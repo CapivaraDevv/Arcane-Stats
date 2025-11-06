@@ -13,7 +13,7 @@ const Sidebar = () => {
       <nav className="sora-text text-white flex flex-col gap-2">
         <Link 
           to="/dashboard" 
-          className={`px-3 py-2 rounded transition ${
+          className={`px-3 py-2 rounded hover:scale-95 transition-all ${
             isActive('/dashboard') || isActive('/') 
               ? 'bg-zinc-700 font-semibold' 
               : 'hover:bg-zinc-700'
@@ -23,7 +23,7 @@ const Sidebar = () => {
         </Link>
         <Link 
           to="/times" 
-          className={`px-3 py-2 rounded transition ${
+          className={`px-3 py-2 rounded hover:scale-95 transition-all ${
             isActive('/times') 
               ? 'bg-zinc-700 font-semibold' 
               : 'hover:bg-zinc-700'
@@ -33,7 +33,7 @@ const Sidebar = () => {
         </Link>
         <Link 
           to="/jogadores" 
-          className={`px-3 py-2 rounded transition ${
+          className={`px-3 py-2 rounded hover:scale-95 transition-all ${
             isActive('/jogadores') 
               ? 'bg-zinc-700 font-semibold' 
               : 'hover:bg-zinc-700'
@@ -43,7 +43,7 @@ const Sidebar = () => {
         </Link>
         <Link 
           to="/partidas" 
-          className={`px-3 py-2 rounded transition ${
+          className={`px-3 py-2 rounded hover:scale-95 transition-all ${
             isActive('/partidas') 
               ? 'bg-zinc-700 font-semibold' 
               : 'hover:bg-zinc-700'
@@ -53,7 +53,7 @@ const Sidebar = () => {
         </Link>
         <Link 
           to="/configuracoes" 
-          className={`px-3 py-2 rounded transition ${
+          className={`px-3 py-2 rounded hover:scale-95 transition-all ${
             isActive('/configuracoes') 
               ? 'bg-zinc-700 font-semibold' 
               : 'hover:bg-zinc-700'
