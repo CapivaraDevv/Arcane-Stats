@@ -8,15 +8,15 @@ const Sidebar = () => {
   };
 
   return (
-    <aside className="bg-[#000434] min-h-screen w-56 flex flex-col gap-4 px-4 py-8 shadow-lg">
-      <h2 className="space-grotesk-title flex text-white px-3 py-4 text-2xl font-bold mb-8">Arcane Stats</h2>
+    <aside className="bg-[#1a0b2e] min-h-screen w-56 flex flex-col gap-4 px-4 py-8 shadow-lg border-r border-[#6b46c1]/30">
+      <h2 className="space-grotesk-title flex text-white px-3 py-4 text-2xl font-bold mb-8 bg-gradient-to-r from-[#8b5cf6] to-[#3b82f6] bg-clip-text text-transparent">Arcane Stats</h2>
       <nav className="sora-text text-white flex flex-col gap-2">
         <Link 
           to="/dashboard" 
           className={`px-3 py-2 rounded hover:scale-95 transition-all ${
             isActive('/dashboard') || isActive('/') 
-              ? 'bg-zinc-700 font-semibold' 
-              : 'hover:bg-zinc-700'
+              ? 'bg-[#6b46c1] font-semibold text-white shadow-lg shadow-[#8b5cf6]/50' 
+              : 'hover:bg-[#4a2c6d] text-[#c4b5fd]'
           }`}
         >
           Dashboard
@@ -25,8 +25,8 @@ const Sidebar = () => {
           to="/times" 
           className={`px-3 py-2 rounded hover:scale-95 transition-all ${
             isActive('/times') 
-              ? 'bg-zinc-700 font-semibold' 
-              : 'hover:bg-zinc-700'
+              ? 'bg-[#6b46c1] font-semibold text-white shadow-lg shadow-[#8b5cf6]/50' 
+              : 'hover:bg-[#4a2c6d] text-[#c4b5fd]'
           }`}
         >
           Times
@@ -35,8 +35,8 @@ const Sidebar = () => {
           to="/jogadores" 
           className={`px-3 py-2 rounded hover:scale-95 transition-all ${
             isActive('/jogadores') 
-              ? 'bg-zinc-700 font-semibold' 
-              : 'hover:bg-zinc-700'
+              ? 'bg-[#6b46c1] font-semibold text-white shadow-lg shadow-[#8b5cf6]/50' 
+              : 'hover:bg-[#4a2c6d] text-[#c4b5fd]'
           }`}
         >
           Jogadores
@@ -45,8 +45,8 @@ const Sidebar = () => {
           to="/partidas" 
           className={`px-3 py-2 rounded hover:scale-95 transition-all ${
             isActive('/partidas') 
-              ? 'bg-zinc-700 font-semibold' 
-              : 'hover:bg-zinc-700'
+              ? 'bg-[#6b46c1] font-semibold text-white shadow-lg shadow-[#8b5cf6]/50' 
+              : 'hover:bg-[#4a2c6d] text-[#c4b5fd]'
           }`}
         >
           Partidas
@@ -55,8 +55,8 @@ const Sidebar = () => {
           to="/configuracoes" 
           className={`px-3 py-2 rounded hover:scale-95 transition-all ${
             isActive('/configuracoes') 
-              ? 'bg-zinc-700 font-semibold' 
-              : 'hover:bg-zinc-700'
+              ? 'bg-[#6b46c1] font-semibold text-white shadow-lg shadow-[#8b5cf6]/50' 
+              : 'hover:bg-[#4a2c6d] text-[#c4b5fd]'
           }`}
         >
           Configurações

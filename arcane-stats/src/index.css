@@ -5,14 +5,39 @@
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
+  color-scheme: dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: #1a0b2e;
+
+  /* Paleta Arcane Purple/Blue */
+  --arcane-dark: #1a0b2e;
+  --arcane-medium: #2d1b4e;
+  --arcane-card: #4a2c6d;
+  --arcane-purple: #6b46c1;
+  --arcane-purple-light: #8b5cf6;
+  --arcane-purple-lighter: #a78bfa;
+  --arcane-blue: #3b82f6;
+  --arcane-blue-light: #60a5fa;
+  --arcane-cyan: #06b6d4;
+  --arcane-cyan-light: #22d3ee;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.dicas {
+  animation: pulse-custom 1.2s infinite;
+}
+
+.titulo-grafico{
+  font-size: 30px;
+}
+
+@keyframes pulse-custom {
+  0%, 100% { scale: 1; }
+  50% { scale: 0.95; }
 }
 
 
@@ -58,9 +83,6 @@ button:focus-visible {
   :root {
     color: #213547;
     background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
   }
   button {
     background-color: #f9f9f9;
