@@ -8,13 +8,13 @@ const dicasExemplo = [
 
 export default function PainelDicas() {
   return (
-    <aside className="bg-[#2d1b4e] p-4 rounded-lg shadow-lg w-full max-w-md mx-auto mt-4 border border-[#6b46c1]/30">
-      <h2 className="text-lg font-bold mb-2 text-white space-grotesk-title">Dicas de Estratégia</h2>
+    <aside className="bg-[#1D2D50] p-4 rounded-lg shadow-lg w-full max-w-md mx-auto mt-4 border border-white/5">
+      <h2 className="text-lg font-bold mb-2 text-[#E0E0E0] space-grotesk-title">Dicas de Estratégia</h2>
       <ul>
         {dicasExemplo.map(dica => (
-          <li key={dica.id} className="dicas bg-[#4a2c6d] my-2 p-3 rounded flex items-center text-white transition-all hover:bg-[#6b46c1] hover:shadow-lg hover:shadow-[#8b5cf6]/50 border border-[#6b46c1]/20">
+          <li key={dica.id} className="dicas bg-[#0B132B] my-2 p-3 rounded flex items-center text-[#E0E0E0] transition-all hover:bg-[#0077B6] hover:shadow-lg hover:shadow-[#00B4D8]/50 border border-white/5">
             <span className="text-2xl mr-3">{dica.icone}</span>
-            <span className="text-[#c4b5fd]">{dica.texto}</span>
+            <span className="sora-text text-white">{dica.texto}</span>
           </li>
         ))}
       </ul>
