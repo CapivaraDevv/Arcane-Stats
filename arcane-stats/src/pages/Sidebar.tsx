@@ -51,7 +51,7 @@ const Sidebar = () => {
             <Link
               to={path}
               className={`px-3 py-2 rounded transition-all relative overflow-hidden ${isActive(path) || (path === '/dashboard' && isActive('/'))
-                  ? 'font-semibold text-[#E0E0E0] shadow-lg shadow-[#00B4D8]/50'
+                  ? 'font-semibold text-[#E0E0E0] '
                   : 'text-[#A8A8A8] hover:bg-[#00B4D8] hover:text-[#E0E0E0]'
                 }`}
             >
