@@ -1,4 +1,3 @@
-
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid } from 'recharts';
 import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
@@ -33,7 +32,7 @@ export default function Dashboard() {
       .normalize('NFD')
       .replace(/[\u0300-\u036f]/g, '')
       .replace(/\s+/g, '');
-    
+
     return `https://ddragon.leagueoflegends.com/cdn/${ddragonVersion}/img/champion/${formattedName}.png`;
   };
 
@@ -131,8 +130,8 @@ export default function Dashboard() {
                     {kpi.icon}
                   </motion.div>
                 ) : (
-                  <img 
-                    src={getChampionImageUrl(kpi.value)} 
+                  <img
+                    src={getChampionImageUrl(kpi.value)}
                     alt={kpi.value}
                     className="w-16 h-16 rounded-lg object-cover border-2 border-[#00B4D8]/50 shadow-lg hover:border-[#00B4D8] transition-all"
                     onError={() => handleImageError(kpi.value)}
@@ -173,32 +172,33 @@ export default function Dashboard() {
           <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
             <div className="absolute inset-0 animate-shimmer"></div>
           </div>
-          
+
           <div className="relative z-10 w-full">
-            <h1 className="titulo-grafico pb-2 space-grotesk-title text-[#E0E0E0] mb-4">Quantidade de partidas por rota</h1>
+            <h2 className="space-grotesk-title text-lg font-semibold mb-4 text-[#E0E0E0]">Quantidade de partidas por rota</h2>
             <ResponsiveContainer width="100%" height={240}>
-            <PieChart>
-              <Pie dataKey="value" data={dadosRoles} cx="50%" cy="50%" outerRadius={75}
-                label={({ name }) => name}>
-                {dadosRoles.map((_, idx) => (
-                  <Cell key={`cell-${idx}`} fill={cores[idx % cores.length]} />
-                ))}
-              </Pie>
-              <Tooltip
-                contentStyle={{
-                  backgroundColor: '#0B132B',
-                  border: '1px solid #0077B6',
-                  borderRadius: '8px',
-                  color: '#E0E0E0'
-                }}
-              />
-              <Legend
-                wrapperStyle={{ color: '#E0E0E0' }}
-              />
-            </PieChart>
-          </ResponsiveContainer>
+              <PieChart>
+                <Pie dataKey="value" data={dadosRoles} cx="50%" cy="50%" outerRadius={75}
+                  label={({ name }) => name}>
+                  {dadosRoles.map((_, idx) => (
+                    <Cell key={`cell-${idx}`} fill={cores[idx % cores.length]} />
+                  ))}
+                </Pie>
+                <Tooltip
+                  contentStyle={{
+                    backgroundColor: '#0B132B',
+                    border: '1px solid #0077B6',
+                    borderRadius: '8px',
+                    color: '#E0E0E0'
+                  }}
+                />
+                <Legend
+                  wrapperStyle={{ color: '#E0E0E0' }}
+                />
+              </PieChart>
+            </ResponsiveContainer>
           </div>
         </motion.div>
+        
         <motion.div
           initial={{ opacity: 0, x: 30 }}
           animate={{ opacity: 1, x: 0 }}
