@@ -1,6 +1,7 @@
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid } from 'recharts';
 import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
+import ScrollReveal from '../components/ScrollReveal';
 
 export default function Dashboard() {
   // Estado para armazenar a versão da API Data Dragon
@@ -45,7 +46,7 @@ export default function Dashboard() {
     { title: 'Taxa de Vitória', value: '62%', description: 'Porcentagem de vitórias totais', icon: '🏆' },
     { title: 'KDA Médio', value: '4.8', description: 'Kill/Death/Assistência média', icon: '⚔️' },
     { title: 'Partidas Analisadas', value: '124', description: 'Total de jogos cadastrados', icon: '🎮' },
-    { title: 'Campeão', value: 'Jhin', description: 'Campeão com maior winrate', icon: '🔥' },
+    { title: 'Campeão', value: 'Vayne', description: 'Campeão com maior winrate', icon: '🔥' },
   ];
 
   // Agora o campo é 'name', não mais 'role'
@@ -96,18 +97,14 @@ export default function Dashboard() {
       {/* GRID DE INDICADORES (KPIs) */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 relative z-10">
         {kpis.map((kpi, idx) => (
-          <motion.div
-            key={idx}
-            custom={idx}
-            initial="hidden"
-            animate="visible"
-            variants={cardVariants}
-            whileHover={{
-              scale: 1.05,
-              boxShadow: "0 0 30px rgba(0, 180, 216, 0.4)"
-            }}
-            className="bg-[#1D2D50] rounded-lg p-6 shadow-lg flex flex-col items-start gap-2 transition-all hover:bg-[#0077B6] duration-100 border border-white/5 relative overflow-hidden group"
-          >
+          <ScrollReveal key={idx} delay={idx * 0.1} direction="up" duration={0.6}>
+            <motion.div
+              whileHover={{
+                scale: 1.05,
+                boxShadow: "0 0 30px rgba(0, 180, 216, 0.4)"
+              }}
+              className="bg-[#1D2D50] rounded-lg p-6 shadow-lg flex flex-col items-start gap-2 transition-all hover:bg-[#0077B6] duration-100 border border-white/5 relative overflow-hidden group"
+            >
             {/* Efeito shimmer no hover */}
             <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
               <div className="absolute inset-0 animate-shimmer"></div>
@@ -157,18 +154,17 @@ export default function Dashboard() {
             <div className="sora-text text-sm text-[#00B4D8] relative z-10">{kpi.title}</div>
             <div className="sora-text text-xs text-[#A8A8A8] italic relative z-10">{kpi.description}</div>
           </motion.div>
+          </ScrollReveal>
         ))}
       </div>
 
       {/* GRÁFICO DE DISTRIBUIÇÃO DE ROLES */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8 relative z-10">
-        <motion.div
-          initial={{ opacity: 0, x: -30 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.2, duration: 0.3 }}
-          whileHover={{ scale: 1.02 }}
-          className="bg-[#1D2D50] rounded-xl p-4 flex flex-col items-center justify-center border border-white/5 shadow-lg hover:border-[#00B4D8]/50 transition-all relative overflow-hidden group"
-        >
+        <ScrollReveal direction="left" delay={0.2} duration={0.7}>
+          <motion.div
+            whileHover={{ scale: 1.02 }}
+            className="bg-[#1D2D50] rounded-xl p-4 flex flex-col items-center justify-center border border-white/5 shadow-lg hover:border-[#00B4D8]/50 transition-all relative overflow-hidden group"
+          >
           <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
             <div className="absolute inset-0 animate-shimmer"></div>
           </div>
@@ -194,18 +190,17 @@ export default function Dashboard() {
                 <Legend
                   wrapperStyle={{ color: '#E0E0E0' }}
                 />
-              </PieChart>
-            </ResponsiveContainer>
-          </div>
-        </motion.div>
+            </PieChart>
+          </ResponsiveContainer>
+        </div>
+      </motion.div>
+        </ScrollReveal>
         
-        <motion.div
-          initial={{ opacity: 0, x: 30 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.25, duration: 0.3 }}
-          whileHover={{ scale: 1.02 }}
-          className="bg-[#1D2D50] rounded-xl p-4 flex flex-col border border-white/5 shadow-lg hover:border-[#00B4D8]/50 transition-all relative overflow-hidden group"
-        >
+        <ScrollReveal direction="right" delay={0.3} duration={0.7}>
+          <motion.div
+            whileHover={{ scale: 1.02 }}
+            className="bg-[#1D2D50] rounded-xl p-4 flex flex-col border border-white/5 shadow-lg hover:border-[#00B4D8]/50 transition-all relative overflow-hidden group"
+          >
           {/* Efeito de brilho no hover */}
           <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
             <div className="absolute inset-0 animate-shimmer"></div>
@@ -270,6 +265,7 @@ export default function Dashboard() {
             </div>
           </div>
         </motion.div>
+        </ScrollReveal>
       </div>
     </div>
   );
