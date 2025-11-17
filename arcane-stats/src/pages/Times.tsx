@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import PainelDicas from "./PainelDicas";
+import ScrollReveal from '../components/ScrollReveal';
 
 interface JogadorTime {
   nome: string;
@@ -110,15 +111,6 @@ const Times = () => {
     return '#E0E0E0';
   };
 
-  const cardVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: (i: number) => ({
-      opacity: 1,
-      y: 0,
-      transition: { delay: i * 0.1, duration: 0.3 }
-    })
-  };
-
   return (
     <main className="flex-1 p-8 bg-[#0B132B] min-h-screen">
       <div className="mb-6">
@@ -129,15 +121,11 @@ const Times = () => {
       {/* Grid de Times */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
         {times.map((time, idx) => (
-          <motion.div
-            key={time.id}
-            custom={idx}
-            initial="hidden"
-            animate="visible"
-            variants={cardVariants}
-            whileHover={{ scale: 1.02, y: -5 }}
-            className="bg-[#1D2D50] rounded-lg border border-white/5 shadow-lg hover:border-[#00B4D8]/50 transition-all relative overflow-hidden group"
-          >
+          <ScrollReveal key={time.id} direction="up" delay={idx * 0.15} duration={0.7}>
+            <motion.div
+              whileHover={{ scale: 1.02, y: -5 }}
+              className="bg-[#1D2D50] rounded-lg border border-white/5 shadow-lg hover:border-[#00B4D8]/50 transition-all relative overflow-hidden group"
+            >
             {/* Efeito shimmer no hover */}
             <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
               <div className="absolute inset-0 animate-shimmer"></div>
@@ -228,10 +216,13 @@ const Times = () => {
               </div>
             </div>
           </motion.div>
+          </ScrollReveal>
         ))}
       </div>
 
-      <PainelDicas />
+      <ScrollReveal direction="up" delay={0.5} duration={0.6}>
+        <PainelDicas />
+      </ScrollReveal>
     </main>
   );
 };
