@@ -121,7 +121,7 @@ const Times = () => {
       {/* Grid de Times */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
         {times.map((time, idx) => (
-          <ScrollReveal key={time.id} direction="up" delay={idx * 0.15} duration={0.7}>
+          <ScrollReveal key={time.id} preset="up" delay={idx * 0.15} duration={0.7}>
             <motion.div
               whileHover={{ scale: 1.02, y: -5 }}
               className="bg-[#1D2D50] rounded-lg border border-white/5 shadow-lg hover:border-[#00B4D8]/50 transition-all relative overflow-hidden group"
@@ -220,7 +220,7 @@ const Times = () => {
         ))}
       </div>
 
-      <ScrollReveal direction="up" delay={0.5} duration={0.6}>
+      <ScrollReveal preset="up" delay={0.5} duration={0.6}>
         <PainelDicas />
       </ScrollReveal>
     </main>

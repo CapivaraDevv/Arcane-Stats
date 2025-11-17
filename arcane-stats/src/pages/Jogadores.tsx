@@ -182,7 +182,7 @@ const Jogadores = () => {
       {/* Grid de Jogadores */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {jogadoresFiltrados.map((jogador, idx) => (
-          <ScrollReveal key={jogador.id} direction="up" delay={idx * 0.1} duration={0.6}>
+          <ScrollReveal key={jogador.id} preset="up" delay={idx * 0.1} duration={0.6}>
             <motion.div
               whileHover={{ scale: 1.05, y: -5 }}
               className="bg-[#1D2D50] p-6 rounded-lg border border-white/5 shadow-lg hover:border-[#00B4D8]/50 transition-all relative overflow-hidden group"

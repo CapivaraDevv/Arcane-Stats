@@ -154,25 +154,25 @@ const Partidas = () => {
 
       {/* Estatísticas Resumidas */}
       <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 mb-6">
-        <ScrollReveal direction="up" delay={0} duration={0.5}>
+        <ScrollReveal preset="up" delay={0} duration={0.5}>
           <div className="bg-[#1D2D50] p-4 rounded-lg border border-white/5 shadow-lg">
             <div className="text-2xl font-bold text-[#E0E0E0]">{estatisticas.total}</div>
             <div className="text-sm text-[#A8A8A8]">Total de Partidas</div>
           </div>
         </ScrollReveal>
-        <ScrollReveal direction="up" delay={0.1} duration={0.5}>
+        <ScrollReveal preset="up" delay={0.1} duration={0.5}>
           <div className="bg-[#1D2D50] p-4 rounded-lg border border-white/5 shadow-lg">
             <div className="text-2xl font-bold text-[#4CAF50]">{estatisticas.vitorias}</div>
             <div className="text-sm text-[#A8A8A8]">Vitórias</div>
           </div>
         </ScrollReveal>
-        <ScrollReveal direction="up" delay={0.2} duration={0.5}>
+        <ScrollReveal preset="up" delay={0.2} duration={0.5}>
           <div className="bg-[#1D2D50] p-4 rounded-lg border border-white/5 shadow-lg">
             <div className="text-2xl font-bold text-[#F44336]">{estatisticas.derrotas}</div>
             <div className="text-sm text-[#A8A8A8]">Derrotas</div>
           </div>
         </ScrollReveal>
-        <ScrollReveal direction="up" delay={0.3} duration={0.5}>
+        <ScrollReveal preset="up" delay={0.3} duration={0.5}>
           <div className="bg-[#1D2D50] p-4 rounded-lg border border-white/5 shadow-lg">
             <div className="text-2xl font-bold text-[#00B4D8]">{estatisticas.winrate}%</div>
             <div className="text-sm text-[#A8A8A8]">Winrate</div>
@@ -200,7 +200,7 @@ const Partidas = () => {
       {/* Lista de Partidas */}
       <div className="space-y-4">
         {partidasFiltradas.map((partida, idx) => (
-          <ScrollReveal key={partida.id} direction="up" delay={idx * 0.1} duration={0.6}>
+          <ScrollReveal key={partida.id} preset="up" delay={idx * 0.1} duration={0.6}>
             <motion.div
               whileHover={{ scale: 1.02 }}
               className={`bg-[#1D2D50] p-6 rounded-lg border shadow-lg transition-all ${

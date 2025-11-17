@@ -97,7 +97,7 @@ export default function Dashboard() {
       {/* GRID DE INDICADORES (KPIs) */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 relative z-10">
         {kpis.map((kpi, idx) => (
-          <ScrollReveal key={idx} delay={idx * 0.1} direction="up" duration={0.6}>
+          <ScrollReveal key={idx} delay={idx * 0.1} preset="up" duration={0.6}>
             <motion.div
               whileHover={{
                 scale: 1.05,
@@ -160,7 +160,7 @@ export default function Dashboard() {
 
       {/* GRÁFICO DE DISTRIBUIÇÃO DE ROLES */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8 relative z-10">
-        <ScrollReveal direction="left" delay={0.2} duration={0.7}>
+        <ScrollReveal preset="left" delay={0.2} duration={0.7}>
           <motion.div
             whileHover={{ scale: 1.02 }}
             className="bg-[#1D2D50] rounded-xl p-4 flex flex-col items-center justify-center border border-white/5 shadow-lg hover:border-[#00B4D8]/50 transition-all relative overflow-hidden group"
@@ -196,7 +196,7 @@ export default function Dashboard() {
       </motion.div>
         </ScrollReveal>
         
-        <ScrollReveal direction="right" delay={0.3} duration={0.7}>
+        <ScrollReveal preset="right" delay={0.3} duration={0.7}>
           <motion.div
             whileHover={{ scale: 1.02 }}
             className="bg-[#1D2D50] rounded-xl p-4 flex flex-col border border-white/5 shadow-lg hover:border-[#00B4D8]/50 transition-all relative overflow-hidden group"
