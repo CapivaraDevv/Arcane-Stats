@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import PainelDicas from "./PainelDicas";
 import ScrollReveal from '../components/ScrollReveal';
+import { useConfig } from '../hooks/useConfig';
 
 interface JogadorTime {
   nome: string;
@@ -24,6 +25,8 @@ interface Time {
 }
 
 const Times = () => {
+  const { configs } = useConfig();
+  
   const times: Time[] = [
     {
       id: 1,
@@ -220,9 +223,11 @@ const Times = () => {
         ))}
       </div>
 
-      <ScrollReveal preset="up" delay={0.5} duration={0.6}>
-        <PainelDicas />
-      </ScrollReveal>
+      {configs.mostrarDicas && (
+        <ScrollReveal preset="up" delay={0.5} duration={0.6}>
+          <PainelDicas />
+        </ScrollReveal>
+      )}
     </main>
   );
 };
