@@ -2,8 +2,10 @@ import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer, LineChart, L
 import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import ScrollReveal from '../components/ScrollReveal';
+import { useConfig } from '../hooks/useConfig';
 
 export default function Dashboard() {
+  const { configs } = useConfig();
   // Estado para armazenar a versão da API Data Dragon
   const [ddragonVersion, setDdragonVersion] = useState<string>('latest');
   // Estado para controlar falhas no carregamento de imagens
@@ -159,6 +161,7 @@ export default function Dashboard() {
       </div>
 
       {/* GRÁFICO DE DISTRIBUIÇÃO DE ROLES */}
+      {configs.mostrarGraficos && (
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8 relative z-10">
         <ScrollReveal preset="left" delay={0.2} duration={0.7}>
           <motion.div
@@ -267,6 +270,7 @@ export default function Dashboard() {
         </motion.div>
         </ScrollReveal>
       </div>
+      )}
     </div>
   );
 }
