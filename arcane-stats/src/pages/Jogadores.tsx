@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
+import ScrollReveal from '../components/ScrollReveal';
 
 interface Jogador {
   id: number;
@@ -181,15 +182,11 @@ const Jogadores = () => {
       {/* Grid de Jogadores */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {jogadoresFiltrados.map((jogador, idx) => (
-          <motion.div
-            key={jogador.id}
-            custom={idx}
-            initial="hidden"
-            animate="visible"
-            variants={cardVariants}
-            whileHover={{ scale: 1.05, y: -5 }}
-            className="bg-[#1D2D50] p-6 rounded-lg border border-white/5 shadow-lg hover:border-[#00B4D8]/50 transition-all relative overflow-hidden group"
-          >
+          <ScrollReveal key={jogador.id} direction="up" delay={idx * 0.1} duration={0.6}>
+            <motion.div
+              whileHover={{ scale: 1.05, y: -5 }}
+              className="bg-[#1D2D50] p-6 rounded-lg border border-white/5 shadow-lg hover:border-[#00B4D8]/50 transition-all relative overflow-hidden group"
+            >
             {/* Efeito shimmer no hover */}
             <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
               <div className="absolute inset-0 animate-shimmer"></div>
@@ -252,6 +249,7 @@ const Jogadores = () => {
               </div>
             </div>
           </motion.div>
+          </ScrollReveal>
         ))}
       </div>
     </main>
