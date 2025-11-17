@@ -28,9 +28,7 @@ export default function LoadingScreen({ onLoadingComplete }: LoadingScreenProps)
                     className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-white text-[#0B132B]"
                 >
                     {/* Background animado sutil */}
-                    <div className="absolute inset-0 pointer-events-none">
-                        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-[#0077B6] via-[#00B4D8] to-[#0077B6] animate-gradient"></div>
-                    </div>
+                    
 
                     {/* Logo animado */}
                     <motion.div
@@ -70,7 +68,7 @@ export default function LoadingScreen({ onLoadingComplete }: LoadingScreenProps)
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ delay: 1.5 }}
-                        className="mt-4 text-sm tracking-wider text-white uppercase sora-text relative z-10"
+                        className="mt-4 text-sm tracking-wider text-black uppercase sora-text relative z-10"
                     >
                         Carregando...
                     </motion.p>
