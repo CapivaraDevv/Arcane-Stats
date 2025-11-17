@@ -49,7 +49,7 @@ export default function LoadingScreen({ onLoadingComplete }: LoadingScreenProps)
                         initial={{ width: "0%" }}
                         animate={{ width: "100%" }}
                         transition={{ duration: 1.8, delay: 0.4 }}
-                        className="mt-6 h-1 bg-gradient-to-r from-[#0077B6] via-[#00B4D8] to-[#0077B6] rounded-full w-full max-w-xs relative z-10 overflow-hidden"
+                        className="mt-2 h-1 bg-gradient-to-r from-[#0077B6] via-[#00B4D8] to-[#0077B6] rounded-full w-full max-w-xs relative z-10 overflow-hidden"
                     >
                         <motion.div
                             className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
