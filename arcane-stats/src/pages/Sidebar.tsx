@@ -21,18 +21,24 @@ const Sidebar = () => {
   };
 
   return (
-    <aside className="bg-[#1D2D50] min-h-screen w-56 flex flex-col gap-4 px-4 py-8 shadow-lg border-r border-white/5 relative overflow-hidden">
+    <aside className="bg-[#1D2D50] min-h-screen w-56 flex flex-col gap-4 px-4 py-3 shadow-lg border-r border-white/5 relative overflow-hidden">
       {/* Background animado sutil */}
       <div className="absolute top-0 right-0 w-32 h-32 bg-[#0077B6]/10 rounded-full blur-3xl animate-float"></div>
 
-      <motion.h2
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="space-grotesk-title flex px-2 py-4 text-2xl font-bold mb-8 bg-gradient-to-r from-[#0077B6] to-[#00B4D8] bg-clip-text text-transparent relative z-10"
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9, rotate: -2}}
+        animate={{ opacity: 1, scale: 1, rotate: 0}}
+        whileHover={{
+          scale: 1.1,
+          rotateX: 8,
+          rotateY: -8,
+          rotate: 0.5,
+          transition: {type: "spring", stiffness: 150}
+        }}
+        className="px-6 mb-5 rounded-3xl cursor-pointer relative"
       >
-        Arcane Stats
-      </motion.h2>
+        <img src="/LogoBrancoSemFundo.png" alt="Logo" className="w-32 relative z-10" />
+      </motion.div>
       <nav className="sora-text text-[#E0E0E0] *:flex flex-col gap-2 relative z-10">
         {[
           { path: '/dashboard', label: 'Dashboard', index: 0 },
