@@ -74,26 +74,12 @@ export default function Dashboard() {
   // Paleta Arcane Tech Style
   const cores = ['#0077B6', '#00B4D8', '#E0E0E0', '#F4A261', '#0B132B'];
 
-  // Variantes de animação para os cards
-  const cardVariants = {
-    hidden: { opacity: 0, y: 20, scale: 0.9 },
-    visible: (i: number) => ({
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      transition: {
-        delay: i * 0.05,
-        duration: 0.3,
-        ease: "easeOut" as const
-      }
-    })
-  };
 
   return (
     <div className="p-6 flex flex-col gap-8 bg-[#0B132B] min-h-screen relative overflow-hidden">
       {/* Background animado sutil */}
       <div className="absolute inset-0 opacity-5 pointer-events-none">
-        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-[#0077B6] via-[#00B4D8] to-[#0077B6] animate-gradient"></div>
+  <div className="absolute top-0 left-0 w-full h-full bg-linear-to-br from-[#0077B6] via-[#00B4D8] to-[#0077B6] animate-gradient"></div>
       </div>
 
       {/* GRID DE INDICADORES (KPIs) */}
