@@ -99,7 +99,7 @@ export default function Dashboard() {
             </div>
 
             {kpi.title === 'Campeão' ? (
-              <div className="relative z-10 mb-2 flex items-center justify-center">
+              <div className="relative z-10 mb-1 flex items-center justify-center">
                 {imageErrors.has(kpi.value) ? (
                   <motion.div
                     className="text-3xl mb-2"
@@ -118,7 +118,7 @@ export default function Dashboard() {
                   <img
                     src={getChampionImageUrl(kpi.value)}
                     alt={kpi.value}
-                    className="w-16 h-16 rounded-lg object-cover border-2 border-[#00B4D8]/50 shadow-lg hover:border-[#00B4D8] transition-all"
+                    className="w-10 h-10 rounded-lg object-cover border border-[#00B4D8]/40 transition-all"
                     onError={() => handleImageError(kpi.value)}
                   />
                 )}
