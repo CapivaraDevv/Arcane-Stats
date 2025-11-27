@@ -74,6 +74,54 @@ export default function Dashboard() {
   // Paleta Arcane Tech Style
   const cores = ['#0077B6', '#00B4D8', '#E0E0E0', '#F4A261', '#0B132B'];
 
+  // Dados detalhados por rota
+  const laneAnalysis = [
+    {
+      lane: 'Top',
+      champions: ['Jax', 'Darius', 'Riven'],
+      winrate: 6,
+      firstBloodInvolvement: 34,
+      bestBuild: ['Força Tríade', 'Cutelo', 'Escudo de Sterak'],
+      avgCS: 286,
+      icon: '⚔️'
+    },
+    {
+      lane: 'Jungle',
+      champions: ['Lee Sin', 'Elise', 'Graves'],
+      winrate: 12,
+      firstBloodInvolvement: 62,
+      bestBuild: ['Guerreiro', 'Cutelo', 'Gume do infinito'],
+      avgCS: 165,
+      icon: '🐆'
+    },
+    {
+      lane: 'Mid',
+      champions: ['Zed', 'Talon', 'Lux'],
+      winrate: 31,
+      firstBloodInvolvement: 48,
+      bestBuild: ['Lâmina do Crepúsculo', 'Presa de Serpente', 'Cajado do Vazio'],
+      avgCS: 312,
+      icon: '✨'
+    },
+    {
+      lane: 'ADC',
+      champions: ['Jinx', 'Caitlyn', 'Vayne'],
+      winrate: 55,
+      firstBloodInvolvement: 18,
+      bestBuild: ['Mata-Cráquens', 'Item Infinito', 'Recordador de Lordes'],
+      avgCS: 336,
+      icon: '/IconeADC.webp'
+    },
+    {
+      lane: 'Support',
+      champions: ['Thresh', 'Braum', 'Leona'],
+      winrate: 3,
+      firstBloodInvolvement: 41,
+      bestBuild: ['Tanque Turbo Químico', 'Escudo de Kaenic', 'Armadura de Espinhos'],
+      avgCS: 18,
+      icon: '🛡️'
+    },
+  ];
 
   return (
     <div className="p-6 flex flex-col gap-8 bg-[#0B132B] min-h-screen relative overflow-hidden">
@@ -257,6 +305,96 @@ export default function Dashboard() {
         </ScrollReveal>
       </div>
       )}
+
+      {/* ANÁLISE DETALHADA POR ROTA */}
+      <div className="relative z-10">
+        <h2 className="space-grotesk-title text-2xl font-bold mb-4 text-[#E0E0E0]">Análise por Rota</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+          {laneAnalysis.map((lane, idx) => (
+            <ScrollReveal key={idx} delay={idx * 0.1} preset="up" duration={0.6}>
+              <motion.div
+                whileHover={{ scale: 1.02, y: -4 }}
+                className="bg-[#1D2D50] rounded-lg p-4 shadow-lg border border-white/5 hover:border-[#00B4D8]/50 transition-all relative overflow-hidden group"
+              >
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                  <div className="absolute inset-0 animate-shimmer" />
+                </div>
+
+                <div className="relative z-10 space-y-3">
+                  {/* Header com lane e icon */}
+                  <div className="flex items-center justify-between mb-3 pb-2 border-b border-white/10">
+                    <h3 className="space-grotesk-title text-lg font-bold text-[#E0E0E0]">{lane.lane}</h3>
+                    {lane.icon.startsWith('/') ? (
+                      <img src={lane.icon} alt={lane.lane} className="w-7 h-7 object-contain" />
+                    ) : (
+                      <span className="text-2xl">{lane.icon}</span>
+                    )}
+                  </div>
+
+                  {/* Campeões mais usados */}
+                  <div>
+                    <div className="text-xs font-semibold text-[#00B4D8] uppercase tracking-wide mb-1">Top Champions</div>
+                    <div className="flex gap-1">
+                      {lane.champions.map((champ, cIdx) => (
+                        <span key={cIdx} className="text-xs px-2 py-1 bg-[#0077B6]/20 text-[#00B4D8] rounded">
+                          {champ}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Winrate */}
+                  <div>
+                    <div className="text-xs font-semibold text-[#A8A8A8] uppercase tracking-wide mb-1">Winrate</div>
+                    <div className="flex items-center gap-2">
+                      <div className="text-xl font-bold text-[#4CAF50]">{lane.winrate}%</div>
+                      <div className="flex-1 h-2 bg-[#0B132B] rounded-full overflow-hidden">
+                        <div
+                          className="h-full bg-gradient-to-r from-[#4CAF50] to-[#00B4D8]"
+                          style={{ width: `${lane.winrate}%` }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Agressividade (First Blood Involvement) */}
+                  <div>
+                    <div className="text-xs font-semibold text-[#A8A8A8] uppercase tracking-wide mb-1">Agressividade</div>
+                    <div className="flex items-center gap-2">
+                      <div className="text-sm font-bold text-[#F4A261]">{lane.firstBloodInvolvement}%</div>
+                      <div className="flex-1 h-2 bg-[#0B132B] rounded-full overflow-hidden">
+                        <div
+                          className="h-full bg-gradient-to-r from-[#F4A261] to-[#FF6B6B]"
+                          style={{ width: `${lane.firstBloodInvolvement}%` }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Melhor Build */}
+                  <div>
+                    <div className="text-xs font-semibold text-[#A8A8A8] uppercase tracking-wide mb-1">Build Ideal</div>
+                    <div className="flex flex-col gap-1">
+                      {lane.bestBuild.map((item, bIdx) => (
+                        <div key={bIdx} className="text-xs text-[#E0E0E0] px-2 py-1 bg-[#0B132B] rounded border border-white/10">
+                          {bIdx + 1}. {item}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Média de CS/Farm */}
+                  <div className="pt-2 border-t border-white/10">
+                    <div className="text-xs font-semibold text-[#A8A8A8] uppercase tracking-wide mb-1">Média de Farm</div>
+                    <div className="text-lg font-bold text-[#00B4D8]">{lane.avgCS} CS</div>
+                    <p className="text-xs text-[#A8A8A8] italic">por 30 min</p>
+                  </div>
+                </div>
+              </motion.div>
+            </ScrollReveal>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
