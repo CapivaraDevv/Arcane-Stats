@@ -146,14 +146,7 @@ const Jogadores = () => {
     return cores[elo] || '#E0E0E0';
   };
 
-  const cardVariants = {
-    hidden: { opacity: 0, scale: 0.9 },
-    visible: (i: number) => ({
-      opacity: 1,
-      scale: 1,
-      transition: { delay: i * 0.05, duration: 0.3 }
-    })
-  };
+  
 
   return (
     <main className="flex-1 p-8 bg-[#0B132B] min-h-screen">
