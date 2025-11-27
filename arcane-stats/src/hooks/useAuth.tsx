@@ -8,6 +8,7 @@ type User = {
 
 type AuthContextType = {
   user: User | null;
+  initialized: boolean;
   register: (name: string, email: string, password: string) => Promise<{ success: boolean; message?: string }>;
   login: (email: string, password: string) => Promise<{ success: boolean; message?: string }>;
   logout: () => void;
@@ -34,6 +35,7 @@ function writeUsers(users: Array<{ id: string; name: string; email: string; pass
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
+  const [initialized, setInitialized] = useState(false);
 
   useEffect(() => {
     const raw = localStorage.getItem(SESSION_KEY);
@@ -44,6 +46,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setUser(null);
       }
     }
+    // marca que a leitura inicial da sessão foi concluída
+    setInitialized(true);
   }, []);
 
   const register = async (name: string, email: string, password: string) => {
@@ -76,7 +80,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   return (
-    <AuthContext.Provider value={{ user, register, login, logout }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ user, initialized, register, login, logout }}>{children}</AuthContext.Provider>
   );
 };
 
