@@ -83,32 +83,32 @@ export default function Dashboard() {
       firstBloodInvolvement: 34,
       bestBuild: ['Força Tríade', 'Cutelo', 'Escudo de Sterak'],
       avgCS: 286,
-      icon: '⚔️'
+      icon: '/IconeTop.png'
     },
     {
       lane: 'Jungle',
       champions: ['Lee Sin', 'Elise', 'Graves'],
       winrate: 12,
       firstBloodInvolvement: 62,
-      bestBuild: ['Guerreiro', 'Cutelo', 'Gume do infinito'],
+      bestBuild: ['Sinal de sterak', 'Cutelo', 'Hidra Raivosa'],
       avgCS: 165,
-      icon: '🐆'
+      icon: '/IconeJungle.png'
     },
     {
       lane: 'Mid',
       champions: ['Zed', 'Talon', 'Lux'],
       winrate: 31,
       firstBloodInvolvement: 48,
-      bestBuild: ['Lâmina do Crepúsculo', 'Presa de Serpente', 'Cajado do Vazio'],
+      bestBuild: ['Eclipse', 'Presa de Serpente', 'Cajado do Vazio'],
       avgCS: 312,
-      icon: '✨'
+      icon: '/IconeMID.png'
     },
     {
       lane: 'ADC',
       champions: ['Jinx', 'Caitlyn', 'Vayne'],
       winrate: 55,
       firstBloodInvolvement: 18,
-      bestBuild: ['Mata-Cráquens', 'Item Infinito', 'Recordador de Lordes'],
+      bestBuild: ['Mata-Cráquens', 'Gume do infinito', 'Lembrança do lorde dominik'],
       avgCS: 336,
       icon: '/IconeADC.webp'
     },
@@ -119,7 +119,7 @@ export default function Dashboard() {
       firstBloodInvolvement: 41,
       bestBuild: ['Tanque Turbo Químico', 'Escudo de Kaenic', 'Armadura de Espinhos'],
       avgCS: 18,
-      icon: '🛡️'
+      icon: '/IconeSuporte.png'
     },
   ];
 
@@ -336,9 +336,8 @@ export default function Dashboard() {
                     <div className="text-xs font-semibold text-[#00B4D8] uppercase tracking-wide mb-1">Top Champions</div>
                     <div className="flex gap-1">
                       {lane.champions.map((champ, cIdx) => (
-                        <span key={cIdx} className="text-xs px-2 py-1 bg-[#0077B6]/20 text-[#00B4D8] rounded">
-                          {champ}
-                        </span>
+                        <img src={getChampionImageUrl(champ)} key={cIdx} className="w-15 bg-[#0077B6]/20 text-[#00B4D8] rounded" />
+                        
                       ))}
                     </div>
                   </div>
