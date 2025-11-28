@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import ScrollReveal from '../components/ScrollReveal';
 
 interface Jogador {
@@ -13,11 +13,49 @@ interface Jogador {
   kda: number;
   campeaoPrincipal: string;
   role: string;
+  roleIcon: string;
   nivel: number;
 }
 
 const Jogadores = () => {
   const [filtroRole, setFiltroRole] = useState<string>('Todas');
+
+  const [ddragonVersion, setDdragonVersion] = useState<string>('latest');
+  // Estado para controlar falhas no carregamento de imagens
+  const [imageErrors, setImageErrors] = useState<Set<string>>(new Set());
+
+  // Função para buscar a versão mais recente da API
+  useEffect(() => {
+    const fetchVersion = async () => {
+      try {
+        const response = await fetch('https://ddragon.leagueoflegends.com/api/versions.json');
+        const versions = await response.json();
+        if (versions && versions.length > 0) {
+          setDdragonVersion(versions[0]); // Pega a versão mais recente
+        }
+      } catch (error) {
+        console.error('Erro ao buscar versão da API:', error);
+        // Mantém 'latest' como fallback
+      }
+    };
+    fetchVersion();
+  }, []);
+
+  // Função utilitária para construir URL da imagem do campeão
+  const getChampionImageUrl = (championName: string) => {
+    // Remove acentos e espaços, converte para o formato da API
+    const formattedName = championName
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/\s+/g, '');
+
+    return `https://ddragon.leagueoflegends.com/cdn/${ddragonVersion}/img/champion/${formattedName}.png`;
+  };
+
+  // Função para lidar com erro no carregamento da imagem
+  const handleImageError = (championName: string) => {
+    setImageErrors(prev => new Set(prev).add(championName));
+  };
 
   const jogadores: Jogador[] = [
     {
@@ -30,7 +68,8 @@ const Jogadores = () => {
       partidas: 145,
       kda: 4.8,
       campeaoPrincipal: 'Vayne',
-      role: 'ADC',
+      role: "ADC",
+      roleIcon: '/IconeADC.webp',
       nivel: 287
     },
     {
@@ -44,7 +83,8 @@ const Jogadores = () => {
       kda: 3.9,
       campeaoPrincipal: 'Lux',
       role: 'Mid',
-      nivel: 245
+      nivel: 245,
+      roleIcon: '/IconeMID.png'
     },
     {
       id: 3,
@@ -57,7 +97,8 @@ const Jogadores = () => {
       kda: 2.8,
       campeaoPrincipal: 'Malphite',
       role: 'Top',
-      nivel: 198
+      nivel: 198,
+      roleIcon: '/IconeTop.png'
     },
     {
       id: 4,
@@ -70,7 +111,8 @@ const Jogadores = () => {
       kda: 5.2,
       campeaoPrincipal: 'Lee Sin',
       role: 'Jungle',
-      nivel: 312
+      nivel: 312,
+      roleIcon: '/IconeJungle.png'
     },
     {
       id: 5,
@@ -83,7 +125,8 @@ const Jogadores = () => {
       kda: 1.8,
       campeaoPrincipal: 'Thresh',
       role: 'Support',
-      nivel: 256
+      nivel: 256,
+      roleIcon: '/IconeSuporte.png'
     },
     {
       id: 6,
@@ -96,7 +139,8 @@ const Jogadores = () => {
       kda: 6.1,
       campeaoPrincipal: 'Zed',
       role: 'Mid',
-      nivel: 389
+      nivel: 389,
+      roleIcon: '/IconeMID.png'
     },
     {
       id: 7,
@@ -109,7 +153,8 @@ const Jogadores = () => {
       kda: 5.5,
       campeaoPrincipal: 'Jinx',
       role: 'ADC',
-      nivel: 298
+      nivel: 298,
+      roleIcon: 'IconeADC.webp'
     },
     {
       id: 8,
@@ -122,7 +167,8 @@ const Jogadores = () => {
       kda: 3.2,
       campeaoPrincipal: 'Darius',
       role: 'Top',
-      nivel: 223
+      nivel: 223,
+      roleIcon: 'IconeTop.png'
     }
   ];
 
@@ -146,7 +192,7 @@ const Jogadores = () => {
     return cores[elo] || '#E0E0E0';
   };
 
-  
+
 
   return (
     <main className="flex-1 p-8 bg-[#0B132B] min-h-screen">
@@ -161,11 +207,10 @@ const Jogadores = () => {
           <button
             key={role}
             onClick={() => setFiltroRole(role)}
-            className={`px-4 py-2 rounded-lg transition-all ${
-              filtroRole === role
-                ? 'bg-[#0077B6] text-[#E0E0E0] shadow-lg'
-                : 'bg-[#1D2D50] text-[#A8A8A8] hover:bg-[#0077B6]/50 border border-white/5'
-            }`}
+            className={`px-4 py-2 rounded-lg transition-all ${filtroRole === role
+              ? 'bg-[#0077B6] text-[#E0E0E0] shadow-lg'
+              : 'bg-[#1D2D50] text-[#A8A8A8] hover:bg-[#0077B6]/50 border border-white/5'
+              }`}
           >
             {role}
           </button>
@@ -180,68 +225,85 @@ const Jogadores = () => {
               whileHover={{ scale: 1.05, y: -5 }}
               className="bg-[#1D2D50] p-6 rounded-lg border border-white/5 shadow-lg hover:border-[#00B4D8]/50 transition-all relative overflow-hidden group"
             >
-            {/* Efeito shimmer no hover */}
-            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-              <div className="absolute inset-0 animate-shimmer"></div>
-            </div>
-
-            <div className="relative z-10">
-              {/* Header do Card */}
-              <div className="flex items-start justify-between mb-4">
-                <div>
-                  <h3 className="space-grotesk-title text-xl font-bold text-[#E0E0E0] mb-1">
-                    {jogador.nome}
-                  </h3>
-                  <div className="flex items-center gap-2">
-                    <span
-                      className="text-sm font-semibold px-2 py-1 rounded"
-                      style={{
-                        backgroundColor: `${getEloColor(jogador.elo)}20`,
-                        color: getEloColor(jogador.elo)
-                      }}
-                    >
-                      {jogador.elo} {jogador.divisao}
-                    </span>
-                    <span className="text-xs text-[#A8A8A8]">• {jogador.lp} LP</span>
-                  </div>
-                </div>
-                <div className="text-right">
-                  <div className="text-2xl mb-1">🎮</div>
-                  <div className="text-xs text-[#A8A8A8]">Nv. {jogador.nivel}</div>
-                </div>
+              {/* Efeito shimmer no hover */}
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                <div className="absolute inset-0 animate-shimmer"></div>
               </div>
 
-              {/* Role e Campeão Principal */}
-              <div className="mb-4 p-3 bg-[#0B132B] rounded-lg border border-white/5">
-                <div className="flex items-center justify-between">
+              <div className="relative z-10">
+                {/* Header do Card */}
+                <div className="flex items-start justify-between mb-4">
                   <div>
-                    <div className="text-xs text-[#A8A8A8] mb-1">Role Principal</div>
-                    <div className="text-sm font-semibold text-[#00B4D8]">{jogador.role}</div>
+                    <h3 className="space-grotesk-title text-xl font-bold text-[#E0E0E0] mb-1">
+                      {jogador.nome}
+                    </h3>
+                    <div className="flex items-center gap-2">
+                      <span
+                        className="text-sm font-semibold px-2 py-1 rounded"
+                        style={{
+                          backgroundColor: `${getEloColor(jogador.elo)}20`,
+                          color: getEloColor(jogador.elo)
+                        }}
+                      >
+                        {jogador.elo} {jogador.divisao}
+                      </span>
+                      <span className="text-xs text-[#A8A8A8]">• {jogador.lp} LP</span>
+                    </div>
                   </div>
                   <div className="text-right">
-                    <div className="text-xs text-[#A8A8A8] mb-1">Campeão</div>
-                    <div className="text-sm font-semibold text-[#E0E0E0]">{jogador.campeaoPrincipal}</div>
+                    <div className="text-2xl mb-1">🎮</div>
+                    <div className="text-xs text-[#A8A8A8]">Nv. {jogador.nivel}</div>
+                  </div>
+                </div>
+
+                {/* Role e Campeão Principal */}
+                <div className="mb-4 p-3 bg-[#0B132B] rounded-lg border border-white/5">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <div className="text-xs text-[#A8A8A8] mb-1">Role Principal</div>
+                      <img src={jogador.roleIcon} alt="" className='w-8' />
+                    </div>
+                    <div className="text-right">
+                      <div className="text-xs text-[#A8A8A8] mb-1">Campeão</div>
+                      {imageErrors.has(jogador.campeaoPrincipal) ? (
+                        <motion.div
+                          className="text-3xl mb-2"
+                          animate={{
+                            y: [0, -5, 0],
+                          }}
+                          transition={{
+                            duration: 2,
+                            repeat: Infinity,
+                            delay: idx * 0.2
+                          }}
+                        >
+                          {jogador.campeaoPrincipal}
+                        </motion.div>
+                      ) : (
+                        < img src={getChampionImageUrl(jogador.campeaoPrincipal)} alt="Icone dos campeões principais"
+                          className='w-13' onError={() => handleImageError(jogador.campeaoPrincipal)} />
+                      )}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Estatísticas */}
+                <div className="grid grid-cols-3 gap-3">
+                  <div className="text-center p-2 bg-[#0B132B] rounded border border-white/5">
+                    <div className="text-lg font-bold text-[#4CAF50]">{jogador.winrate}%</div>
+                    <div className="text-xs text-[#A8A8A8]">Winrate</div>
+                  </div>
+                  <div className="text-center p-2 bg-[#0B132B] rounded border border-white/5">
+                    <div className="text-lg font-bold text-[#00B4D8]">{jogador.kda.toFixed(1)}</div>
+                    <div className="text-xs text-[#A8A8A8]">KDA</div>
+                  </div>
+                  <div className="text-center p-2 bg-[#0B132B] rounded border border-white/5">
+                    <div className="text-lg font-bold text-[#F4A261]">{jogador.partidas}</div>
+                    <div className="text-xs text-[#A8A8A8]">Partidas</div>
                   </div>
                 </div>
               </div>
-
-              {/* Estatísticas */}
-              <div className="grid grid-cols-3 gap-3">
-                <div className="text-center p-2 bg-[#0B132B] rounded border border-white/5">
-                  <div className="text-lg font-bold text-[#4CAF50]">{jogador.winrate}%</div>
-                  <div className="text-xs text-[#A8A8A8]">Winrate</div>
-                </div>
-                <div className="text-center p-2 bg-[#0B132B] rounded border border-white/5">
-                  <div className="text-lg font-bold text-[#00B4D8]">{jogador.kda.toFixed(1)}</div>
-                  <div className="text-xs text-[#A8A8A8]">KDA</div>
-                </div>
-                <div className="text-center p-2 bg-[#0B132B] rounded border border-white/5">
-                  <div className="text-lg font-bold text-[#F4A261]">{jogador.partidas}</div>
-                  <div className="text-xs text-[#A8A8A8]">Partidas</div>
-                </div>
-              </div>
-            </div>
-          </motion.div>
+            </motion.div>
           </ScrollReveal>
         ))}
       </div>
