@@ -1,198 +1,68 @@
-import { motion } from 'framer-motion';
-import { useState, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 import ScrollReveal from '../components/ScrollReveal';
 
-interface Jogador {
-  id: number;
-  nome: string;
-  elo: string;
-  divisao: string;
-  lp: number;
-  winrate: number;
-  partidas: number;
-  kda: number;
-  campeaoPrincipal: string;
-  role: string;
-  roleIcon: string;
-  nivel: number;
-}
+// interface Jogador removed (ranking uses a simpler structure)
 
 const Jogadores = () => {
   const [filtroRole, setFiltroRole] = useState<string>('Todas');
 
-  const [ddragonVersion, setDdragonVersion] = useState<string>('latest');
+  // ddragonVersion removed (não usado aqui)
   // Estado para controlar falhas no carregamento de imagens
-  const [imageErrors, setImageErrors] = useState<Set<string>>(new Set());
+  // const [imageErrors, setImageErrors] = useState<Set<string>>(new Set());
 
-  // Função para buscar a versão mais recente da API
-  useEffect(() => {
-    const fetchVersion = async () => {
-      try {
-        const response = await fetch('https://ddragon.leagueoflegends.com/api/versions.json');
-        const versions = await response.json();
-        if (versions && versions.length > 0) {
-          setDdragonVersion(versions[0]); // Pega a versão mais recente
-        }
-      } catch (error) {
-        console.error('Erro ao buscar versão da API:', error);
-        // Mantém 'latest' como fallback
-      }
-    };
-    fetchVersion();
-  }, []);
+  // (removido) fetching ddragon version - não necessário no ranking
 
   // Função utilitária para construir URL da imagem do campeão
-  const getChampionImageUrl = (championName: string) => {
-    // Remove acentos e espaços, converte para o formato da API
-    const formattedName = championName
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '')
-      .replace(/\s+/g, '');
+  // Função utilitária para construir URL da imagem do campeão removida (não usada)
 
-    return `https://ddragon.leagueoflegends.com/cdn/${ddragonVersion}/img/champion/${formattedName}.png`;
-  };
-
-  // Função para lidar com erro no carregamento da imagem
-  const handleImageError = (championName: string) => {
-    setImageErrors(prev => new Set(prev).add(championName));
-  };
-
-  const jogadores: Jogador[] = [
-    {
-      id: 1,
-      nome: 'ShadowHunter',
-      elo: 'Diamante',
-      divisao: 'II',
-      lp: 1250,
-      winrate: 68,
-      partidas: 145,
-      kda: 4.8,
-      campeaoPrincipal: 'Vayne',
-      role: "ADC",
-      roleIcon: '/IconeADC.webp',
-      nivel: 287
-    },
-    {
-      id: 2,
-      nome: 'FrostMage',
-      elo: 'Platina',
-      divisao: 'I',
-      lp: 980,
-      winrate: 62,
-      partidas: 203,
-      kda: 3.9,
-      campeaoPrincipal: 'Lux',
-      role: 'Mid',
-      nivel: 245,
-      roleIcon: '/IconeMID.png'
-    },
-    {
-      id: 3,
-      nome: 'IronTank',
-      elo: 'Ouro',
-      divisao: 'III',
-      lp: 450,
-      winrate: 55,
-      partidas: 178,
-      kda: 2.8,
-      campeaoPrincipal: 'Malphite',
-      role: 'Top',
-      nivel: 198,
-      roleIcon: '/IconeTop.png'
-    },
-    {
-      id: 4,
-      nome: 'JungleKing',
-      elo: 'Diamante',
-      divisao: 'IV',
-      lp: 1100,
-      winrate: 71,
-      partidas: 167,
-      kda: 5.2,
-      campeaoPrincipal: 'Lee Sin',
-      role: 'Jungle',
-      nivel: 312,
-      roleIcon: '/IconeJungle.png'
-    },
-    {
-      id: 5,
-      nome: 'SupportQueen',
-      elo: 'Platina',
-      divisao: 'II',
-      lp: 720,
-      winrate: 65,
-      partidas: 192,
-      kda: 1.8,
-      campeaoPrincipal: 'Thresh',
-      role: 'Support',
-      nivel: 256,
-      roleIcon: '/IconeSuporte.png'
-    },
-    {
-      id: 6,
-      nome: 'AssassinPro',
-      elo: 'Mestre',
-      divisao: 'I',
-      lp: 1850,
-      winrate: 74,
-      partidas: 234,
-      kda: 6.1,
-      campeaoPrincipal: 'Zed',
-      role: 'Mid',
-      nivel: 389,
-      roleIcon: '/IconeMID.png'
-    },
-    {
-      id: 7,
-      nome: 'ADCGod',
-      elo: 'Diamante',
-      divisao: 'I',
-      lp: 1520,
-      winrate: 69,
-      partidas: 201,
-      kda: 5.5,
-      campeaoPrincipal: 'Jinx',
-      role: 'ADC',
-      nivel: 298,
-      roleIcon: 'IconeADC.webp'
-    },
-    {
-      id: 8,
-      nome: 'TopLaneBeast',
-      elo: 'Platina',
-      divisao: 'III',
-      lp: 680,
-      winrate: 58,
-      partidas: 156,
-      kda: 3.2,
-      campeaoPrincipal: 'Darius',
-      role: 'Top',
-      nivel: 223,
-      roleIcon: 'IconeTop.png'
-    }
+  // Ranking de jogadores (mock com nomes de jogadores profissionais públicos e estatísticas demonstrativas)
+  const ranking = [
+    { rank: 1, nick: 'Faker', name: 'Lee Sang-hyeok', team: 'T1', role: 'Mid', kda: 6.2, winrate: 72, games: 210, country: 'KR' },
+    { rank: 2, nick: 'Caps', name: 'Rasmus Winther', team: 'G2 Esports', role: 'Mid', kda: 5.8, winrate: 69, games: 198, country: 'EU' },
+    { rank: 3, nick: 'Chovy', name: 'Jeong Ji-hoon', team: 'Gen.G', role: 'Mid', kda: 5.6, winrate: 67, games: 185, country: 'KR' },
+    { rank: 4, nick: 'Rekkles', name: 'Carl Martin Erik Larsson', team: 'G2 Esports', role: 'ADC', kda: 5.4, winrate: 66, games: 220, country: 'EU' },
+    { rank: 5, nick: 'Perkz', name: 'Luka Perković', team: 'Cloud9', role: 'ADC', kda: 5.1, winrate: 65, games: 205, country: 'EU' },
+    { rank: 6, nick: 'Teddy', name: 'Park Jin-seong', team: 'T1', role: 'ADC', kda: 4.9, winrate: 64, games: 190, country: 'KR' },
+    { rank: 7, nick: 'Doinb', name: 'Kim Tae-sang', team: 'LNG', role: 'Mid', kda: 4.8, winrate: 63, games: 176, country: 'KR' },
+    { rank: 8, nick: 'Uzi', name: 'Jian Zihao', team: 'Retired', role: 'ADC', kda: 4.7, winrate: 62, games: 300, country: 'CN' },
+    { rank: 9, nick: 'Nuguri', name: 'Jang Ha-gwon', team: 'DWG KIA', role: 'Top', kda: 4.6, winrate: 61, games: 160, country: 'KR' },
+    { rank: 10, nick: 'ShowMaker', name: 'Heo Su', team: 'DWG KIA', role: 'Mid', kda: 4.5, winrate: 60, games: 170, country: 'KR' }
   ];
 
   const roles = ['Todas', 'Top', 'Jungle', 'Mid', 'ADC', 'Support'];
   const jogadoresFiltrados = filtroRole === 'Todas'
-    ? jogadores
-    : jogadores.filter(j => j.role === filtroRole);
+    ? ranking
+    : ranking.filter(j => j.role === filtroRole);
 
-  const getEloColor = (elo: string) => {
-    const cores: Record<string, string> = {
-      'Ferro': '#8B8B8B',
-      'Bronze': '#CD7F32',
-      'Prata': '#C0C0C0',
-      'Ouro': '#FFD700',
-      'Platina': '#00D4FF',
-      'Diamante': '#B9F2FF',
-      'Mestre': '#FF69B4',
-      'Grão-Mestre': '#FF0000',
-      'Desafiante': '#FFD700'
-    };
-    return cores[elo] || '#E0E0E0';
+  // Ordenação e paginação
+  const [sortKey, setSortKey] = useState<'rank' | 'kda' | 'winrate' | 'games'>('rank');
+  const [sortDir, setSortDir] = useState<'asc' | 'desc'>('asc');
+  const [page, setPage] = useState<number>(1);
+  const [pageSize, setPageSize] = useState<number>(5);
+
+  const sorted = useMemo(() => {
+    const arr = [...jogadoresFiltrados];
+    arr.sort((a: any, b: any) => {
+      const aVal = a[sortKey];
+      const bVal = b[sortKey];
+      if (typeof aVal === 'string') {
+        return sortDir === 'asc' ? aVal.localeCompare(bVal) : bVal.localeCompare(aVal);
+      }
+      // number
+      return sortDir === 'asc' ? (aVal - bVal) : (bVal - aVal);
+    });
+    return arr;
+  }, [jogadoresFiltrados, sortKey, sortDir]);
+
+  const totalPages = Math.max(1, Math.ceil(sorted.length / pageSize));
+  if (page > totalPages) setPage(totalPages);
+  const pageItems = sorted.slice((page - 1) * pageSize, page * pageSize);
+
+  // getEloColor removido (não usado no ranking)
+
+  const getInitials = (nick: string) => {
+    return nick.split(' ').map(s => s[0]).slice(0,2).join('').toUpperCase();
   };
-
-
 
   return (
     <main className="flex-1 p-8 bg-[#0B132B] min-h-screen">
@@ -206,7 +76,7 @@ const Jogadores = () => {
         {roles.map((role) => (
           <button
             key={role}
-            onClick={() => setFiltroRole(role)}
+            onClick={() => { setFiltroRole(role); setPage(1); }}
             className={`px-4 py-2 rounded-lg transition-all ${filtroRole === role
               ? 'bg-[#0077B6] text-[#E0E0E0] shadow-lg'
               : 'bg-[#1D2D50] text-[#A8A8A8] hover:bg-[#0077B6]/50 border border-white/5'
@@ -217,95 +87,88 @@ const Jogadores = () => {
         ))}
       </div>
 
-      {/* Grid de Jogadores */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {jogadoresFiltrados.map((jogador, idx) => (
-          <ScrollReveal key={jogador.id} preset="up" delay={idx * 0.1} duration={0.6}>
-            <motion.div
-              whileHover={{ scale: 1.05, y: -5 }}
-              className="bg-[#1D2D50] p-6 rounded-lg border border-white/5 shadow-lg hover:border-[#00B4D8]/50 transition-all relative overflow-hidden group"
-            >
-              {/* Efeito shimmer no hover */}
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                <div className="absolute inset-0 animate-shimmer"></div>
-              </div>
+      {/* Tabela de Ranking de Jogadores */}
+      <div className="bg-[#1D2D50] rounded-lg p-4 border border-white/5 shadow-lg">
+        <ScrollReveal preset="up" delay={0.05} duration={0.6}>
+          <div className="overflow-x-auto">
+            <table className="min-w-full table-auto">
+              <thead>
+                <tr className="text-left text-sm text-[#A8A8A8] border-b border-white/10">
+                  <th className="py-3 px-4 w-12 cursor-pointer" onClick={() => { if (sortKey === 'rank') setSortDir(sortDir === 'asc' ? 'desc' : 'asc'); else { setSortKey('rank'); setSortDir('asc'); } }}>
+                    # {sortKey === 'rank' ? (sortDir === 'asc' ? '▲' : '▼') : ''}
+                  </th>
+                  <th className="py-3 px-4">Jogador</th>
+                  <th className="py-3 px-4">Time</th>
+                  <th className="py-3 px-4">Role</th>
+                  <th className="py-3 px-4 cursor-pointer" onClick={() => { if (sortKey === 'kda') setSortDir(sortDir === 'asc' ? 'desc' : 'asc'); else { setSortKey('kda'); setSortDir('desc'); } }}>
+                    KDA {sortKey === 'kda' ? (sortDir === 'asc' ? '▲' : '▼') : ''}
+                  </th>
+                  <th className="py-3 px-4 cursor-pointer" onClick={() => { if (sortKey === 'winrate') setSortDir(sortDir === 'asc' ? 'desc' : 'asc'); else { setSortKey('winrate'); setSortDir('desc'); } }}>
+                    Winrate {sortKey === 'winrate' ? (sortDir === 'asc' ? '▲' : '▼') : ''}
+                  </th>
+                  <th className="py-3 px-4 cursor-pointer" onClick={() => { if (sortKey === 'games') setSortDir(sortDir === 'asc' ? 'desc' : 'asc'); else { setSortKey('games'); setSortDir('desc'); } }}>
+                    Partidas {sortKey === 'games' ? (sortDir === 'asc' ? '▲' : '▼') : ''}
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {pageItems.map((p, idx) => (
+                  <tr key={p.rank} className={`border-b border-white/5 ${idx % 2 === 0 ? 'bg-[#14223A]/20' : ''}`}>
+                    <td className="py-3 px-4 font-semibold text-[#E0E0E0]">{p.rank}</td>
+                    <td className="py-3 px-4">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-full flex items-center justify-center bg-linear-to-br from-[#0077B6] to-[#00B4D8] text-white font-bold">
+                          {getInitials(p.nick)}
+                        </div>
+                        <div>
+                          <div className="text-sm font-semibold text-[#E0E0E0]">{p.nick}</div>
+                          <div className="text-xs text-[#A8A8A8]">{p.name} • {p.country}</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="py-3 px-4 text-sm text-[#A8A8A8]">{p.team}</td>
+                    <td className="py-3 px-4 text-sm text-[#A8A8A8]">{p.role}</td>
+                    <td className="py-3 px-4 text-sm text-[#00B4D8] font-semibold">{p.kda.toFixed(1)}</td>
+                    <td className="py-3 px-4 text-sm text-[#4CAF50] font-semibold">{p.winrate}%</td>
+                    <td className="py-3 px-4 text-sm text-[#F4A261]">{p.games}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </ScrollReveal>
 
-              <div className="relative z-10">
-                {/* Header do Card */}
-                <div className="flex items-start justify-between mb-4">
-                  <div>
-                    <h3 className="space-grotesk-title text-xl font-bold text-[#E0E0E0] mb-1">
-                      {jogador.nome}
-                    </h3>
-                    <div className="flex items-center gap-2">
-                      <span
-                        className="text-sm font-semibold px-2 py-1 rounded"
-                        style={{
-                          backgroundColor: `${getEloColor(jogador.elo)}20`,
-                          color: getEloColor(jogador.elo)
-                        }}
-                      >
-                        {jogador.elo} {jogador.divisao}
-                      </span>
-                      <span className="text-xs text-[#A8A8A8]">• {jogador.lp} LP</span>
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <div className="text-2xl mb-1">🎮</div>
-                    <div className="text-xs text-[#A8A8A8]">Nv. {jogador.nivel}</div>
-                  </div>
-                </div>
+        {/* Controles de paginação */}
+        <div className="mt-4 flex items-center justify-between">
+          <div className="text-sm text-[#A8A8A8]">
+            Mostrando <span className="text-[#E0E0E0]">{(page - 1) * pageSize + 1}</span>–<span className="text-[#E0E0E0]">{Math.min(page * pageSize, sorted.length)}</span> de <span className="text-[#E0E0E0]">{sorted.length}</span>
+          </div>
 
-                {/* Role e Campeão Principal */}
-                <div className="mb-4 p-3 bg-[#0B132B] rounded-lg border border-white/5">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <div className="text-xs text-[#A8A8A8] mb-1">Role Principal</div>
-                      <img src={jogador.roleIcon} alt="" className='w-8' />
-                    </div>
-                    <div className="text-right">
-                      <div className="text-xs text-[#A8A8A8] mb-1">Campeão</div>
-                      {imageErrors.has(jogador.campeaoPrincipal) ? (
-                        <motion.div
-                          className="text-3xl mb-2"
-                          animate={{
-                            y: [0, -5, 0],
-                          }}
-                          transition={{
-                            duration: 2,
-                            repeat: Infinity,
-                            delay: idx * 0.2
-                          }}
-                        >
-                          {jogador.campeaoPrincipal}
-                        </motion.div>
-                      ) : (
-                        < img src={getChampionImageUrl(jogador.campeaoPrincipal)} alt="Icone dos campeões principais"
-                          className='w-13' onError={() => handleImageError(jogador.campeaoPrincipal)} />
-                      )}
-                    </div>
-                  </div>
-                </div>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setPage(p => Math.max(1, p - 1))}
+              disabled={page === 1}
+              className="px-3 py-1 rounded bg-[#0B132B] text-[#A8A8A8] disabled:opacity-50"
+            >Prev</button>
+            <div className="text-sm text-[#A8A8A8]">Página</div>
+            <input type="number" value={page} min={1} max={totalPages} onChange={(e) => setPage(Math.min(Math.max(1, Number(e.target.value || 1)), totalPages))} className="w-12 text-center bg-[#0B132B] text-[#E0E0E0] rounded" />
+            <div className="text-sm text-[#A8A8A8]">de {totalPages}</div>
+            <button
+              onClick={() => setPage(p => Math.min(totalPages, p + 1))}
+              disabled={page === totalPages}
+              className="px-3 py-1 rounded bg-[#0B132B] text-[#A8A8A8] disabled:opacity-50"
+            >Next</button>
+          </div>
 
-                {/* Estatísticas */}
-                <div className="grid grid-cols-3 gap-3">
-                  <div className="text-center p-2 bg-[#0B132B] rounded border border-white/5">
-                    <div className="text-lg font-bold text-[#4CAF50]">{jogador.winrate}%</div>
-                    <div className="text-xs text-[#A8A8A8]">Winrate</div>
-                  </div>
-                  <div className="text-center p-2 bg-[#0B132B] rounded border border-white/5">
-                    <div className="text-lg font-bold text-[#00B4D8]">{jogador.kda.toFixed(1)}</div>
-                    <div className="text-xs text-[#A8A8A8]">KDA</div>
-                  </div>
-                  <div className="text-center p-2 bg-[#0B132B] rounded border border-white/5">
-                    <div className="text-lg font-bold text-[#F4A261]">{jogador.partidas}</div>
-                    <div className="text-xs text-[#A8A8A8]">Partidas</div>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </ScrollReveal>
-        ))}
+          <div className="flex items-center gap-2">
+            <div className="text-sm text-[#A8A8A8]">Linhas</div>
+            <select value={pageSize} onChange={(e) => { setPageSize(Number(e.target.value)); setPage(1); }} className="bg-[#0B132B] text-[#E0E0E0] rounded px-2 py-1">
+              <option value={5}>5</option>
+              <option value={10}>10</option>
+              <option value={20}>20</option>
+            </select>
+          </div>
+        </div>
       </div>
     </main>
   );
