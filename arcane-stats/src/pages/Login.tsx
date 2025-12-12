@@ -18,7 +18,7 @@ export default function Login() {
   };
 
   return (
-    <div className="p-6 max-w-md mx-auto mt-12 bg-[#0B132B] rounded-lg shadow-lg">
+    <div className="p-6 max-w-md mx-auto mt-20 bg-[#0B132B] rounded-lg shadow-lg">
       <h2 className="text-2xl font-semibold mb-4 text-white">Entrar</h2>
       <form onSubmit={handle} className="flex flex-col gap-3">
         <input value={email} onChange={e => setEmail(e.target.value)} placeholder="E-mail" className="p-2 rounded bg-[#1D2D50] text-white" />
