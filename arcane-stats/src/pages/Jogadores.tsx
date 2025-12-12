@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect, useRef } from 'react';
 import ScrollReveal from '../components/ScrollReveal';
 
 // interface Jogador removed (ranking uses a simpler structure)
@@ -74,6 +74,20 @@ const Jogadores = () => {
     { id: 3, result: 'Derrota', kda: '3/5/7', champion: 'Fake Champion', date: '2h atrás' },
   ];
 
+  // Modal ref para focus management
+  const modalRef = useRef<HTMLDivElement>(null);
+
+  // Fechar modal com ESC
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && selectedPlayer) {
+        setSelectedPlayer(null);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [selectedPlayer]);
+
   return (
     <main className="flex-1 p-8 bg-[#0B132B] min-h-screen">
       <div className="mb-6">
@@ -82,20 +96,25 @@ const Jogadores = () => {
       </div>
 
       {/* Filtros por Role */}
-      <div className="flex flex-wrap gap-2 mb-6">
-        {roles.map((role) => (
-          <button
-            key={role}
-            onClick={() => { setFiltroRole(role); setPage(1); }}
-            className={`px-4 py-2 rounded-lg transition-all ${filtroRole === role
-              ? 'bg-[#0077B6] text-[#E0E0E0] shadow-lg'
-              : 'bg-[#1D2D50] text-[#A8A8A8] hover:bg-[#0077B6]/50 border border-white/5'
-              }`}
-          >
-            {role}
-          </button>
-        ))}
-      </div>
+      <fieldset className="mb-6">
+        <legend className="sr-only">Filtrar por role</legend>
+        <div className="flex flex-wrap gap-2">
+          {roles.map((role) => (
+            <button
+              key={role}
+              onClick={() => { setFiltroRole(role); setPage(1); }}
+              aria-pressed={filtroRole === role}
+              aria-label={`Filtrar por role ${role}`}
+              className={`px-4 py-2 rounded-lg transition-all focus:outline-none focus:ring-2 focus:ring-[#00B4D8] ${filtroRole === role
+                ? 'bg-[#0077B6] text-[#E0E0E0] shadow-lg'
+                : 'bg-[#1D2D50] text-[#A8A8A8] hover:bg-[#0077B6]/50 border border-white/5'
+                }`}
+            >
+              {role}
+            </button>
+          ))}
+        </div>
+      </fieldset>
 
       {/* Tabela de Ranking de Jogadores */}
       <div className="bg-[#1D2D50] rounded-lg p-4 border border-white/5 shadow-lg">
@@ -104,26 +123,18 @@ const Jogadores = () => {
             <table className="min-w-full table-auto">
               <thead>
                 <tr className="text-left text-sm text-[#A8A8A8] border-b border-white/10">
-                  <th className="py-3 px-4 w-12 cursor-pointer" onClick={() => { if (sortKey === 'rank') setSortDir(sortDir === 'asc' ? 'desc' : 'asc'); else { setSortKey('rank'); setSortDir('asc'); } }}>
-                    # {sortKey === 'rank' ? (sortDir === 'asc' ? '▲' : '▼') : ''}
-                  </th>
-                  <th className="py-3 px-4">Jogador</th>
-                  <th className="py-3 px-4">Time</th>
-                  <th className="py-3 px-4">Role</th>
-                  <th className="py-3 px-4 cursor-pointer" onClick={() => { if (sortKey === 'kda') setSortDir(sortDir === 'asc' ? 'desc' : 'asc'); else { setSortKey('kda'); setSortDir('desc'); } }}>
-                    KDA {sortKey === 'kda' ? (sortDir === 'asc' ? '▲' : '▼') : ''}
-                  </th>
-                  <th className="py-3 px-4 cursor-pointer" onClick={() => { if (sortKey === 'winrate') setSortDir(sortDir === 'asc' ? 'desc' : 'asc'); else { setSortKey('winrate'); setSortDir('desc'); } }}>
-                    Winrate {sortKey === 'winrate' ? (sortDir === 'asc' ? '▲' : '▼') : ''}
-                  </th>
-                  <th className="py-3 px-4 cursor-pointer" onClick={() => { if (sortKey === 'games') setSortDir(sortDir === 'asc' ? 'desc' : 'asc'); else { setSortKey('games'); setSortDir('desc'); } }}>
-                    Partidas {sortKey === 'games' ? (sortDir === 'asc' ? '▲' : '▼') : ''}
-                  </th>
+                  <th className="py-3 px-4 w-12" role="columnheader"><button className="cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#00B4D8] p-1 rounded" onClick={() => { if (sortKey === 'rank') setSortDir(sortDir === 'asc' ? 'desc' : 'asc'); else { setSortKey('rank'); setSortDir('asc'); } }} aria-label={`Ordenar por ranking ${sortKey === 'rank' ? `(${sortDir})` : ''}`}># {sortKey === 'rank' ? (sortDir === 'asc' ? '▲' : '▼') : ''}</button></th>
+                  <th className="py-3 px-4" role="columnheader">Jogador</th>
+                  <th className="py-3 px-4" role="columnheader">Time</th>
+                  <th className="py-3 px-4" role="columnheader">Role</th>
+                  <th className="py-3 px-4" role="columnheader"><button className="cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#00B4D8] p-1 rounded" onClick={() => { if (sortKey === 'kda') setSortDir(sortDir === 'asc' ? 'desc' : 'asc'); else { setSortKey('kda'); setSortDir('desc'); } }} aria-label={`Ordenar por KDA ${sortKey === 'kda' ? `(${sortDir})` : ''}`}>KDA {sortKey === 'kda' ? (sortDir === 'asc' ? '▲' : '▼') : ''}</button></th>
+                  <th className="py-3 px-4" role="columnheader"><button className="cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#00B4D8] p-1 rounded" onClick={() => { if (sortKey === 'winrate') setSortDir(sortDir === 'asc' ? 'desc' : 'asc'); else { setSortKey('winrate'); setSortDir('desc'); } }} aria-label={`Ordenar por Winrate ${sortKey === 'winrate' ? `(${sortDir})` : ''}`}>Winrate {sortKey === 'winrate' ? (sortDir === 'asc' ? '▲' : '▼') : ''}</button></th>
+                  <th className="py-3 px-4" role="columnheader"><button className="cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#00B4D8] p-1 rounded" onClick={() => { if (sortKey === 'games') setSortDir(sortDir === 'asc' ? 'desc' : 'asc'); else { setSortKey('games'); setSortDir('desc'); } }} aria-label={`Ordenar por Partidas ${sortKey === 'games' ? `(${sortDir})` : ''}`}>Partidas {sortKey === 'games' ? (sortDir === 'asc' ? '▲' : '▼') : ''}</button></th>
                 </tr>
               </thead>
               <tbody>
                 {pageItems.map((p, idx) => (
-                  <tr key={p.rank} className={`border-b border-white/5 ${idx % 2 === 0 ? 'bg-[#14223A]/20' : ''} cursor-pointer hover:bg-[#0077B6]/20`} onClick={() => setSelectedPlayer(p)}>
+                  <tr key={p.rank} className={`border-b border-white/5 ${idx % 2 === 0 ? 'bg-[#14223A]/20' : ''} cursor-pointer hover:bg-[#0077B6]/20`} onClick={() => setSelectedPlayer(p)} role="button" tabIndex={0} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setSelectedPlayer(p); } }} aria-label={`Ver detalhes de ${p.nick}`}>
                     <td className="py-3 px-4 font-semibold text-[#E0E0E0]">{p.rank}</td>
                     <td className="py-3 px-4">
                       <div className="flex items-center gap-3">
@@ -154,25 +165,27 @@ const Jogadores = () => {
             Mostrando <span className="text-[#E0E0E0]">{(page - 1) * pageSize + 1}</span>–<span className="text-[#E0E0E0]">{Math.min(page * pageSize, sorted.length)}</span> de <span className="text-[#E0E0E0]">{sorted.length}</span>
           </div>
 
-          <div className="flex items-center gap-2">
+          <nav className="flex items-center gap-2" aria-label="Controles de paginação">
             <button
               onClick={() => setPage(p => Math.max(1, p - 1))}
               disabled={page === 1}
-              className="px-3 py-1 rounded bg-[#0B132B] text-[#A8A8A8] disabled:opacity-50"
+              aria-label="Página anterior"
+              className="px-3 py-1 rounded bg-[#0B132B] text-[#A8A8A8] disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-[#00B4D8]"
             >Prev</button>
-            <div className="text-sm text-[#A8A8A8]">Página</div>
-            <input type="number" value={page} min={1} max={totalPages} onChange={(e) => setPage(Math.min(Math.max(1, Number(e.target.value || 1)), totalPages))} className="w-12 text-center bg-[#0B132B] text-[#E0E0E0] rounded" />
+            <label htmlFor="page-input" className="text-sm text-[#A8A8A8]">Página</label>
+            <input id="page-input" type="number" value={page} min={1} max={totalPages} onChange={(e) => setPage(Math.min(Math.max(1, Number(e.target.value || 1)), totalPages))} aria-label="Número da página" className="w-12 text-center bg-[#0B132B] text-[#E0E0E0] rounded focus:outline-none focus:ring-2 focus:ring-[#00B4D8]" />
             <div className="text-sm text-[#A8A8A8]">de {totalPages}</div>
             <button
               onClick={() => setPage(p => Math.min(totalPages, p + 1))}
               disabled={page === totalPages}
-              className="px-3 py-1 rounded bg-[#0B132B] text-[#A8A8A8] disabled:opacity-50"
+              aria-label="Próxima página"
+              className="px-3 py-1 rounded bg-[#0B132B] text-[#A8A8A8] disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-[#00B4D8]"
             >Next</button>
-          </div>
+          </nav>
 
           <div className="flex items-center gap-2">
-            <div className="text-sm text-[#A8A8A8]">Linhas</div>
-            <select value={pageSize} onChange={(e) => { setPageSize(Number(e.target.value)); setPage(1); }} className="bg-[#0B132B] text-[#E0E0E0] rounded px-2 py-1">
+            <label htmlFor="page-size-select" className="text-sm text-[#A8A8A8]">Linhas</label>
+            <select id="page-size-select" value={pageSize} onChange={(e) => { setPageSize(Number(e.target.value)); setPage(1); }} aria-label="Quantidade de linhas por página" className="bg-[#0B132B] text-[#E0E0E0] rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-[#00B4D8]">
               <option value={5}>5</option>
               <option value={10}>10</option>
               <option value={20}>20</option>
@@ -183,20 +196,20 @@ const Jogadores = () => {
 
       {/* Modal de Perfil */}
       {selectedPlayer && (
-        <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4" onClick={() => setSelectedPlayer(null)}>
-          <div className="bg-[#1D2D50] rounded-lg w-full max-w-2xl max-h-[90vh] overflow-y-auto border border-white/10 shadow-2xl" onClick={(e) => e.stopPropagation()}>
+        <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4" onClick={() => setSelectedPlayer(null)} role="presentation">
+          <div ref={modalRef} className="bg-[#1D2D50] rounded-lg w-full max-w-2xl max-h-[90vh] overflow-y-auto border border-white/10 shadow-2xl focus:outline-none" onClick={(e) => e.stopPropagation()} role="dialog" aria-modal="true" aria-labelledby="modal-title" tabIndex={-1}>
             {/* Cabeçalho do Modal */}
             <div className="sticky top-0 bg-[#0B132B] p-6 border-b border-white/10 flex justify-between items-center">
               <div className="flex items-center gap-4">
-                <div className="w-16 h-16 rounded-full flex items-center justify-center bg-linear-to-br from-[#0077B6] to-[#00B4D8] text-white font-bold text-2xl">
+                <div className="w-16 h-16 rounded-full flex items-center justify-center bg-linear-to-br from-[#0077B6] to-[#00B4D8] text-white font-bold text-2xl" aria-hidden="true">
                   {getInitials(selectedPlayer.nick)}
                 </div>
                 <div>
-                  <h2 className="text-2xl font-bold text-[#E0E0E0]">{selectedPlayer.nick}</h2>
+                  <h2 id="modal-title" className="text-2xl font-bold text-[#E0E0E0]">{selectedPlayer.nick}</h2>
                   <p className="text-sm text-[#A8A8A8]">{selectedPlayer.name} • {selectedPlayer.country}</p>
                 </div>
               </div>
-              <button onClick={() => setSelectedPlayer(null)} className="text-[#A8A8A8] hover:text-[#E0E0E0] text-2xl">✕</button>
+              <button onClick={() => setSelectedPlayer(null)} aria-label="Fechar perfil do jogador" className="text-[#A8A8A8] hover:text-[#E0E0E0] text-2xl focus:outline-none focus:ring-2 focus:ring-[#00B4D8] rounded px-2" title="Fechar (ESC)">✕</button>
             </div>
 
             <div className="p-6 space-y-6">
@@ -256,8 +269,8 @@ const Jogadores = () => {
 
               {/* Botões de ação */}
               <div className="grid grid-cols-2 gap-3">
-                <button className="bg-[#0077B6] hover:bg-[#00B4D8] text-[#E0E0E0] font-semibold py-2 rounded-lg transition">Seguir</button>
-                <button className="bg-[#1D2D50] hover:bg-[#0077B6]/50 text-[#E0E0E0] font-semibold py-2 rounded-lg border border-white/10 transition">Comparar</button>
+                <button aria-label={`Seguir ${selectedPlayer.nick}`} className="bg-[#0077B6] hover:bg-[#00B4D8] text-[#E0E0E0] font-semibold py-2 rounded-lg transition focus:outline-none focus:ring-2 focus:ring-[#00B4D8] focus:ring-offset-2 focus:ring-offset-[#1D2D50]">Seguir</button>
+                <button aria-label={`Comparar com ${selectedPlayer.nick}`} className="bg-[#1D2D50] hover:bg-[#0077B6]/50 text-[#E0E0E0] font-semibold py-2 rounded-lg border border-white/10 transition focus:outline-none focus:ring-2 focus:ring-[#00B4D8] focus:ring-offset-2 focus:ring-offset-[#1D2D50]">Comparar</button>
               </div>
             </div>
           </div>
