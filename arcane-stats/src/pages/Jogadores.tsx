@@ -64,6 +64,16 @@ const Jogadores = () => {
     return nick.split(' ').map(s => s[0]).slice(0,2).join('').toUpperCase();
   };
 
+  // Estado do modal
+  const [selectedPlayer, setSelectedPlayer] = useState<any | null>(null);
+
+  // Mock match history por jogador
+  const getMatchHistory = () => [
+    { id: 1, result: 'Vitória', kda: '6/2/8', champion: 'Fake Champion', date: '5 min atrás' },
+    { id: 2, result: 'Vitória', kda: '4/3/12', champion: 'Fake Champion', date: '1h atrás' },
+    { id: 3, result: 'Derrota', kda: '3/5/7', champion: 'Fake Champion', date: '2h atrás' },
+  ];
+
   return (
     <main className="flex-1 p-8 bg-[#0B132B] min-h-screen">
       <div className="mb-6">
@@ -113,7 +123,7 @@ const Jogadores = () => {
               </thead>
               <tbody>
                 {pageItems.map((p, idx) => (
-                  <tr key={p.rank} className={`border-b border-white/5 ${idx % 2 === 0 ? 'bg-[#14223A]/20' : ''}`}>
+                  <tr key={p.rank} className={`border-b border-white/5 ${idx % 2 === 0 ? 'bg-[#14223A]/20' : ''} cursor-pointer hover:bg-[#0077B6]/20`} onClick={() => setSelectedPlayer(p)}>
                     <td className="py-3 px-4 font-semibold text-[#E0E0E0]">{p.rank}</td>
                     <td className="py-3 px-4">
                       <div className="flex items-center gap-3">
@@ -170,6 +180,89 @@ const Jogadores = () => {
           </div>
         </div>
       </div>
+
+      {/* Modal de Perfil */}
+      {selectedPlayer && (
+        <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4" onClick={() => setSelectedPlayer(null)}>
+          <div className="bg-[#1D2D50] rounded-lg w-full max-w-2xl max-h-[90vh] overflow-y-auto border border-white/10 shadow-2xl" onClick={(e) => e.stopPropagation()}>
+            {/* Cabeçalho do Modal */}
+            <div className="sticky top-0 bg-[#0B132B] p-6 border-b border-white/10 flex justify-between items-center">
+              <div className="flex items-center gap-4">
+                <div className="w-16 h-16 rounded-full flex items-center justify-center bg-linear-to-br from-[#0077B6] to-[#00B4D8] text-white font-bold text-2xl">
+                  {getInitials(selectedPlayer.nick)}
+                </div>
+                <div>
+                  <h2 className="text-2xl font-bold text-[#E0E0E0]">{selectedPlayer.nick}</h2>
+                  <p className="text-sm text-[#A8A8A8]">{selectedPlayer.name} • {selectedPlayer.country}</p>
+                </div>
+              </div>
+              <button onClick={() => setSelectedPlayer(null)} className="text-[#A8A8A8] hover:text-[#E0E0E0] text-2xl">✕</button>
+            </div>
+
+            <div className="p-6 space-y-6">
+              {/* Informações básicas */}
+              <div className="grid grid-cols-2 gap-4">
+                <div className="bg-[#0B132B] p-4 rounded-lg border border-white/5">
+                  <div className="text-xs text-[#A8A8A8] mb-1">Time</div>
+                  <div className="text-lg font-semibold text-[#E0E0E0]">{selectedPlayer.team}</div>
+                </div>
+                <div className="bg-[#0B132B] p-4 rounded-lg border border-white/5">
+                  <div className="text-xs text-[#A8A8A8] mb-1">Role</div>
+                  <div className="text-lg font-semibold text-[#E0E0E0]">{selectedPlayer.role}</div>
+                </div>
+              </div>
+
+              {/* Estatísticas em detalhe */}
+              <div>
+                <h3 className="text-lg font-bold text-[#E0E0E0] mb-3">Estatísticas</h3>
+                <div className="grid grid-cols-4 gap-3">
+                  <div className="bg-[#0B132B] p-3 rounded-lg border border-white/5 text-center">
+                    <div className="text-2xl font-bold text-[#00B4D8]">{selectedPlayer.kda.toFixed(1)}</div>
+                    <div className="text-xs text-[#A8A8A8]">KDA</div>
+                  </div>
+                  <div className="bg-[#0B132B] p-3 rounded-lg border border-white/5 text-center">
+                    <div className="text-2xl font-bold text-[#4CAF50]">{selectedPlayer.winrate}%</div>
+                    <div className="text-xs text-[#A8A8A8]">Winrate</div>
+                  </div>
+                  <div className="bg-[#0B132B] p-3 rounded-lg border border-white/5 text-center">
+                    <div className="text-2xl font-bold text-[#F4A261]">{selectedPlayer.games}</div>
+                    <div className="text-xs text-[#A8A8A8]">Partidas</div>
+                  </div>
+                  <div className="bg-[#0B132B] p-3 rounded-lg border border-white/5 text-center">
+                    <div className="text-2xl font-bold text-[#FFD700]">#1</div>
+                    <div className="text-xs text-[#A8A8A8]">Posição</div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Histórico de partidas */}
+              <div>
+                <h3 className="text-lg font-bold text-[#E0E0E0] mb-3">Histórico Recente</h3>
+                <div className="space-y-2">
+                  {getMatchHistory().map((match) => (
+                    <div key={match.id} className="flex items-center justify-between bg-[#0B132B] p-3 rounded-lg border border-white/5">
+                      <div>
+                        <div className="text-sm font-semibold text-[#E0E0E0]">{match.champion}</div>
+                        <div className="text-xs text-[#A8A8A8]">{match.date}</div>
+                      </div>
+                      <div className="text-right">
+                        <div className={`text-sm font-bold ${match.result === 'Vitória' ? 'text-[#4CAF50]' : 'text-[#FF6B6B]'}`}>{match.result}</div>
+                        <div className="text-xs text-[#A8A8A8]">{match.kda}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Botões de ação */}
+              <div className="grid grid-cols-2 gap-3">
+                <button className="bg-[#0077B6] hover:bg-[#00B4D8] text-[#E0E0E0] font-semibold py-2 rounded-lg transition">Seguir</button>
+                <button className="bg-[#1D2D50] hover:bg-[#0077B6]/50 text-[#E0E0E0] font-semibold py-2 rounded-lg border border-white/10 transition">Comparar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   );
 };
