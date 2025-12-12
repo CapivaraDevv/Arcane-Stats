@@ -71,8 +71,8 @@ export default function Dashboard() {
     { partida: 'P7', kda: 5.5, winrate: 75 },
   ];
 
-  // Paleta Arcane Tech Style
-  const cores = ['#0077B6', '#00B4D8', '#E0E0E0', '#F4A261', '#0B132B'];
+  // Paleta Arcane Tech Style (ajustada para melhor contraste no gráfico de pizza)
+  const cores = ['#00B4D8', '#0077B6', '#F4A261', '#FF6B6B', '#A8DADC'];
 
   // Dados detalhados por rota
   const laneAnalysis = [
@@ -210,8 +210,16 @@ export default function Dashboard() {
             <h2 className="space-grotesk-title text-lg font-semibold mb-4 text-[#E0E0E0]">Quantidade de partidas por rota</h2>
             <ResponsiveContainer width="100%" height={240}>
               <PieChart>
-                <Pie dataKey="value" data={dadosRoles} cx="50%" cy="50%" outerRadius={75}
-                  label={({ name }) => name}>
+                <Pie
+                  dataKey="value"
+                  data={dadosRoles}
+                  cx="50%"
+                  cy="50%"
+                  outerRadius={75}
+                  // render labels in light color to avoid default black SVG text on hover
+                  label={{ fill: '#E0E0E0', fontSize: 12 }}
+                  labelLine={false}
+                >
                   {dadosRoles.map((_, idx) => (
                     <Cell key={`cell-${idx}`} fill={cores[idx % cores.length]} />
                   ))}
@@ -223,12 +231,14 @@ export default function Dashboard() {
                     borderRadius: '8px',
                     color: '#E0E0E0'
                   }}
+                  // ensure tooltip text is light as well
+                  itemStyle={{ color: '#E0E0E0' } as any}
                 />
                 <Legend
                   wrapperStyle={{ color: '#E0E0E0' }}
                 />
-            </PieChart>
-          </ResponsiveContainer>
+              </PieChart>
+            </ResponsiveContainer>
         </div>
       </motion.div>
         </ScrollReveal>
@@ -349,7 +359,7 @@ export default function Dashboard() {
                       <div className="text-xl font-bold text-[#4CAF50]">{lane.winrate}%</div>
                       <div className="flex-1 h-2 bg-[#0B132B] rounded-full overflow-hidden">
                         <div
-                          className="h-full bg-gradient-to-r from-[#4CAF50] to-[#00B4D8]"
+                          className="h-full bg-linear-to-r from-[#4CAF50] to-[#00B4D8]"
                           style={{ width: `${lane.winrate}%` }}
                         />
                       </div>
@@ -363,7 +373,7 @@ export default function Dashboard() {
                       <div className="text-sm font-bold text-[#F4A261]">{lane.firstBloodInvolvement}%</div>
                       <div className="flex-1 h-2 bg-[#0B132B] rounded-full overflow-hidden">
                         <div
-                          className="h-full bg-gradient-to-r from-[#F4A261] to-[#FF6B6B]"
+                          className="h-full bg-linear-to-r from-[#F4A261] to-[#FF6B6B]"
                           style={{ width: `${lane.firstBloodInvolvement}%` }}
                         />
                       </div>
