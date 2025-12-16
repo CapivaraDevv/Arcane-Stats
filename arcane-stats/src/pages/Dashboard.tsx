@@ -1,4 +1,4 @@
-import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid } from 'recharts';
+import { Tooltip, Legend, ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid, BarChart, Bar } from 'recharts';
 import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import ScrollReveal from '../components/ScrollReveal';
@@ -55,15 +55,6 @@ export default function Dashboard() {
     { title: 'Melhor Campeão', value: 'Vayne', feedback: "65% de Winrate" },
   ];
 
-  // Agora o campo é 'name', não mais 'role'
-  const dadosRoles = [
-    { name: 'Top', value: 25 },
-    { name: 'Jungle', value: 21 },
-    { name: 'Mid', value: 30 },
-    { name: 'ADC', value: 22 },
-    { name: 'Support', value: 26 },
-  ];
-
   // Dados para tendência de performance (últimas 7 partidas)
   const tendenciaPerformance = [
     { partida: 'P1', kda: 3.2, winrate: 45 },
@@ -75,8 +66,6 @@ export default function Dashboard() {
     { partida: 'P7', kda: 5.5, winrate: 75 },
   ];
 
-  // Paleta Arcane Tech Style (ajustada para melhor contraste no gráfico de pizza)
-  const cores = ['#00B4D8', '#0077B6', '#F4A261', '#FF6B6B', '#A8DADC'];
 
   // Dados detalhados por rota
   const laneAnalysis = [
@@ -84,6 +73,7 @@ export default function Dashboard() {
       lane: 'Top',
       champions: ['Jax', 'Darius', 'Riven'],
       winrate: 6,
+      kdaAvg: 3.8,
       firstBloodInvolvement: 34,
       bestBuild: ['Força Tríade', 'Cutelo', 'Escudo de Sterak'],
       avgCS: 286,
@@ -93,6 +83,7 @@ export default function Dashboard() {
       lane: 'Jungle',
       champions: ['Lee Sin', 'Elise', 'Graves'],
       winrate: 12,
+      kdaAvg: 4.0,
       firstBloodInvolvement: 62,
       bestBuild: ['Sinal de sterak', 'Cutelo', 'Hidra Raivosa'],
       avgCS: 165,
@@ -102,6 +93,7 @@ export default function Dashboard() {
       lane: 'Mid',
       champions: ['Zed', 'Talon', 'Lux'],
       winrate: 31,
+      kdaAvg: 4.5,
       firstBloodInvolvement: 48,
       bestBuild: ['Eclipse', 'Presa de Serpente', 'Cajado do Vazio'],
       avgCS: 312,
@@ -111,6 +103,7 @@ export default function Dashboard() {
       lane: 'ADC',
       champions: ['Jinx', 'Caitlyn', 'Vayne'],
       winrate: 55,
+      kdaAvg: 5.0,
       firstBloodInvolvement: 18,
       bestBuild: ['Mata-Cráquens', 'Gume do infinito', 'Lembrança do lorde dominik'],
       avgCS: 336,
@@ -120,6 +113,7 @@ export default function Dashboard() {
       lane: 'Support',
       champions: ['Thresh', 'Braum', 'Leona'],
       winrate: 3,
+      kdaAvg: 3.2,
       firstBloodInvolvement: 41,
       bestBuild: ['Tanque Turbo Químico', 'Escudo de Kaenic', 'Armadura de Espinhos'],
       avgCS: 18,
@@ -184,7 +178,7 @@ export default function Dashboard() {
       {/* GRÁFICO DE DISTRIBUIÇÃO DE ROLES */}
       {configs.mostrarGraficos && (
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mt-8 relative z-10">
-          <div className="md:col-span-1">
+          <div className="md:col-span-2">
             <ScrollReveal preset="left" delay={0.2} duration={0.7}>
               <motion.div
                 whileHover={{ scale: 1.02 }}
@@ -195,23 +189,12 @@ export default function Dashboard() {
               </div>
 
               <div className="relative z-10 w-full">
-                <h2 className="space-grotesk-title text-lg font-semibold mb-4 text-[#E0E0E0]">Quantidade de partidas por rota</h2>
+                <h2 className="space-grotesk-title text-lg font-semibold mb-4 text-[#E0E0E0]">Eficiência por rota</h2>
                 <ResponsiveContainer width="100%" height={240}>
-                  <PieChart>
-                    <Pie
-                      dataKey="value"
-                      data={dadosRoles}
-                      cx="50%"
-                      cy="50%"
-                      outerRadius={75}
-                      // render labels in light color to avoid default black SVG text on hover
-                      label={{ fill: '#E0E0E0', fontSize: 12 }}
-                      labelLine={false}
-                    >
-                      {dadosRoles.map((_, idx) => (
-                        <Cell key={`cell-${idx}`} fill={cores[idx % cores.length]} />
-                      ))}
-                    </Pie>
+                  <BarChart data={laneAnalysis} layout="vertical" margin={{ top: 10, right: 20, left: 20, bottom: 10 }}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#0077B6" opacity={0.08} />
+                    <XAxis type="number" domain={[0, 'dataMax']} stroke="#A8A8A8" />
+                    <YAxis dataKey="lane" type="category" width={90} stroke="#A8A8A8" />
                     <Tooltip
                       contentStyle={{
                         backgroundColor: '#0B132B',
@@ -219,20 +202,19 @@ export default function Dashboard() {
                         borderRadius: '8px',
                         color: '#E0E0E0'
                       }}
-                      // ensure tooltip text is light as well
-                      itemStyle={{ color: '#E0E0E0' } as any}
+                      formatter={(value: number, name: string) => name === 'Winrate' ? `${value}%` : value.toFixed(1)}
                     />
-                    <Legend
-                      wrapperStyle={{ color: '#E0E0E0' }}
-                    />
-                  </PieChart>
+                    <Legend wrapperStyle={{ color: '#E0E0E0' }} />
+                    <Bar dataKey="winrate" name="Winrate" fill="#00B4D8" barSize={14} />
+                    <Bar dataKey="kdaAvg" name="KDA" fill="#F4A261" barSize={10} />
+                  </BarChart>
                 </ResponsiveContainer>
               </div>
             </motion.div>
             </ScrollReveal>
           </div>
 
-          <div className="md:col-span-3">
+          <div className="md:col-span-2">
             <ScrollReveal preset="right" delay={0.3} duration={0.7}>
               <motion.div
                 whileHover={{ scale: 1.02 }}
