@@ -24,7 +24,7 @@ function readTeams(): Team[] {
     const raw = localStorage.getItem(TEAMS_KEY);
     if (!raw) return [];
     return JSON.parse(raw) as Team[];
-  } catch (e) {
+  } catch {
     return [];
   }
 }
@@ -38,7 +38,7 @@ function readUsers(): StoredUser[] {
     const raw = localStorage.getItem(USERS_KEY);
     if (!raw) return [];
     return JSON.parse(raw) as StoredUser[];
-  } catch (e) {
+  } catch {
     return [];
   }
 }
