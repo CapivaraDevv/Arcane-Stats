@@ -1,6 +1,8 @@
 import { useState, useMemo, useEffect, useRef } from 'react';
 import ScrollReveal from '../components/ScrollReveal';
 
+type Player = { rank: number; nick: string; name: string; team: string; role: string; kda: number; winrate: number; games: number; country: string };
+
 // interface Jogador removed (ranking uses a simpler structure)
 
 const Jogadores = () => {
@@ -42,14 +44,22 @@ const Jogadores = () => {
 
   const sorted = useMemo(() => {
     const arr = [...jogadoresFiltrados];
-    arr.sort((a: any, b: any) => {
-      const aVal = a[sortKey];
-      const bVal = b[sortKey];
+    arr.sort((a: Player, b: Player) => {
+      let aVal: string | number;
+      let bVal: string | number;
+      if (sortKey === 'rank' || sortKey === 'kda' || sortKey === 'winrate' || sortKey === 'games') {
+        aVal = a[sortKey as 'rank' | 'kda' | 'winrate' | 'games'] as number;
+        bVal = b[sortKey as 'rank' | 'kda' | 'winrate' | 'games'] as number;
+      } else {
+        aVal = a[sortKey as keyof Player] as string;
+        bVal = b[sortKey as keyof Player] as string;
+      }
+
       if (typeof aVal === 'string') {
-        return sortDir === 'asc' ? aVal.localeCompare(bVal) : bVal.localeCompare(aVal);
+        return sortDir === 'asc' ? aVal.localeCompare(bVal as string) : (bVal as string).localeCompare(aVal);
       }
       // number
-      return sortDir === 'asc' ? (aVal - bVal) : (bVal - aVal);
+      return sortDir === 'asc' ? ((aVal as number) - (bVal as number)) : ((bVal as number) - (aVal as number));
     });
     return arr;
   }, [jogadoresFiltrados, sortKey, sortDir]);
@@ -65,7 +75,7 @@ const Jogadores = () => {
   };
 
   // Estado do modal
-  const [selectedPlayer, setSelectedPlayer] = useState<any | null>(null);
+  const [selectedPlayer, setSelectedPlayer] = useState<Player | null>(null);
 
   // Mock match history por jogador
   const getMatchHistory = () => [
