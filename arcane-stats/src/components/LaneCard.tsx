@@ -9,9 +9,11 @@ type Lane = {
   icon?: string;
 };
 
-export default function LaneCard({ lane, getChampionImageUrl }: { lane: Lane; getChampionImageUrl: (s: string) => string }) {
+import React from 'react';
+
+function LaneCardInner({ lane, getChampionImageUrl }: { lane: Lane; getChampionImageUrl: (s: string) => string }) {
   return (
-    <div className="bg-[#1D2D50] rounded-lg p-4 shadow-lg border border-white/5 hover:border-[#00B4D8]/50 transition-all relative overflow-hidden group">
+    <div className="bg-[#1D2D50] rounded-lg p-4 shadow-lg border border-white/5 hover:border-[#00B4D8]/50 transition-all relative overflow-hidden group focus:outline-none focus:ring-2 focus:ring-[#00B4D8]">
       <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
         <div className="absolute inset-0 animate-shimmer" />
       </div>
@@ -73,3 +75,5 @@ export default function LaneCard({ lane, getChampionImageUrl }: { lane: Lane; ge
     </div>
   );
 }
+
+export default React.memo(LaneCardInner);
