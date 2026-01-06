@@ -1,4 +1,4 @@
-import { motion, useReducedMotion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import ScrollReveal from '../components/ScrollReveal';
 import { useConfig } from '../hooks/useConfig';
@@ -14,21 +14,8 @@ export default function Dashboard() {
   const [ddragonVersion, setDdragonVersion] = useState<string>('latest');
   // Estado para controlar falhas no carregamento de imagens
   const [imageErrors, setImageErrors] = useState<Set<string>>(new Set());
-  // Estado para controlar os cards animados
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-  // Respeitar preferência do usuário por reduzir animações
-  const prefersReducedMotion = useReducedMotion();
-
-  // Detecta se estamos em tela larga (md breakpoint). Usado para alternar entre
-  // layout absoluto com offsets e layout empilhado em telas pequenas.
-  const [isDesktop, setIsDesktop] = useState<boolean>(() => typeof window !== 'undefined' ? window.innerWidth >= 768 : true);
-
-  useEffect(() => {
-    const onResize = () => setIsDesktop(window.innerWidth >= 768);
-    onResize();
-    window.addEventListener('resize', onResize);
-    return () => window.removeEventListener('resize', onResize);
-  }, []);
+  // Layout de cards passou para um scroll horizontal com snap; não precisamos
+  // mais de estado para hover/carousel complexo.
 
 
   // Função para buscar a versão mais recente da API
@@ -204,57 +191,18 @@ export default function Dashboard() {
       {/* ANÁLISE DETALHADA POR ROTA */}
       <div className="relative z-10">
         <h2 className="space-grotesk-title text-2xl font-bold mb-4 text-[#E0E0E0] text-center">Análise por Rota</h2>
-        <div className="relative w-full md:h-[560px] grid grid-cols-1 md:block gap-4 place-items-center">
-          {laneAnalysis.map((lane, idx) => {
-            const total = laneAnalysis.length;
-            const centerIndex = Math.floor(total / 2);
-
-            const isHovered = hoveredIndex === idx;
-            const isAnyHovered = hoveredIndex !== null;
-
-            const offset = idx - centerIndex;
-
-            // Quando em tela pequena (isDesktop === false) ou quando o usuário
-            // preferir reduzir movimento, simplificamos a animação para apenas
-            // escala/opacidade e mantemos os cards no fluxo (não absolute).
-            const useFancy = isDesktop && !prefersReducedMotion;
-
-            const animateProps: any = useFancy ? {
-              x: isAnyHovered ? offset * 140 : 0,
-              y: isAnyHovered ? Math.abs(offset) * 10 : offset * 6,
-              rotate: isAnyHovered ? offset * 6 : offset * 2,
-              scale: isHovered ? 1.06 : 1,
-              zIndex: isHovered ? 50 : 10 - Math.abs(offset),
-              opacity: isAnyHovered && !isHovered ? 0.92 : 1,
-            } : {
-              x: 0,
-              y: 0,
-              rotate: 0,
-              scale: isHovered ? 1.03 : 1,
-              zIndex: isHovered ? 50 : 10 - Math.abs(offset),
-              opacity: isHovered ? 1 : 1,
-            };
-
-            return (
-              <motion.div
-                key={idx}
-                onHoverStart={() => requestAnimationFrame(() => setHoveredIndex(idx))}
-                onHoverEnd={() => requestAnimationFrame(() => setHoveredIndex(null))}
-                onFocus={() => requestAnimationFrame(() => setHoveredIndex(idx))}
-                onBlur={() => requestAnimationFrame(() => setHoveredIndex(null))}
-                initial={false}
-                animate={animateProps}
-                transition={{ type: 'spring', stiffness: 120, damping: 16 }}
-                className={`${useFancy ? 'md:absolute' : 'relative'} w-full md:w-auto`}
-                style={{ willChange: 'transform, opacity', transformStyle: 'preserve-3d' }}
-                tabIndex={0}
-                role="group"
-                aria-label={`Rota ${lane.lane} — Winrate ${lane.winrate}% — KDA ${lane.kdaAvg ?? 'N/A'}`}
-              >
-                <LaneCard lane={lane} getChampionImageUrl={getChampionImageUrl} />
-              </motion.div>
-            );
-          })}
+        <div className="w-full">
+          <div className="overflow-x-auto w-full py-4 md:py-6">
+            <div className="flex gap-4 px-4 md:px-8 snap-x snap-mandatory">
+              {laneAnalysis.map((lane, idx) => (
+                <div key={idx} className="snap-center flex-shrink-0 w-[260px] sm:w-[300px] md:w-80">
+                  <div tabIndex={0} role="group" aria-label={`Rota ${lane.lane} — Winrate ${lane.winrate}% — KDA ${lane.kdaAvg ?? 'N/A'}`}>
+                    <LaneCard lane={lane} getChampionImageUrl={getChampionImageUrl} />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </div >
