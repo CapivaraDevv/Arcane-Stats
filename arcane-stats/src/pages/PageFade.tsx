@@ -17,7 +17,7 @@ const PageFade: React.FC<PageFadeProps> = ({ children, isReady = true }) => {
         ease: [0.4, 0, 0.2, 1],
         delay: isReady ? 0.2 : 0
       }}
-      style={{ height: '100%' }}
+      className="w-full h-full"
     >
       {children}
     </motion.div>
