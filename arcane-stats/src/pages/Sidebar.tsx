@@ -21,7 +21,7 @@ const Sidebar = () => {
   };
 
   return (
-    <aside className="bg-[#1D2D50] min-h-screen w-56 flex flex-col gap-4 px-4 py-3 shadow-lg border-r border-white/5 relative overflow-hidden">
+    <aside className="bg-[#1d2d50] min-h-screen w-56 flex flex-col gap-4 px-4 py-3 shadow-lg border-r border-white/5 relative overflow-hidden">
       {/* Background animado sutil */}
       <div className="absolute top-0 right-0 w-32 h-32 bg-[#0077B6]/10 rounded-full blur-3xl animate-float"></div>
 

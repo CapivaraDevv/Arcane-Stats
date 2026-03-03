@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
 type User = {
@@ -24,7 +25,7 @@ function readUsers(): Array<{ id: string; name: string; email: string; password:
     const raw = localStorage.getItem(USERS_KEY);
     if (!raw) return [];
     return JSON.parse(raw);
-  } catch (e) {
+  } catch {
     return [];
   }
 }
@@ -42,7 +43,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     if (raw) {
       try {
         setUser(JSON.parse(raw));
-      } catch (e) {
+      } catch {
         setUser(null);
       }
     }

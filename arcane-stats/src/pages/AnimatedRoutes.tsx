@@ -16,6 +16,8 @@ interface AnimatedRoutesProps {
 
 const AnimatedRoutes = ({ isReady = true }: AnimatedRoutesProps) => {
   const location = useLocation();
+  // Não renderiza rotas enquanto a tela de carregamento não estiver completa.
+  if (!isReady) return null;
   return (
     <AnimatePresence mode="wait">
       <Routes location={location} key={location.pathname}>

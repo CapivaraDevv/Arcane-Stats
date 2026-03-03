@@ -6,7 +6,7 @@ import useAuthContext from '../hooks/useAuth';
 const Header = () => {
   const { scrollY } = useScroll();
 
-  const height = useTransform(scrollY, [0, 150], ['150px', '70px']);
+  const height = useTransform(scrollY, [0, 150], ['100px', '70px']);
   const blur = useTransform(scrollY, [0, 200], ['blur(0px)', 'blur(8px)']);
   const opacity = useTransform(scrollY, [0, 200], [1, 0.85]);
 
@@ -33,8 +33,8 @@ const Header = () => {
         animate={mounted ? { opacity: 1, y: 0 } : {}}
         transition={{ delay: 0.3, duration: 0.7 }}
   className="text-3xl md:text-4xl font-semibold 
-       bg-linear-to-r from-white to-blue-200 
-       bg-clip-text text-transparent tracking-wide"
+       bg-linear-to-r text-white 
+       bg-clip-text tracking-wide"
       >
         Plataforma de Análise eSports
       </motion.h1>

@@ -17,6 +17,16 @@ const Times: React.FC = () => {
   const [addEmailByTeam, setAddEmailByTeam] = React.useState<Record<number, string>>({});
   const [addMsgByTeam, setAddMsgByTeam] = React.useState<Record<number, string>>({});
 
+  async function CriarTime() {
+    setCreateMsg(null);
+    if (!user) return setCreateMsg('Faça login para criar um time');
+    if (!novoNome) return setCreateMsg('Nome é obrigatório');
+    const res = await createTeam(novoNome.trim(), novoTag.trim(), user.id);
+    if (!res.success) return setCreateMsg(res.message || 'Erro');
+    setCreateMsg('Time criado com sucesso');
+    setNovoNome(''); setNovoTag('');
+  }
+
   return (
     <main className="flex-1 p-8 bg-[#0B132B] min-h-screen">
       <div className="mb-6">
@@ -30,15 +40,7 @@ const Times: React.FC = () => {
             <input value={novoNome} onChange={e => setNovoNome(e.target.value)} placeholder="Nome do time" className="p-2 rounded bg-[#1D2D50] text-white flex-1" />
             <input value={novoTag} onChange={e => setNovoTag(e.target.value)} placeholder="TAG" className="p-2 rounded bg-[#1D2D50] text-white w-28" />
             <button
-              onClick={async () => {
-                setCreateMsg(null);
-                if (!user) return setCreateMsg('Faça login para criar um time');
-                if (!novoNome) return setCreateMsg('Nome é obrigatório');
-                const res = await createTeam(novoNome.trim(), novoTag.trim(), user.id);
-                if (!res.success) return setCreateMsg(res.message || 'Erro');
-                setCreateMsg('Time criado com sucesso');
-                setNovoNome(''); setNovoTag('');
-              }}
+              onClick={CriarTime}
               className="bg-[#00B4D8] text-black px-3 rounded font-semibold"
             >Criar</button>
           </div>
@@ -74,9 +76,6 @@ const Times: React.FC = () => {
                       <span>•</span>
                       <span className={'text-[#A8A8A8]'}>Desde {new Date(time.createdAt).toLocaleDateString()}</span>
                     </div>
-                  </div>
-                  <div className="text-right">
-                    <div className="text-3xl mb-1">🏆</div>
                   </div>
                 </div>
 
@@ -120,7 +119,7 @@ const Times: React.FC = () => {
                   {user && user.id === time.creatorId && (
                     <div className="mt-3">
                       <div className="flex gap-2">
-                        <input value={addEmailByTeam[time.id] || ''} onChange={e => setAddEmailByTeam(prev => ({ ...prev, [time.id]: e.target.value }))} placeholder="E-mail do usuário" className="p-2 rounded bg-[#1D2D50] text-white flex-1" />
+                        <input value={addEmailByTeam[time.id] || ''} onChange={e => setAddEmailByTeam(prev => ({ ...prev, [time.id]: e.target.value }))} placeholder="E-mail do usuário" className="p-2 rounded bg-[#141f36] text-white flex-1" />
                         <button onClick={async () => {
                           setAddMsgByTeam(prev => ({ ...prev, [time.id]: '' }));
                           const email = (addEmailByTeam[time.id] || '').trim();
