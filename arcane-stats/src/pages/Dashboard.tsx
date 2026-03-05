@@ -14,9 +14,6 @@ export default function Dashboard() {
   const [ddragonVersion, setDdragonVersion] = useState<string>('latest');
   // Estado para controlar falhas no carregamento de imagens
   const [imageErrors, setImageErrors] = useState<Set<string>>(new Set());
-  // Layout de cards passou para um scroll horizontal com snap; não precisamos
-  // mais de estado para hover/carousel complexo.
-
 
   // Função para buscar a versão mais recente da API
   useEffect(() => {
@@ -46,6 +43,15 @@ export default function Dashboard() {
     return `https://ddragon.leagueoflegends.com/cdn/${ddragonVersion}/img/champion/${formattedName}.png`;
   };
 
+  const getItemImageUrl = (itemName: string) => {
+    const formattedName = itemName
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/\s+/g, '');
+
+    return `https://ddragon.leagueoflegends.com/cdn/${ddragonVersion}/img/item/${formattedName}.png`;
+  }
+
   // Função para lidar com erro no carregamento da imagem
   const handleImageError = (championName: string) => {
     setImageErrors(prev => {
@@ -72,7 +78,6 @@ export default function Dashboard() {
     { partida: 'P6', kda: 4.8, winrate: 65 },
     { partida: 'P7', kda: 5.5, winrate: 75 },
   ];
-
 
   // Dados detalhados por rota
   const laneAnalysis = [
@@ -128,17 +133,15 @@ export default function Dashboard() {
     },
   ];
 
-
-
   return (
-    <div className="p-4 sm:p-5 md:p-6 flex flex-col gap-4 sm:gap-6 md:gap-8 bg-[#0B132B] relative overflow-x-hidden max-w-full\">
+    <div className="p-6 flex flex-col gap-8 bg-[#0B132B] min-h-screen relative overflow-hidden">
       {/* Background animado sutil */}
       <div className="absolute inset-0 opacity-5 pointer-events-none">
         <div className="absolute top-0 left-0 w-full h-full bg-linear-to-br from-[#0077B6] via-[#00B4D8] to-[#0077B6] animate-gradient"></div>
       </div>
 
       {/* GRID DE INDICADORES (KPIs) */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-5 lg:gap-6 relative z-10">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 relative z-10">
         {kpis.map((kpi, idx) => (
           <ScrollReveal key={idx} delay={idx * 0.1} preset="up" duration={0.6}>
             <KPICard kpi={kpi} idx={idx} getChampionImageUrl={getChampionImageUrl} imageErrors={imageErrors} handleImageError={handleImageError} />
@@ -148,17 +151,17 @@ export default function Dashboard() {
 
       {/* GRÁFICO DE DISTRIBUIÇÃO DE ROLES */}
       {configs.mostrarGraficos && (
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 sm:gap-5 md:gap-6 mt-4 sm:mt-6 md:mt-8 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mt-8 relative z-10">
 
           <div className="md:col-span-2">
             <ScrollReveal preset="left" delay={0.2} duration={0.7}>
-              <motion.div whileHover={{ scale: 1.02 }} className="bg-[#1D2D50] rounded-lg sm:rounded-xl p-3 sm:p-4 flex flex-col items-center justify-center border border-white/5 shadow-lg hover:border-[#00B4D8]/50 transition-all relative overflow-hidden group">
+              <motion.div whileHover={{ scale: 1.02 }} className="bg-[#1D2D50] rounded-xl p-4 flex flex-col items-center justify-center border border-white/5 shadow-lg hover:border-[#00B4D8]/50 transition-all relative overflow-hidden group">
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                   <div className="absolute inset-0 animate-shimmer"></div>
                 </div>
 
                 <div className="relative z-10 w-full">
-                  <h2 className="space-grotesk-title text-base sm:text-lg font-semibold mb-3 sm:mb-4 text-[#E0E0E0]">Eficiência por rota</h2>
+                  <h2 className="space-grotesk-title text-lg font-semibold mb-4 text-[#E0E0E0]">Eficiência por rota</h2>
                   <EfficiencyChart data={laneAnalysis} />
                 </div>
               </motion.div>
@@ -167,14 +170,14 @@ export default function Dashboard() {
 
           <div className="md:col-span-2">
             <ScrollReveal preset="right" delay={0.3} duration={0.7}>
-              <motion.div whileHover={{ scale: 1.02 }} className="bg-[#1D2D50] rounded-lg sm:rounded-xl p-3 sm:p-4 flex flex-col border border-white/5 shadow-lg hover:border-[#00B4D8]/50 transition-all relative overflow-hidden group">
+              <motion.div whileHover={{ scale: 1.02 }} className="bg-[#1D2D50] rounded-xl p-4 flex flex-col border border-white/5 shadow-lg hover:border-[#00B4D8]/50 transition-all relative overflow-hidden group">
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                   <div className="absolute inset-0 animate-shimmer" />
                 </div>
 
                 <div className="relative z-10 w-full">
-                  <div className="flex items-center justify-between mb-3 sm:mb-4">
-                    <h2 className="space-grotesk-title text-base sm:text-lg font-semibold text-[#E0E0E0]">Tendência de Performance</h2>
+                  <div className="flex items-center justify-between mb-4">
+                    <h2 className="space-grotesk-title text-lg font-semibold text-[#E0E0E0]">Tendência de Performance</h2>
                   </div>
                   <TrendChart data={tendenciaPerformance} />
 
@@ -189,23 +192,18 @@ export default function Dashboard() {
       )}
 
       {/* ANÁLISE DETALHADA POR ROTA */}
-      <div className="relative w-full">
-        <h2 className="space-grotesk-title text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-[#E0E0E0] text-center">Análise por Rota</h2>
-        <div className="grid gap-4 
-            grid-cols-1 
-            sm:grid-cols-2 
-            md:grid-cols-3 
-            lg:grid-cols-4">
+      <div className="relative z-10">
+        <h2 className="space-grotesk-title text-2xl font-bold mb-4 text-[#E0E0E0]">Análise por Rota</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
           {laneAnalysis.map((lane, idx) => (
-            <div key={idx} className="snap-center w-full">
-              <div tabIndex={0} role="group" aria-label={`Rota ${lane.lane} — Winrate ${lane.winrate}% — KDA ${lane.kdaAvg ?? 'N/A'}`}>
-                <LaneCard lane={lane} getChampionImageUrl={getChampionImageUrl} />
-              </div>
-            </div>
+            <ScrollReveal key={idx} delay={idx * 0.1} preset="up" duration={0.6}>
+              <motion.div whileHover={{ scale: 1.02, y: -4 }} className="relative">
+                <LaneCard lane={lane} getChampionImageUrl={getChampionImageUrl} getItemImageUrl={getItemImageUrl} />
+              </motion.div>
+            </ScrollReveal>
           ))}
         </div>
       </div>
     </div >
   );
 }
-

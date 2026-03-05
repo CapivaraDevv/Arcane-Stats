@@ -6,7 +6,7 @@ export default function EfficiencyChart({ data }: { data: EfficiencyDatum[] }) {
 
   return (
     <div className="relative z-10 w-full">
-      <ResponsiveContainer width="100%" height={180} minHeight={180}>
+      <ResponsiveContainer width="100%" height={200} minHeight={180}>
         <BarChart data={data} layout="vertical" margin={{ top: 10, right: 10, left: 60, bottom: 10 }}>
           <CartesianGrid strokeDasharray="3 3" stroke="#0077B6" opacity={0.08} />
           <XAxis type="number" domain={[0, 'dataMax']} stroke="#A8A8A8" />
