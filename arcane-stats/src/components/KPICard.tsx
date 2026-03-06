@@ -1,8 +1,10 @@
 import { motion } from 'framer-motion';
+import { useAssets } from '../hooks/useAssets.tsx';
 
 type KPI = { title: string; value: string; feedback?: string };
 
-export default function KPICard({ kpi, idx, getChampionImageUrl, imageErrors, handleImageError }: { kpi: KPI; idx: number; getChampionImageUrl: (s: string) => string; imageErrors: Set<string>; handleImageError: (s: string) => void }) {
+export default function KPICard({ kpi, idx, imageErrors, handleImageError }: { kpi: KPI; idx: number; imageErrors: Set<string>; handleImageError: (s: string) => void }) {
+  const { getChampionIcon } = useAssets();
   return (
     <motion.div
       whileHover={{
@@ -20,7 +22,7 @@ export default function KPICard({ kpi, idx, getChampionImageUrl, imageErrors, ha
           <div className="relative z-10 w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center flex-shrink-0">
             {!imageErrors.has(kpi.value) ? (
               <img
-                src={getChampionImageUrl(kpi.value)}
+                src={getChampionIcon(kpi.value)}
                 alt={kpi.value}
                 className="w-full h-full rounded-lg object-cover border border-[#00B4D8]/40 transition-all"
                 onError={() => handleImageError(kpi.value)}

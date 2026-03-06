@@ -1,17 +1,19 @@
 type Lane = {
   lane: string;
-  champions: string[];
+  champions: string[]; // internal names or ids, depending on data source
   winrate: number;
   kdaAvg?: number;
   firstBloodInvolvement: number;
-  bestBuild: string[];
+  bestBuild: number[]; // item ids
   avgCS: number;
   icon?: string;
 };
 
 import React from 'react';
+import { useAssets } from '../hooks/useAssets.tsx';
 
-function LaneCardInner({ lane, getChampionImageUrl }: { lane: Lane; getChampionImageUrl: (s: string) => string }) {
+function LaneCardInner({ lane }: { lane: Lane }) {
+  const { getChampionIcon, getItemIcon } = useAssets();
   return (
     <div className="bg-[#1D2D50] rounded-lg p-3 sm:p-4 shadow-lg border border-white/5 hover:border-[#00B4D8]/50 transition-all relative overflow-hidden group focus:outline-none focus:ring-2 focus:ring-[#00B4D8]">
       <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
@@ -32,7 +34,14 @@ function LaneCardInner({ lane, getChampionImageUrl }: { lane: Lane; getChampionI
           <div className="text-xs font-semibold text-[#00B4D8] uppercase tracking-wide mb-1">Top Champions</div>
           <div className="flex gap-1">
             {lane.champions.map((champ: string, cIdx: number) => (
-              <img key={cIdx} src={getChampionImageUrl(champ)} alt={champ} title={champ} loading="lazy" className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 rounded-md object-cover bg-[#0077B6]/20 border border-white/5 hover:scale-110 cursor-pointer transition-all" />
+              <img
+                key={cIdx}
+                src={getChampionIcon(champ)}
+                alt={champ}
+                title={champ}
+                loading="lazy"
+                className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 rounded-md object-cover bg-[#0077B6]/20 border border-white/5 hover:scale-110 cursor-pointer transition-all"
+              />
             ))}
           </div>
         </div>
@@ -59,9 +68,15 @@ function LaneCardInner({ lane, getChampionImageUrl }: { lane: Lane; getChampionI
 
         <div>
           <div className="text-xs font-semibold text-[#A8A8A8] uppercase tracking-wide mb-1">Build Ideal</div>
-          <div className="flex flex-col gap-1">
-            {lane.bestBuild.map((item: string, bIdx: number) => (
-              <div key={bIdx} className="text-xs text-[#E0E0E0] px-2 py-1 bg-[#0B132B] rounded border border-white/10 truncate" title={item}>{bIdx + 1}. {item}</div>
+          <div className="flex gap-1">
+            {lane.bestBuild.map((itemId: number, bIdx: number) => (
+              <img
+                key={bIdx}
+                src={getItemIcon(itemId)}
+                alt={`item-${itemId}`}
+                title={`#${itemId}`}
+                className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 rounded-md object-contain bg-[#0B132B]/20 border border-white/10"
+              />
             ))}
           </div>
         </div>

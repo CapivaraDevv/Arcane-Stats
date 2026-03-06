@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import ScrollReveal from '../components/ScrollReveal';
 import { useConfig } from '../hooks/useConfig';
 
@@ -10,47 +10,9 @@ import LaneCard from '../components/LaneCard';
 
 export default function Dashboard() {
   const { configs } = useConfig();
-  // Estado para armazenar a versão da API Data Dragon
-  const [ddragonVersion, setDdragonVersion] = useState<string>('latest');
   // Estado para controlar falhas no carregamento de imagens
   const [imageErrors, setImageErrors] = useState<Set<string>>(new Set());
 
-  // Função para buscar a versão mais recente da API
-  useEffect(() => {
-    const fetchVersion = async () => {
-      try {
-        const response = await fetch('https://ddragon.leagueoflegends.com/api/versions.json');
-        const versions = await response.json();
-        if (versions && versions.length > 0) {
-          setDdragonVersion(versions[0]); // Pega a versão mais recente
-        }
-      } catch (error) {
-        console.error('Erro ao buscar versão da API:', error);
-        // Mantém 'latest' como fallback
-      }
-    };
-    fetchVersion();
-  }, []);
-
-  // Função utilitária para construir URL da imagem do campeão
-  const getChampionImageUrl = (championName: string) => {
-    // Remove acentos e espaços, converte para o formato da API
-    const formattedName = championName
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '')
-      .replace(/\s+/g, '');
-
-    return `https://ddragon.leagueoflegends.com/cdn/${ddragonVersion}/img/champion/${formattedName}.png`;
-  };
-
-  const getItemImageUrl = (itemName: string) => {
-    const formattedName = itemName
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '')
-      .replace(/\s+/g, '');
-
-    return `https://ddragon.leagueoflegends.com/cdn/${ddragonVersion}/img/item/${formattedName}.png`;
-  }
 
   // Função para lidar com erro no carregamento da imagem
   const handleImageError = (championName: string) => {
@@ -87,17 +49,17 @@ export default function Dashboard() {
       winrate: 6,
       kdaAvg: 3.8,
       firstBloodInvolvement: 34,
-      bestBuild: ['Força Tríade', 'Cutelo', 'Escudo de Sterak'],
+      bestBuild: [3742, 3142, 3053], 
       avgCS: 286,
       icon: '/IconeTop.png'
     },
     {
       lane: 'Jungle',
-      champions: ['Lee Sin', 'Elise', 'Graves'],
+      champions: ['LeeSin', 'Elise', 'Graves'],
       winrate: 12,
       kdaAvg: 4.0,
       firstBloodInvolvement: 62,
-      bestBuild: ['Sinal de sterak', 'Cutelo', 'Hidra Raivosa'],
+      bestBuild: [3142, 3102, 3071],
       avgCS: 165,
       icon: '/IconeJungle.png'
     },
@@ -107,7 +69,7 @@ export default function Dashboard() {
       winrate: 31,
       kdaAvg: 4.5,
       firstBloodInvolvement: 48,
-      bestBuild: ['Eclipse', 'Presa de Serpente', 'Cajado do Vazio'],
+      bestBuild: [6630, 3165, 3020],
       avgCS: 312,
       icon: '/IconeMID.png'
     },
@@ -117,7 +79,7 @@ export default function Dashboard() {
       winrate: 55,
       kdaAvg: 5.0,
       firstBloodInvolvement: 18,
-      bestBuild: ['Mata-Cráquens', 'Gume do infinito', 'Lembrança do lorde dominik'],
+      bestBuild: [6672, 3031, 3036],
       avgCS: 336,
       icon: '/IconeADC.webp'
     },
@@ -127,7 +89,7 @@ export default function Dashboard() {
       winrate: 3,
       kdaAvg: 3.2,
       firstBloodInvolvement: 41,
-      bestBuild: ['Tanque Turbo Químico', 'Escudo de Kaenic', 'Armadura de Espinhos'],
+      bestBuild: [3107, 323075, 323110],
       avgCS: 18,
       icon: '/IconeSuporte.png'
     },
@@ -144,7 +106,7 @@ export default function Dashboard() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 relative z-10">
         {kpis.map((kpi, idx) => (
           <ScrollReveal key={idx} delay={idx * 0.1} preset="up" duration={0.6}>
-            <KPICard kpi={kpi} idx={idx} getChampionImageUrl={getChampionImageUrl} imageErrors={imageErrors} handleImageError={handleImageError} />
+            <KPICard kpi={kpi} idx={idx} imageErrors={imageErrors} handleImageError={handleImageError} />
           </ScrollReveal>
         ))}
       </div>
@@ -198,7 +160,7 @@ export default function Dashboard() {
           {laneAnalysis.map((lane, idx) => (
             <ScrollReveal key={idx} delay={idx * 0.1} preset="up" duration={0.6}>
               <motion.div whileHover={{ scale: 1.02, y: -4 }} className="relative">
-                <LaneCard lane={lane} getChampionImageUrl={getChampionImageUrl} getItemImageUrl={getItemImageUrl} />
+                <LaneCard lane={lane} />
               </motion.div>
             </ScrollReveal>
           ))}
