@@ -30,8 +30,8 @@ const Times: React.FC = () => {
   return (
     <main className="flex-1 p-8 bg-[#0B132B] min-h-screen">
       <div className="mb-6">
-        <h2 className="space-grotesk-title text-3xl font-bold mb-2 text-[#E0E0E0]">Times</h2>
-        <p className="sora-text text-[#A8A8A8]">Gerencie e visualize informações dos times</p>
+        <h2 className="space-grotesk-title text-3xl font-bold mb-2 text-[#E0E0E0]">Arcane Team Control</h2>
+        <p className="sora-text text-[#A8A8A8]">Gerencie seus times, analise desempenho e descubra padrões estratégicos.</p>
 
         {/* Criar Time */}
         <div className="mt-4 p-4 bg-[#0B132B] rounded border border-white/5 max-w-lg">

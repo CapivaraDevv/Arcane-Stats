@@ -242,7 +242,7 @@ const Partidas = () => {
                         src={getItemIcon(itemId)}
                         alt={`item-${itemId}`}
                         title={`#${itemId}`}
-                        className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 rounded-md object-contain bg-[#0B132B]/20 border border-white/10"
+                        className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 rounded-md object-contain bg-[#0B132B]/20 border border-white/10 hover:scale-110 transition-all"
                       />
                     ))}
                   </div>
