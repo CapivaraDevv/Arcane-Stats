@@ -5,7 +5,7 @@ type TrendDatum = { partida: string; kda: number; winrate: number };
 export default function TrendChart({ data }: { data: TrendDatum[] }) {
   return (
     <div className="relative z-10 w-full">
-      <ResponsiveContainer width="100%" height={160} minHeight={160}>
+      <ResponsiveContainer width="100%" height={360} minHeight={160}>
         <LineChart data={data}>
           <CartesianGrid strokeDasharray="3 3" stroke="#0077B6" opacity={0.2} />
           <XAxis dataKey="partida" stroke="#A8A8A8" style={{ fontSize: '10px' }} />

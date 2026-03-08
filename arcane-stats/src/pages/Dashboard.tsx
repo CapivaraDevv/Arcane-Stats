@@ -7,6 +7,7 @@ import KPICard from '../components/KPICard';
 import EfficiencyChart from '../components/EfficiencyChart';
 import TrendChart from '../components/TrendChart';
 import LaneCard from '../components/LaneCard';
+import DecisionHeatMap from '../components/DecisionHeatmap';
 
 export default function Dashboard() {
   const { configs } = useConfig();
@@ -40,6 +41,14 @@ export default function Dashboard() {
     { partida: 'P6', kda: 4.8, winrate: 65 },
     { partida: 'P7', kda: 5.5, winrate: 75 },
   ];
+
+  const decisionHeatMap = [
+    { x: 20, y: 65, intensity: 1.2},
+    { x: 25, y: 60, intensity: 0.9},
+    { x: 55, y: 45, intensity: 1.5},
+    { x: 70, y: 30, intensity: 0.7},
+    { x: 80, y: 20, intensity: 1.3}
+  ]
 
   // Dados detalhados por rota
   const laneAnalysis = [
@@ -123,8 +132,8 @@ export default function Dashboard() {
                 </div>
 
                 <div className="relative z-10 w-full">
-                  <h2 className="space-grotesk-title text-lg font-semibold mb-4 text-[#E0E0E0]">Eficiência por rota</h2>
-                  <EfficiencyChart data={laneAnalysis} />
+                  <h2 className="space-grotesk-title text-lg font-semibold mb-4 text-[#E0E0E0]">Mapa de Pressão Estratégica</h2>
+                  <DecisionHeatMap data={decisionHeatMap}/>
                 </div>
               </motion.div>
             </ScrollReveal>
