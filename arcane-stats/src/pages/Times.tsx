@@ -108,7 +108,7 @@ const Times: React.FC = () => {
                           <div className="w-8 h-8 rounded bg-[#0077B6]/20 flex items-center justify-center text-xs font-bold text-[#00B4D8]">{member?.name ? member.name.charAt(0) : '?'}</div>
                           <div>
                             <div className="text-sm font-semibold text-[#E0E0E0]">{member?.name || 'Usuário desconhecido'}</div>
-                            <div className="text-xs text-[#A8A8A8]">{member?.email || ''}</div>
+                            
                           </div>
                         </div>
                         <span className="text-xs font-semibold px-2 py-1 rounded text-[#A8A8A8]">Membro</span>

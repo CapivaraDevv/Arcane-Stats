@@ -3,19 +3,11 @@ import ScrollReveal from '../components/ScrollReveal';
 
 type Player = { rank: number; nick: string; name: string; team: string; role: string; kda: number; winrate: number; games: number; country: string };
 
-// interface Jogador removed (ranking uses a simpler structure)
+
 
 const Jogadores = () => {
   const [filtroRole, setFiltroRole] = useState<string>('Todas');
 
-  // ddragonVersion removed (não usado aqui)
-  // Estado para controlar falhas no carregamento de imagens
-  // const [imageErrors, setImageErrors] = useState<Set<string>>(new Set());
-
-  // (removido) fetching ddragon version - não necessário no ranking
-
-  // Função utilitária para construir URL da imagem do campeão
-  // Função utilitária para construir URL da imagem do campeão removida (não usada)
 
   // Ranking de jogadores (mock com nomes de jogadores profissionais públicos e estatísticas demonstrativas)
   const ranking = [
@@ -68,7 +60,6 @@ const Jogadores = () => {
   if (page > totalPages) setPage(totalPages);
   const pageItems = sorted.slice((page - 1) * pageSize, page * pageSize);
 
-  // getEloColor removido (não usado no ranking)
 
   const getInitials = (nick: string) => {
     return nick.split(' ').map(s => s[0]).slice(0,2).join('').toUpperCase();

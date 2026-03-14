@@ -21,14 +21,14 @@ const AnimatedRoutes = ({ isReady = true }: AnimatedRoutesProps) => {
   return (
     <AnimatePresence mode="wait">
       <Routes location={location} key={location.pathname}>
-  <Route path="/" element={<PageFade isReady={isReady}><ProtectedRoute><Dashboard /></ProtectedRoute></PageFade>} />
-  <Route path="/dashboard" element={<PageFade isReady={isReady}><ProtectedRoute><Dashboard /></ProtectedRoute></PageFade>} />
-  <Route path="/login" element={<PageFade isReady={isReady}><Login /></PageFade>} />
-  <Route path="/register" element={<PageFade isReady={isReady}><Register /></PageFade>} />
-        <Route path="/times" element={<PageFade isReady={isReady}><Times /></PageFade>} />
-        <Route path="/jogadores" element={<PageFade isReady={isReady}><Jogadores /></PageFade>} />
-        <Route path="/partidas" element={<PageFade isReady={isReady}><Partidas /></PageFade>} />
-        <Route path="/configuracoes" element={<PageFade isReady={isReady}><Configuracoes /></PageFade>} />
+        <Route path="/" element={<PageFade isReady={isReady}><ProtectedRoute><Dashboard /></ProtectedRoute></PageFade>} />
+        <Route path="/dashboard" element={<PageFade isReady={isReady}><ProtectedRoute><Dashboard /></ProtectedRoute></PageFade>} />
+        <Route path="/login" element={<PageFade isReady={isReady}><Login /></PageFade>} />
+        <Route path="/register" element={<PageFade isReady={isReady}><Register /></PageFade>} />
+        <Route path="/times" element={<PageFade isReady={isReady}><ProtectedRoute><Times /></ProtectedRoute></PageFade>} />
+        <Route path="/jogadores" element={<PageFade isReady={isReady}><ProtectedRoute><Jogadores /></ProtectedRoute></PageFade>} />
+        <Route path="/partidas" element={<PageFade isReady={isReady}><ProtectedRoute><Partidas /></ProtectedRoute></PageFade>} />
+        <Route path="/configuracoes" element={<PageFade isReady={isReady}><ProtectedRoute><Configuracoes /></ProtectedRoute></PageFade>} />
       </Routes>
     </AnimatePresence>
   );

@@ -40,7 +40,7 @@ const Header = () => {
       </motion.h1>
 
       <div className="flex items-center gap-4">
-        {/* simple auth area */}
+        
         <AuthArea />
       </div>
     </motion.header>
