@@ -5,6 +5,7 @@ import ScrollReveal from '../components/ScrollReveal';
 import { useConfig } from '../hooks/useConfig';
 import useTeams from '../hooks/useTeams';
 import useAuthContext from '../hooks/useAuth';
+import DarkVeilBackground from '../components/DarkVeilBackground';
 
 const Times: React.FC = () => {
   const { configs } = useConfig();
@@ -28,8 +29,10 @@ const Times: React.FC = () => {
   }
 
   return (
-    <main className="flex-1 p-8 bg-[#0B132B] min-h-screen">
-      <div className="mb-6">
+    <main className="relative flex-1 p-8 bg-transparent min-h-screen overflow-hidden">
+      
+      <div className="relative z-10">
+        
         <h2 className="space-grotesk-title text-3xl font-bold mb-2 text-[#E0E0E0]">Arcane Team Control</h2>
         <p className="sora-text text-[#A8A8A8]">Gerencie seus times, analise desempenho e descubra padrões estratégicos.</p>
 
