@@ -8,6 +8,7 @@ import EfficiencyChart from '../components/EfficiencyChart';
 import TrendChart from '../components/TrendChart';
 import LaneCard from '../components/LaneCard';
 import DecisionHeatMap from '../components/DecisionHeatmap';
+import DarkVeilBackground from '../components/DarkVeilBackground';
 
 export default function Dashboard() {
   const { configs } = useConfig();
@@ -43,11 +44,11 @@ export default function Dashboard() {
   ];
 
   const decisionHeatMap = [
-    { x: 20, y: 65, intensity: 1.2},
-    { x: 25, y: 60, intensity: 0.9},
-    { x: 55, y: 45, intensity: 1.5},
-    { x: 70, y: 30, intensity: 0.7},
-    { x: 80, y: 20, intensity: 1.3}
+    { x: 20, y: 65, intensity: 1.2 },
+    { x: 25, y: 60, intensity: 0.9 },
+    { x: 55, y: 45, intensity: 1.5 },
+    { x: 70, y: 30, intensity: 0.7 },
+    { x: 80, y: 20, intensity: 1.3 }
   ]
 
   // Dados detalhados por rota
@@ -58,7 +59,7 @@ export default function Dashboard() {
       winrate: 6,
       kdaAvg: 3.8,
       firstBloodInvolvement: 34,
-      bestBuild: [3742, 3142, 3053], 
+      bestBuild: [3742, 3142, 3053],
       avgCS: 286,
       icon: '/IconeTop.png'
     },
@@ -105,74 +106,74 @@ export default function Dashboard() {
   ];
 
   return (
-    <div className="p-6 flex flex-col gap-8 bg-[#0B132B] min-h-screen relative overflow-hidden">
+    <div className="relative overflow-hidden p-6 flex-1 flex-col gap-8 bg-transparent min-h-screen">
       {/* Background animado sutil */}
-      <div className="absolute inset-0 opacity-5 pointer-events-none">
-        <div className="absolute top-0 left-0 w-full h-full bg-linear-to-br from-[#0077B6] via-[#00B4D8] to-[#0077B6] animate-gradient"></div>
-      </div>
+      <DarkVeilBackground />
 
-      {/* GRID DE INDICADORES (KPIs) */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 relative z-10">
-        {kpis.map((kpi, idx) => (
-          <ScrollReveal key={idx} delay={idx * 0.1} preset="up" duration={0.6}>
-            <KPICard kpi={kpi} idx={idx} imageErrors={imageErrors} handleImageError={handleImageError} />
-          </ScrollReveal>
-        ))}
-      </div>
-
-      {/* GRÁFICO DE DISTRIBUIÇÃO DE ROLES */}
-      {configs.mostrarGraficos && (
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mt-8 relative z-10">
-
-          <div className="md:col-span-2">
-            <ScrollReveal preset="left" delay={0.2} duration={0.7}>
-              <motion.div whileHover={{ scale: 1.02 }} className="bg-[#1D2D50] rounded-xl p-4 flex flex-col items-center justify-center border border-white/5 shadow-lg hover:border-[#00B4D8]/50 transition-all relative overflow-hidden group">
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                  <div className="absolute inset-0 animate-shimmer"></div>
-                </div>
-
-                <div className="relative z-10 w-full">
-                  <h2 className="space-grotesk-title text-lg font-semibold mb-4 text-[#E0E0E0]">Mapa de Pressão Estratégica</h2>
-                  <DecisionHeatMap data={decisionHeatMap}/>
-                </div>
-              </motion.div>
-            </ScrollReveal>
-          </div>
-
-          <div className="md:col-span-2">
-            <ScrollReveal preset="right" delay={0.3} duration={0.7}>
-              <motion.div whileHover={{ scale: 1.02 }} className="bg-[#1D2D50] rounded-xl p-4 flex flex-col border border-white/5 shadow-lg hover:border-[#00B4D8]/50 transition-all relative overflow-hidden group">
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                  <div className="absolute inset-0 animate-shimmer" />
-                </div>
-
-                <div className="relative z-10 w-full">
-                  <div className="flex items-center justify-between mb-4">
-                    <h2 className="space-grotesk-title text-lg font-semibold text-[#E0E0E0]">Tendência de Performance</h2>
-                  </div>
-                  <TrendChart data={tendenciaPerformance} />
-
-                  <div className="mt-3 pt-3 border-t border-white/10">
-                    <p className="sora-text text-xs text-[#A8A8A8] italic text-center">Últimas 7 partidas • Tendência: <span className="text-[#4CAF50] font-semibold">↑ Melhorando</span></p>
-                  </div>
-                </div>
-              </motion.div>
-            </ScrollReveal>
-          </div>
-        </div>
-      )}
-
-      {/* ANÁLISE DETALHADA POR ROTA */}
-      <div className="relative z-10">
-        <h2 className="space-grotesk-title text-2xl font-bold mb-4 text-[#E0E0E0]">Análise por Rota</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-          {laneAnalysis.map((lane, idx) => (
+      <div className='relative z-10'>
+        {/* GRID DE INDICADORES (KPIs) */}
+        <div className="relative z-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 ">
+          {kpis.map((kpi, idx) => (
             <ScrollReveal key={idx} delay={idx * 0.1} preset="up" duration={0.6}>
-              <motion.div whileHover={{ scale: 1.02, y: -4 }} className="relative">
-                <LaneCard lane={lane} />
-              </motion.div>
+              <KPICard kpi={kpi} idx={idx} imageErrors={imageErrors} handleImageError={handleImageError} />
             </ScrollReveal>
           ))}
+        </div>
+
+        {/* GRÁFICO DE DISTRIBUIÇÃO DE ROLES */}
+        {configs.mostrarGraficos && (
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mt-8 relative z-10">
+
+            <div className="md:col-span-2">
+              <ScrollReveal preset="left" delay={0.2} duration={0.7}>
+                <motion.div whileHover={{ scale: 1.02 }} className="bg-[#1D2D50] rounded-xl p-4 flex flex-col items-center justify-center border border-white/5 shadow-lg hover:border-[#00B4D8]/50 transition-all relative overflow-hidden group">
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                    <div className="absolute inset-0 animate-shimmer"></div>
+                  </div>
+
+                  <div className="relative z-10 w-full">
+                    <h2 className="space-grotesk-title text-lg font-semibold mb-4 text-[#E0E0E0]">Mapa de Pressão Estratégica</h2>
+                    <DecisionHeatMap data={decisionHeatMap} />
+                  </div>
+                </motion.div>
+              </ScrollReveal>
+            </div>
+
+            <div className="md:col-span-2">
+              <ScrollReveal preset="right" delay={0.3} duration={0.7}>
+                <motion.div whileHover={{ scale: 1.02 }} className="bg-[#1D2D50] rounded-xl p-4 flex flex-col border border-white/5 shadow-lg hover:border-[#00B4D8]/50 transition-all relative overflow-hidden group">
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                    <div className="absolute inset-0 animate-shimmer" />
+                  </div>
+
+                  <div className="relative z-10 w-full">
+                    <div className="flex items-center justify-between mb-4">
+                      <h2 className="space-grotesk-title text-lg font-semibold text-[#E0E0E0]">Tendência de Performance</h2>
+                    </div>
+                    <TrendChart data={tendenciaPerformance} />
+
+                    <div className="mt-3 pt-3 border-t border-white/10">
+                      <p className="sora-text text-xs text-[#A8A8A8] italic text-center">Últimas 7 partidas • Tendência: <span className="text-[#4CAF50] font-semibold">↑ Melhorando</span></p>
+                    </div>
+                  </div>
+                </motion.div>
+              </ScrollReveal>
+            </div>
+          </div>
+        )}
+
+        {/* ANÁLISE DETALHADA POR ROTA */}
+        <div className="relative z-10">
+          <h2 className="space-grotesk-title text-2xl font-bold mb-4 text-[#E0E0E0]">Análise por Rota</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+            {laneAnalysis.map((lane, idx) => (
+              <ScrollReveal key={idx} delay={idx * 0.1} preset="up" duration={0.6}>
+                <motion.div whileHover={{ scale: 1.02, y: -4 }} className="relative">
+                  <LaneCard lane={lane} />
+                </motion.div>
+              </ScrollReveal>
+            ))}
+          </div>
         </div>
       </div>
     </div >
