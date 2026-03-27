@@ -108,7 +108,7 @@ export default function Dashboard() {
   return (
     <div className="relative overflow-hidden p-6 flex-1 flex-col gap-8 bg-transparent min-h-screen">
       {/* Background animado sutil */}
-      <DarkVeilBackground />
+      {/* <DarkVeilBackground /> */}
 
       <div className='relative z-10'>
         {/* GRID DE INDICADORES (KPIs) */}

@@ -27,7 +27,7 @@ export default function LoadingScreen({ onLoadingComplete }: LoadingScreenProps)
                     exit={{ opacity: 0, transition: { duration: 1 } }}
                     className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-white text-[#0B132B]"
                 >
-                    {/* Background animado sutil */}
+                    
                     
 
                     {/* Logo animado */}
@@ -48,7 +48,7 @@ export default function LoadingScreen({ onLoadingComplete }: LoadingScreenProps)
                     <motion.div
                         initial={{ width: "0%" }}
                         animate={{ width: "100%" }}
-                        transition={{ duration: 1.8, delay: 0.4 }}
+                        transition={{ duration: 3.5, delay: 0.4 }}
                         className="mt-2 h-1 bg-gradient-to-r from-[#0077B6] via-[#00B4D8] to-[#0077B6] rounded-full w-full max-w-xs relative z-10 overflow-hidden"
                     >
                         <motion.div
@@ -57,7 +57,7 @@ export default function LoadingScreen({ onLoadingComplete }: LoadingScreenProps)
                                 x: ['-100%', '100%'],
                             }}
                             transition={{
-                                duration: 1.5,
+                                duration: 3.5,
                                 repeat: Infinity,
                                 ease: "linear"
                             }}

@@ -10,17 +10,17 @@ const Header = () => {
   const blur = useTransform(scrollY, [0, 200], ['blur(0px)', 'blur(8px)']);
   const opacity = useTransform(scrollY, [0, 200], [1, 0.85]);
 
-  const [mounted, setMounted] = useState(false);
+  // const [mounted, setMounted] = useState(false);
 
-  useEffect(() => {
-    // só anima depois do loading (header montado)
-    setMounted(true);
-  }, []);
+  // useEffect(() => {
+  //   // só anima depois do loading (header montado)
+  //   setMounted(true);
+  // }, []);
 
   return (
     <motion.header
       initial={{ opacity: 0, y: -20 }}
-      animate={mounted ? { opacity: 1, y: 0 } : {}}
+      animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
       style={{ height, backdropFilter: blur, opacity }}
       className="w-full sticky top-0 z-50 px-8 bg-[#1D2D50]/70 
@@ -30,10 +30,10 @@ const Header = () => {
     >
       <motion.h1
         initial={{ opacity: 0, y: 10 }}
-        animate={mounted ? { opacity: 1, y: 0 } : {}}
+        animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3, duration: 0.7 }}
   className="text-3xl md:text-4xl font-semibold 
-       bg-linear-to-r text-white 
+       text-white 
        bg-clip-text tracking-wide"
       >
         Plataforma de Análise eSports
