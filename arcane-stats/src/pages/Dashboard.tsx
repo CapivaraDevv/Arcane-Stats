@@ -106,9 +106,9 @@ export default function Dashboard() {
   ];
 
   return (
-    <div className="relative overflow-hidden p-6 flex-1 flex-col gap-8 bg-transparent min-h-screen">
+    <div className="relative overflow-hidden p-6 flex-1 flex-col gap-8 bg-transparent min-h-screen ">
       {/* Background animado sutil */}
-      <DarkVeilBackground />
+      {/* <DarkVeilBackground /> */}
 
       <div className='relative z-10'>
         {/* GRID DE INDICADORES (KPIs) */}
@@ -122,7 +122,7 @@ export default function Dashboard() {
 
         {/* GRÁFICO DE DISTRIBUIÇÃO DE ROLES */}
         {configs.mostrarGraficos && (
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mt-8 relative z-10">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mt-8 mb-6 relative z-10">
 
             <div className="md:col-span-2">
               <ScrollReveal preset="left" delay={0.2} duration={0.7}>
