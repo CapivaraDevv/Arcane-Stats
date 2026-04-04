@@ -14,20 +14,25 @@ const Sidebar = () => {
       opacity: 1,
       x: 0,
       transition: {
-        delay: i * 0.1,
-        duration: 0.3
+        delay: 0.4 + i * 0.1,
+        duration: 0.4
       }
     })
   };
 
   return (
-    <aside className="bg-[#1d2d50] min-h-screen w-56 flex flex-col gap-4 px-4 py-3 shadow-lg border-r border-white/5 relative overflow-hidden">
+    <motion.aside className="bg-[#1d2d50] min-h-screen w-56 flex flex-col gap-4 px-4 py-3 shadow-lg border-r border-white/5 relative overflow-hidden"
+      initial={{ opacity: 0, x: -50 }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: -50 }}
+      transition={{ duration: 0.5, ease: "easeOut" }}>
       {/* Background animado sutil */}
       <div className="absolute top-0 right-0 w-32 h-32 bg-[#0077B6]/10 rounded-full blur-3xl animate-float"></div>
 
       <motion.div
         initial={{ opacity: 0, scale: 0.9, rotate: -2}}
         animate={{ opacity: 1, scale: 1, rotate: 0}}
+        transition={{ delay: 0.2, duration: 0.5 }}
         whileHover={{
           scale: 1.1,
           rotateX: 8,
@@ -79,7 +84,7 @@ const Sidebar = () => {
           </motion.div>
         ))}
       </nav>
-    </aside>
+    </motion.aside>
   );
 };
 

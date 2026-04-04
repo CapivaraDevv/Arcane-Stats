@@ -9,6 +9,7 @@ import PageFade from './PageFade';
 import Login from './Login';
 import Register from './Register';
 import ProtectedRoute from './ProtectedRoute';
+import Home from './Home';
 
 interface AnimatedRoutesProps {
   isReady?: boolean;
@@ -21,7 +22,7 @@ const AnimatedRoutes = ({ isReady = true }: AnimatedRoutesProps) => {
   return (
     <AnimatePresence mode="wait">
       <Routes location={location} key={location.pathname}>
-        <Route path="/" element={<PageFade isReady={isReady}><ProtectedRoute><Dashboard /></ProtectedRoute></PageFade>} />
+        <Route path="/" element={<PageFade isReady={isReady}><Home/></PageFade>} />
         <Route path="/dashboard" element={<PageFade isReady={isReady}><ProtectedRoute><Dashboard /></ProtectedRoute></PageFade>} />
         <Route path="/login" element={<PageFade isReady={isReady}><Login /></PageFade>} />
         <Route path="/register" element={<PageFade isReady={isReady}><Register /></PageFade>} />
