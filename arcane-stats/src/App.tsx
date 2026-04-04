@@ -1,5 +1,5 @@
 import './App.css'
-import { BrowserRouter } from 'react-router-dom'
+import { BrowserRouter, useLocation } from 'react-router-dom'
 import { useState } from 'react'
 import Header from './pages/Header'
 import Sidebar from './pages/Sidebar'
@@ -9,13 +9,36 @@ import { AuthProvider } from './hooks/useAuth.tsx'
 import { AssetProvider } from './hooks/useAssets.tsx'
 import Home from './pages/Home'
 
-function App() {
+const ROTAS_SEM_SIDEBAR = ['/login', '/register']
+
+function AppLayout() {
   const [isLoadingComplete, setIsLoadingComplete] = useState(false)
+  const { pathname } = useLocation()
+
+  const mostrarSidebar = !ROTAS_SEM_SIDEBAR.includes(pathname)
 
   return (
+    <>
+      <LoadingScreen onLoadingComplete={() => setIsLoadingComplete(true)} />
+      <div className='flex min-h-screen'>
+        {mostrarSidebar && <Sidebar />}
+        <div className='flex-1 flex flex-col'>
+          {isLoadingComplete && <Header />}
+          <AnimatedRoutes isReady={isLoadingComplete} />
+        </div>
+      </div>
+    </>
+  )
+}
+
+function App() {
+
+  return (
+
     <BrowserRouter>
       <AssetProvider>
         <AuthProvider>
+<<<<<<< HEAD
           <Home />
           {/* <LoadingScreen onLoadingComplete={() => setIsLoadingComplete(true)} />      
           <div className='flex min-h-screen'>
@@ -25,10 +48,14 @@ function App() {
               <AnimatedRoutes isReady={isLoadingComplete} />
             </div>
           </div> */}
+=======
+          <AppLayout/>
+>>>>>>> 03edbd771c8b11288eb6ff2624db4e8c883350ff
         </AuthProvider>
       </AssetProvider>
     </BrowserRouter>
   )
 }
+
 
 export default App
