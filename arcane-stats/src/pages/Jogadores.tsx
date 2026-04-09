@@ -235,15 +235,15 @@ const Jogadores = () => {
                     <div className="text-xs text-[#A8A8A8]">KDA</div>
                   </div>
                   <div className="bg-[#0B132B] p-3 rounded-lg border border-white/5 text-center">
-                    <div className="text-2xl font-bold text-[#4CAF50]">{selectedPlayer.winrate}%</div>
+                    <div className="text-2xl font-bold text-[#00B4D8]">{selectedPlayer.winrate}%</div>
                     <div className="text-xs text-[#A8A8A8]">Winrate</div>
                   </div>
                   <div className="bg-[#0B132B] p-3 rounded-lg border border-white/5 text-center">
-                    <div className="text-2xl font-bold text-[#F4A261]">{selectedPlayer.games}</div>
+                    <div className="text-2xl font-bold text-[#00B4D8]">{selectedPlayer.games}</div>
                     <div className="text-xs text-[#A8A8A8]">Partidas</div>
                   </div>
                   <div className="bg-[#0B132B] p-3 rounded-lg border border-white/5 text-center">
-                    <div className="text-2xl font-bold text-[#FFD700]">#1</div>
+                    <div className="text-2xl font-bold text-[#00B4D8]">#1</div>
                     <div className="text-xs text-[#A8A8A8]">Posição</div>
                   </div>
                 </div>
