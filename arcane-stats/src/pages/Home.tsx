@@ -42,12 +42,12 @@ export default function Home() {
                     className="flex gap-4"
                 >
                     <button className="bg-indigo-500 hover:bg-indigo-600 px-6 py-3 rounded-xl font-semibold shadow-lg transition">
-                        <Link to="/register">Começar agora</Link>
+                        <Link to="/login">Começar agora</Link>
                     </button>
 
-                    <button className="border border-slate-700 px-6 py-3 rounded-xl hover:bg-slate-800 transition">
+                    {/* <button className="border border-slate-700 px-6 py-3 rounded-xl hover:bg-slate-800 transition">
                         Ver demo
-                    </button>
+                    </button> */}
                 </motion.div>
             </section>
 
@@ -133,9 +133,9 @@ export default function Home() {
                     Você joga ou você evolui?
                 </h2>
 
-                <button className="bg-indigo-500 px-8 py-4 rounded-xl text-lg font-semibold shadow-xl hover:bg-indigo-600 transition">
+                {/* <button className="bg-indigo-500 px-8 py-4 rounded-xl text-lg font-semibold shadow-xl hover:bg-indigo-600 transition">
                     Começar minha evolução
-                </button>
+                </button> */}
             </section>
         </div>
     )

@@ -37,7 +37,7 @@ const Times: React.FC = () => {
         <p className="sora-text text-[#A8A8A8]">Gerencie seus times, analise desempenho e descubra padrões estratégicos.</p>
 
         {/* Criar Time */}
-        <div className="mt-4 p-4 bg-[#0B132B] rounded border border-white/5 max-w-lg">
+        <div className="mt-4 mb-6 p-4 bg-[#0B132B] rounded border border-white/5 max-w-lg">
           <div className="text-sm text-[#A8A8A8] mb-2">Criar novo time</div>
           <div className="flex gap-2">
             <input value={novoNome} onChange={e => setNovoNome(e.target.value)} placeholder="Nome do time" className="p-2 rounded bg-[#1D2D50] text-white flex-1" />

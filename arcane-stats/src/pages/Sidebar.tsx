@@ -42,7 +42,7 @@ const Sidebar = () => {
         }}
         className="px-6 mb-5 rounded-3xl cursor-pointer relative"
       >
-        <img src="/LogoBrancoSemFundo.png" alt="Logo" className="w-32 relative z-10" />
+        <Link to="/"><img src="/LogoBrancoSemFundo.png" alt="Logo" className="w-32 relative z-10" /></Link>
       </motion.div>
       <nav className="sora-text text-[#E0E0E0] *:flex flex-col gap-2 relative z-10">
         {[
