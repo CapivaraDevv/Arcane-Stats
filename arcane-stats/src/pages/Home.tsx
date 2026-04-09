@@ -12,7 +12,7 @@ export default function Home() {
             <DarkVeil />
 
             {/* HERO */}
-            <section className="relative z-10 flex flex-col items-center justify-center text-center px-6 pt-24 gap-6">
+            <section className="relative z-10 flex flex-col items-center justify-center text-center px-6 pt-16 gap-6">
                 <motion.h1
                     initial={{ opacity: 0, y: 40 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -21,7 +21,7 @@ export default function Home() {
                 >
                     Pare de jogar no automático.
                     <br />
-                    <span className="text-indigo-400">
+                    <span className="text-[#0077B6]">
                         Comece a jogar com dados.
                     </span>
                 </motion.h1>
@@ -51,7 +51,7 @@ export default function Home() {
                 </motion.div>
             </section>
 
-            {/* DASHBOARD PREVIEW (o segredo do SaaS) */}
+            
             <section className="relative z-10 mt-20 flex justify-center px-6">
                 <motion.div
                     initial={{ opacity: 0, y: 80 }}
@@ -64,25 +64,25 @@ export default function Home() {
                         {/* CARD 1 */}
                         <div className="bg-slate-800 p-4 rounded-xl">
                             <p className="text-sm text-slate-400">Winrate</p>
-                            <h3 className="text-2xl font-bold text-green-400">+12%</h3>
+                            <h3 className="text-2xl font-bold text-[#00B4D8]">+12%</h3>
                         </div>
 
                         {/* CARD 2 */}
                         <div className="bg-slate-800 p-4 rounded-xl">
                             <p className="text-sm text-slate-400">Farm médio</p>
-                            <h3 className="text-2xl font-bold text-yellow-400">7.8 CS/min</h3>
+                            <h3 className="text-2xl font-bold text-[#00B4D8]">7.8 CS/min</h3>
                         </div>
 
                         {/* CARD 3 */}
                         <div className="bg-slate-800 p-4 rounded-xl">
                             <p className="text-sm text-slate-400">Erros críticos</p>
-                            <h3 className="text-2xl font-bold text-red-400">3 detectados</h3>
+                            <h3 className="text-2xl font-bold text-[#00B4D8]">3 detectados</h3>
                         </div>
                     </div>
 
                     {/* INSIGHT FAKE */}
                     <div className="mt-6 bg-black p-4 rounded-xl border border-slate-800">
-                        <p className="text-red-400 text-sm">Insight da IA</p>
+                        <p className="text-[#00B4D8] text-sm">Insight da IA</p>
                         <p className="text-slate-300 text-sm">
                             Você perdeu 3 waves por rotação errada aos 12 minutos.
                         </p>
@@ -91,8 +91,8 @@ export default function Home() {
             </section>
 
             {/* FEATURES COM SCROLL */}
-            <section className="relative z-10 mt-20 px-6 flex justify-center">
-                <div className="w-full max-w-4xl h-[60vh] rounded-3xl overflow-hidden shadow-2xl">
+            {/* <section className="relative z-10 mt-20 px-6 flex justify-center">
+                <div className="w-full max-w-4xl h-[60vh] rounded-3xl overflow-hidden">
                     <ScrollStack className="h-full">
 
                         <ScrollStackItem itemClassName="bg-slate-900 text-white">
@@ -125,18 +125,18 @@ export default function Home() {
 
                     </ScrollStack>
                 </div>
-            </section>
+            </section> */}
 
             {/* CTA FINAL */}
-            <section className="relative z-10 mt-20 mb-20 flex flex-col items-center text-center px-6 gap-6">
+            {/* <section className="relative z-10 mt-20 mb-20 flex flex-col items-center text-center px-6 gap-6">
                 <h2 className="text-3xl font-bold">
                     Você joga ou você evolui?
                 </h2>
 
                 {/* <button className="bg-indigo-500 px-8 py-4 rounded-xl text-lg font-semibold shadow-xl hover:bg-indigo-600 transition">
                     Começar minha evolução
-                </button> */}
-            </section>
+                </button> 
+            </section> */}
         </div>
     )
 }
