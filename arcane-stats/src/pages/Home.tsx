@@ -1,10 +1,12 @@
 import { motion } from "framer-motion"
 import DarkVeil from "../components/DarkVeilBackground"
 import { Link } from "react-router-dom"
+import { useState } from "react"
 
 export default function Home() {
     const demoVideoUrl = ""
     const demoThumbnail = "https://images.unsplash.com/photo-1542751110-97427bbecf20?auto=format&fit=crop&w=1200&q=80"
+    const [isLearnMoreOpen, setIsLearnMoreOpen] = useState(false)
 
     return (
         <div className="relative min-h-screen w-full overflow-hidden bg-[#020617] text-white">
@@ -95,6 +97,63 @@ export default function Home() {
                 </div>
             </section>
 
+            <section className="relative z-10 mt-12 px-6">
+                <div className="mx-auto w-full max-w-6xl rounded-3xl border border-slate-800 bg-slate-900/70 p-6 backdrop-blur md:p-8">
+                    <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+                        <div>
+                            <p className="text-sm font-semibold uppercase tracking-wide text-[#00B4D8]">
+                                Novo em LoL/eSports?
+                            </p>
+                            <h2 className="mt-2 text-2xl font-bold md:text-3xl">
+                                Um guia rápido para entender o básico sem complicação.
+                            </h2>
+                        </div>
+                        <button
+                            type="button"
+                            onClick={() => setIsLearnMoreOpen(true)}
+                            className="w-fit rounded-xl border border-slate-600 px-4 py-2 text-sm font-semibold transition hover:bg-slate-800"
+                        >
+                            Saiba mais
+                        </button>
+                    </div>
+
+                    <div className="mt-6 grid gap-4 md:grid-cols-3">
+                        <article className="rounded-xl border border-slate-800 bg-slate-800/70 p-4">
+                            <h3 className="text-lg font-semibold text-[#00B4D8]">O que é LoL?</h3>
+                            <p className="mt-2 text-sm text-slate-300">
+                                League of Legends é um jogo de equipe 5 contra 5. Cada pessoa escolhe um personagem e trabalha com o time para chegar até a base inimiga.
+                            </p>
+                        </article>
+
+                        <article className="rounded-xl border border-slate-800 bg-slate-800/70 p-4">
+                            <h3 className="text-lg font-semibold text-[#00B4D8]">O que é uma partida competitiva?</h3>
+                            <p className="mt-2 text-sm text-slate-300">
+                                É uma partida organizada entre times treinados, com estratégia e funções bem definidas. Vence quem toma melhores decisões ao longo do jogo.
+                            </p>
+                        </article>
+
+                        <article className="rounded-xl border border-slate-800 bg-slate-800/70 p-4">
+                            <h3 className="text-lg font-semibold text-[#00B4D8]">O que é eSports e por que existem estatísticas?</h3>
+                            <p className="mt-2 text-sm text-slate-300">
+                                eSports são campeonatos de jogos. As estatísticas ajudam a mostrar o que funcionou ou não, para entender desempenho de forma justa e melhorar mais rápido.
+                            </p>
+                        </article>
+                    </div>
+
+                    <div className="mt-6 rounded-xl border border-slate-800 bg-black/40 p-4">
+                        <p className="text-sm font-semibold text-slate-100">Microglossário</p>
+                        <div className="mt-3 grid gap-2 text-sm text-slate-300 md:grid-cols-2">
+                            <p><span className="font-semibold text-slate-100">Campeão:</span> personagem escolhido por cada jogador.</p>
+                            <p><span className="font-semibold text-slate-100">Rota:</span> caminho principal do mapa por onde o time avança.</p>
+                            <p><span className="font-semibold text-slate-100">Objetivo:</span> alvo importante como torres, dragão e barão.</p>
+                            <p><span className="font-semibold text-slate-100">Draft:</span> momento de escolher e bloquear campeões antes da partida.</p>
+                            <p><span className="font-semibold text-slate-100">Farm:</span> ouro e experiência obtidos ao eliminar tropas e monstros.</p>
+                            <p><span className="font-semibold text-slate-100">Gank:</span> ataque surpresa para ajudar um aliado em outra rota.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             
             <section className="relative z-10 mt-20 flex justify-center px-6">
                 <motion.div
@@ -181,6 +240,34 @@ export default function Home() {
                     Começar minha evolução
                 </button> 
             </section> */}
+
+            {isLearnMoreOpen && (
+                <div className="fixed inset-0 z-30 flex items-center justify-center bg-black/70 px-4">
+                    <div className="w-full max-w-2xl rounded-2xl border border-slate-700 bg-slate-950 p-6 shadow-2xl">
+                        <div className="flex items-start justify-between gap-4">
+                            <h3 className="text-xl font-bold text-[#00B4D8]">Guia estendido para iniciantes</h3>
+                            <button
+                                type="button"
+                                onClick={() => setIsLearnMoreOpen(false)}
+                                className="rounded-lg border border-slate-600 px-3 py-1 text-sm hover:bg-slate-800"
+                            >
+                                Fechar
+                            </button>
+                        </div>
+                        <div className="mt-4 space-y-4 text-sm text-slate-300">
+                            <p>
+                                Em LoL, o objetivo final é destruir o Nexus inimigo. Para isso, os times avançam pelo mapa, conquistam visão, lutam por objetivos e protegem sua própria base.
+                            </p>
+                            <p>
+                                Em competições, quase tudo é planejado: escolhas no draft, movimentação pelo mapa, tempos de luta e controle de recursos. Pequenas decisões podem decidir o resultado.
+                            </p>
+                            <p>
+                                As estatísticas existem para transformar a partida em aprendizado. Elas ajudam a responder perguntas como: “onde perdemos vantagem?”, “quem cresceu mais rápido?” e “em que minuto o jogo virou?”.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     )
 }
