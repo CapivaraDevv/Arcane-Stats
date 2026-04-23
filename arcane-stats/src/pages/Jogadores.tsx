@@ -57,7 +57,11 @@ const Jogadores = () => {
   }, [jogadoresFiltrados, sortKey, sortDir]);
 
   const totalPages = Math.max(1, Math.ceil(sorted.length / pageSize));
-  if (page > totalPages) setPage(totalPages);
+  useEffect(() => {
+    if (page > totalPages) {
+      setPage(totalPages);
+    }
+  }, [page, totalPages]);
   const pageItems = sorted.slice((page - 1) * pageSize, page * pageSize);
 
 

@@ -1,50 +1,34 @@
 import './App.css'
-import { BrowserRouter, useLocation } from 'react-router-dom'
 import { useState } from 'react'
-import Header from './pages/Header'
-import Sidebar from './pages/Sidebar'
-import AnimatedRoutes from './pages/AnimatedRoutes'
-import LoadingScreen from './pages/LoadingScreenn'
-import { AuthProvider } from './hooks/useAuth.tsx'
-import { AssetProvider } from './hooks/useAssets.tsx'
-import Home from './pages/Home'
+import { useLocation } from 'react-router-dom'
+import AppProviders from './app/providers/AppProviders'
+import AppRouter from './app/router/AppRouter'
+import { getRouteMeta } from './app/router/routeConfig'
+import AppShell from './layouts/AppShell'
+import LoadingScreen from './shared/ui/LoadingScreen'
 
-const ROTAS_SEM_SIDEBAR_E_HEADER = ['/login', '/register', '/']
-
-
-function AppLayout() {
+function AppContent() {
   const [isLoadingComplete, setIsLoadingComplete] = useState(false)
   const { pathname } = useLocation()
-
-  const mostrarSidebareHeader = !ROTAS_SEM_SIDEBAR_E_HEADER.includes(pathname)
+  const routeMeta = getRouteMeta(pathname)
+  const showShell = routeMeta?.showShell ?? false
 
   return (
     <>
       <LoadingScreen onLoadingComplete={() => setIsLoadingComplete(true)} />
-      <div className='flex min-h-screen'>
-        {mostrarSidebareHeader && isLoadingComplete && <Sidebar />}
-        <div className='flex-1 flex flex-col'>
-          {mostrarSidebareHeader && isLoadingComplete && <Header />}
-          <AnimatedRoutes isReady={isLoadingComplete} />
-        </div>
-      </div>
+      <AppShell showShell={showShell && isLoadingComplete}>
+        <AppRouter isReady={isLoadingComplete} />
+      </AppShell>
     </>
   )
 }
 
 function App() {
-
   return (
-
-    <BrowserRouter>
-      <AssetProvider>
-        <AuthProvider>
-          <AppLayout />
-        </AuthProvider>
-      </AssetProvider>
-    </BrowserRouter>
+    <AppProviders>
+      <AppContent />
+    </AppProviders>
   )
 }
-
 
 export default App

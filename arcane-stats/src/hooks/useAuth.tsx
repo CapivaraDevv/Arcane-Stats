@@ -1,5 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 import React, { createContext, useContext, useEffect, useState } from 'react';
+import { authStorage } from '../features/auth/services/authStorage';
 
 type User = {
   id: string;
@@ -17,66 +18,42 @@ type AuthContextType = {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-const USERS_KEY = 'arcane_users_v1';
-const SESSION_KEY = 'arcane_session_v1';
-
-function readUsers(): Array<{ id: string; name: string; email: string; password: string }> {
-  try {
-    const raw = localStorage.getItem(USERS_KEY);
-    if (!raw) return [];
-    return JSON.parse(raw);
-  } catch {
-    return [];
-  }
-}
-
-function writeUsers(users: Array<{ id: string; name: string; email: string; password: string }>) {
-  localStorage.setItem(USERS_KEY, JSON.stringify(users));
-}
-
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [initialized, setInitialized] = useState(false);
 
   useEffect(() => {
-    const raw = localStorage.getItem(SESSION_KEY);
-    if (raw) {
-      try {
-        setUser(JSON.parse(raw));
-      } catch {
-        setUser(null);
-      }
-    }
+    setUser(authStorage.readSession());
     // marca que a leitura inicial da sessão foi concluída
     setInitialized(true);
   }, []);
 
   const register = async (name: string, email: string, password: string) => {
-    const users = readUsers();
+    const users = authStorage.readUsers();
     if (users.find(u => u.email.toLowerCase() === email.toLowerCase())) {
       return { success: false, message: 'E-mail já cadastrado' };
     }
     const id = Math.random().toString(36).slice(2, 9);
     users.push({ id, name, email, password });
-    writeUsers(users);
+    authStorage.writeUsers(users);
     const newUser = { id, name, email };
-    localStorage.setItem(SESSION_KEY, JSON.stringify(newUser));
+    authStorage.writeSession(newUser);
     setUser(newUser);
     return { success: true };
   };
 
   const login = async (email: string, password: string) => {
-    const users = readUsers();
+    const users = authStorage.readUsers();
     const found = users.find(u => u.email.toLowerCase() === email.toLowerCase() && u.password === password);
     if (!found) return { success: false, message: 'Credenciais inválidas' };
     const logged = { id: found.id, name: found.name, email: found.email };
-    localStorage.setItem(SESSION_KEY, JSON.stringify(logged));
+    authStorage.writeSession(logged);
     setUser(logged);
     return { success: true };
   };
 
   const logout = () => {
-    localStorage.removeItem(SESSION_KEY);
+    authStorage.clearSession();
     setUser(null);
   };
 

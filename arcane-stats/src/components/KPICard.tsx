@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { useAssets } from '../hooks/useAssets.tsx';
+import { useAssets } from '../hooks/useAssets';
 
 type KPI = { title: string; value: string; feedback?: string };
 

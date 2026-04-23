@@ -2,11 +2,26 @@ import { motion } from "framer-motion"
 import DarkVeil from "../components/DarkVeilBackground"
 import { Link } from "react-router-dom"
 import { useState } from "react"
+import ScrollReveal from "../components/ScrollReveal"
 
 export default function Home() {
-    const demoVideoUrl = ""
+    const demoVideoUrl = "https://www.youtube.com/watch?v=mDYqT0_9VR4"
     const demoThumbnail = "https://images.unsplash.com/photo-1542751110-97427bbecf20?auto=format&fit=crop&w=1200&q=80"
     const [isLearnMoreOpen, setIsLearnMoreOpen] = useState(false)
+    const youtubeVideoId = demoVideoUrl.match(/(?:v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/)?.[1]
+    const demoEmbedUrl = youtubeVideoId
+        ? `https://www.youtube.com/embed/${youtubeVideoId}`
+        : null
+
+    const itemVariants = {
+        hidden: { opacity: 0, x: 20 },
+        visible: { opacity: 1, x: 0 },
+    };
+
+    const upItemVariants = {
+        hidden: { opacity: 0, y: 20 },
+        visible: { opacity: 1, y: 0 },
+    };
 
     return (
         <div className="relative min-h-screen w-full overflow-hidden bg-[#020617] text-white">
@@ -42,7 +57,7 @@ export default function Home() {
                         >
                             <Link
                                 to="/login"
-                                className="bg-indigo-500 hover:bg-indigo-600 px-6 py-3 rounded-xl font-semibold shadow-lg transition"
+                                className="bg-[#0077B6] hover:bg-[#00B4D8] px-6 py-3 rounded-xl font-semibold shadow-lg transition"
                             >
                                 Ver demonstração
                             </Link>
@@ -62,15 +77,16 @@ export default function Home() {
                         transition={{ duration: 0.8, delay: 0.25 }}
                         className="rounded-3xl border border-slate-700 bg-slate-900/70 p-4 backdrop-blur"
                     >
-                        {demoVideoUrl ? (
+                        {demoEmbedUrl ? (
                             <div className="relative overflow-hidden rounded-2xl">
-                                <video
-                                    controls
-                                    poster={demoThumbnail}
-                                    className="aspect-video w-full rounded-2xl object-cover"
-                                >
-                                    <source src={demoVideoUrl} type="video/mp4" />
-                                </video>
+                                <iframe
+                                    src={demoEmbedUrl}
+                                    title="Demonstração do Arcane Stats"
+                                    className="aspect-video w-full rounded-2xl"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                    referrerPolicy="strict-origin-when-cross-origin"
+                                    allowFullScreen
+                                />
                             </div>
                         ) : (
                             <div className="relative aspect-video overflow-hidden rounded-2xl">
@@ -98,7 +114,12 @@ export default function Home() {
             </section>
 
             <section className="relative z-10 mt-12 px-6">
-                <div className="mx-auto w-full max-w-6xl rounded-3xl border border-slate-800 bg-slate-900/70 p-6 backdrop-blur md:p-8">
+                <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, delay: 0.5 }}
+                    className="mx-auto w-full max-w-6xl rounded-3xl border border-slate-800 bg-slate-900/70 p-6 backdrop-blur md:p-8"
+                >
                     <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
                         <div>
                             <p className="text-sm font-semibold uppercase tracking-wide text-[#00B4D8]">
@@ -151,47 +172,125 @@ export default function Home() {
                             <p><span className="font-semibold text-slate-100">Gank:</span> ataque surpresa para ajudar um aliado em outra rota.</p>
                         </div>
                     </div>
-                </div>
-            </section>
-
-            
-            <section className="relative z-10 mt-20 flex justify-center px-6">
-                <motion.div
-                    initial={{ opacity: 0, y: 80 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8 }}
-                    className="w-full max-w-5xl bg-slate-900/80 backdrop-blur-xl rounded-3xl shadow-2xl p-6 border border-slate-800"
-                >
-                    <div className="grid md:grid-cols-3 gap-4">
-                        
-                        {/* CARD 1 */}
-                        <div className="bg-slate-800 p-4 rounded-xl">
-                            <p className="text-sm text-slate-400">Winrate</p>
-                            <h3 className="text-2xl font-bold text-[#00B4D8]">+12%</h3>
-                        </div>
-
-                        {/* CARD 2 */}
-                        <div className="bg-slate-800 p-4 rounded-xl">
-                            <p className="text-sm text-slate-400">Farm médio</p>
-                            <h3 className="text-2xl font-bold text-[#00B4D8]">7.8 CS/min</h3>
-                        </div>
-
-                        {/* CARD 3 */}
-                        <div className="bg-slate-800 p-4 rounded-xl">
-                            <p className="text-sm text-slate-400">Erros críticos</p>
-                            <h3 className="text-2xl font-bold text-[#00B4D8]">3 detectados</h3>
-                        </div>
-                    </div>
-
-                    {/* INSIGHT FAKE */}
-                    <div className="mt-6 bg-black p-4 rounded-xl border border-slate-800">
-                        <p className="text-[#00B4D8] text-sm">Insight da IA</p>
-                        <p className="text-slate-300 text-sm">
-                            Você perdeu 3 waves por rotação errada aos 12 minutos.
-                        </p>
-                    </div>
                 </motion.div>
             </section>
+
+            <ScrollReveal>
+                <section className="relative z-10 mt-12 px-6">
+                    <div className="mx-auto w-full max-w-6xl rounded-3xl border border-slate-800 bg-slate-900/70 p-6 backdrop-blur md:p-8">
+                        <div className="grid gap-6 lg:grid-cols-[1.2fr_1fr]">
+                            <div className="space-y-5">
+                                <ScrollReveal preset="right">
+                                    <article
+                                        className="rounded-2xl border border-slate-800 bg-slate-800/60 p-5"
+                                    >
+                                        <h2 className="text-xl font-bold text-[#00B4D8]">Para quem é</h2>
+                                        <p className="mt-2 text-sm text-slate-300 md:text-base">
+                                            Feito para fãs que querem entender o jogo além do placar, jogadores que buscam evolução prática,
+                                            analistas que precisam de sinais rápidos e curiosos que querem aprender eSports sem jargão.
+                                        </p>
+                                    </article>
+                                </ScrollReveal>
+
+                                <ScrollReveal preset="right">
+                                    <article className="rounded-2xl border border-slate-800 bg-slate-800/60 p-5">
+                                        <h2 className="text-xl font-bold text-[#00B4D8]">Por que criamos</h2>
+                                        <p className="mt-2 text-sm text-slate-300 md:text-base">
+                                            Nossa missão é democratizar análise competitiva em LoL: transformar dados difíceis em decisões
+                                            acionáveis para qualquer pessoa melhorar, acompanhar e discutir partidas com confiança.
+                                        </p>
+                                    </article>
+                                </ScrollReveal>
+                            </div>
+
+                            <ScrollReveal preset="left" stagger={0.12}>
+                                <aside className="rounded-2xl border border-slate-800 bg-black/40 p-5">
+                                    <h3 className="text-lg font-bold text-slate-100">Métricas de confiança</h3>
+                                    <ul className="mt-4 space-y-3 text-sm text-slate-300">
+
+                                        <motion.li variants={itemVariants} transition={{ duration: 0.35, delay: 0.5 }} className="flex items-center justify-between rounded-lg border border-slate-800 bg-slate-900/70 px-3 py-2">
+                                            <span>Partidas analisadas</span>
+                                            <strong className="text-[#00B4D8]">12.4k</strong>
+                                        </motion.li>
+
+                                        <motion.li variants={itemVariants} transition={{ duration: 0.35, delay: 0.53 }} className="flex items-center justify-between rounded-lg border border-slate-800 bg-slate-900/70 px-3 py-2">
+                                            <span>Atualizações de modelo</span>
+                                            <strong className="text-[#00B4D8]">Semanais</strong>
+                                        </motion.li>
+                                        <motion.li variants={itemVariants} transition={{ duration: 0.35, delay: 0.56 }} className="flex items-center justify-between rounded-lg border border-slate-800 bg-slate-900/70 px-3 py-2">
+                                            <span>Fontes de dados</span>
+                                            <strong className="text-[#00B4D8]">Riot + APIs públicas</strong>
+                                        </motion.li>
+                                    </ul>
+                                </aside>
+                            </ScrollReveal>
+                        </div>
+
+                        <ScrollReveal preset="up" stagger={0.12}>
+                            <div className="mt-6 grid gap-4 md:grid-cols-3">
+
+                                <motion.blockquote variants={upItemVariants} className="rounded-xl border border-slate-800 bg-slate-800/60 p-4 text-sm text-slate-200">
+                                    “Finalmente consigo explicar o jogo para meus amigos sem travar em termos técnicos.”
+                                    <footer className="mt-2 text-xs text-slate-400">— Lara, fã casual</footer>
+                                </motion.blockquote>
+
+
+                                <motion.blockquote variants={upItemVariants} className="rounded-xl border border-slate-800 bg-slate-800/60 p-4 text-sm text-slate-200">
+                                    “O resumo pós-jogo me mostrou erros de rotação que eu nunca tinha percebido.”
+                                    <footer className="mt-2 text-xs text-slate-400">— Vini, jogador ranked</footer>
+                                </motion.blockquote>
+
+
+                                <motion.blockquote variants={upItemVariants} className="rounded-xl border border-slate-800 bg-slate-800/60 p-4 text-sm text-slate-200">
+                                    “Os indicadores são rápidos e confiáveis para preparar comentários antes das séries.”
+                                    <footer className="mt-2 text-xs text-slate-400">— Caio, analista iniciante</footer>
+                                </motion.blockquote>
+
+                            </div>
+                        </ScrollReveal>
+                    </div>
+                </section>
+            </ScrollReveal>
+
+            <ScrollReveal>
+                <section className="relative z-10 mt-20 flex justify-center px-6">
+                    <motion.div
+                        initial={{ opacity: 0, y: 80 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8 }}
+                        className="w-full max-w-5xl bg-slate-900/80 backdrop-blur-xl rounded-3xl shadow-2xl p-6 border border-slate-800"
+                    >
+                        <div className="grid md:grid-cols-3 gap-4">
+
+                            {/* CARD 1 */}
+                            <div className="bg-slate-800 p-4 rounded-xl">
+                                <p className="text-sm text-slate-400">Winrate</p>
+                                <h3 className="text-2xl font-bold text-[#00B4D8]">+12%</h3>
+                            </div>
+
+                            {/* CARD 2 */}
+                            <div className="bg-slate-800 p-4 rounded-xl">
+                                <p className="text-sm text-slate-400">Farm médio</p>
+                                <h3 className="text-2xl font-bold text-[#00B4D8]">7.8 CS/min</h3>
+                            </div>
+
+                            {/* CARD 3 */}
+                            <div className="bg-slate-800 p-4 rounded-xl">
+                                <p className="text-sm text-slate-400">Erros críticos</p>
+                                <h3 className="text-2xl font-bold text-[#00B4D8]">3 detectados</h3>
+                            </div>
+                        </div>
+
+                        {/* INSIGHT FAKE */}
+                        <div className="mt-6 bg-black p-4 rounded-xl border border-slate-800">
+                            <p className="text-[#00B4D8] text-sm">Insight da IA</p>
+                            <p className="text-slate-300 text-sm">
+                                Você perdeu 3 waves por rotação errada aos 12 minutos.
+                            </p>
+                        </div>
+                    </motion.div>
+                </section>
+            </ScrollReveal>
 
             {/* FEATURES COM SCROLL */}
             {/* <section className="relative z-10 mt-20 px-6 flex justify-center">

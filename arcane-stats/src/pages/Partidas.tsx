@@ -1,7 +1,8 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 import ScrollReveal from '../components/ScrollReveal';
-import { useAssets } from '../hooks/useAssets.tsx';
+import { useAssets } from '../hooks/useAssets';
+import { useImageFallback } from '../shared/hooks/useImageFallback';
 
 interface Partida {
   id: number;
@@ -20,17 +21,8 @@ interface Partida {
 
 const Partidas = () => {
   const [filtro, setFiltro] = useState<'Todas' | 'Vitória' | 'Derrota'>('Todas');
-  const [imageErrors, setImageErrors] = useState<Set<string>>(new Set());
+  const { imageErrors, markImageError } = useImageFallback();
   const { getChampionIcon, getItemIcon } = useAssets();
-
-  // Função para lidar com erro no carregamento da imagem
-  const handleImageError = (championName: string) => {
-    setImageErrors(prev => {
-      const next = new Set(prev);
-      next.add(championName);
-      return next;
-    });
-  };
 
   const partidas: Partida[] = [
     {
@@ -208,7 +200,7 @@ const Partidas = () => {
                         src={getChampionIcon(partida.campeao)}
                         alt={partida.campeao}
                         className="w-full h-full object-cover"
-                        onError={() => handleImageError(partida.campeao)}
+                        onError={() => markImageError(partida.campeao)}
                       />
                     )}
                     {/* Overlay sutil para indicar resultado */}

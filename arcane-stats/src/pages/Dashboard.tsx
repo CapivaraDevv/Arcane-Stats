@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
-import { useState } from 'react';
 import ScrollReveal from '../components/ScrollReveal';
 import { useConfig } from '../hooks/useConfig';
+import { useImageFallback } from '../shared/hooks/useImageFallback';
 
 import KPICard from '../components/KPICard';
 import EfficiencyChart from '../components/EfficiencyChart';
@@ -12,18 +12,7 @@ import DarkVeilBackground from '../components/DarkVeilBackground';
 
 export default function Dashboard() {
   const { configs } = useConfig();
-  // Estado para controlar falhas no carregamento de imagens
-  const [imageErrors, setImageErrors] = useState<Set<string>>(new Set());
-
-
-  // Função para lidar com erro no carregamento da imagem
-  const handleImageError = (championName: string) => {
-    setImageErrors(prev => {
-      const next = new Set(prev);
-      next.add(championName);
-      return next;
-    });
-  };
+  const { imageErrors, markImageError } = useImageFallback();
   // Dados mockados para KPIs
   const kpis = [
     { title: 'Taxa de Vitória', value: '62%', feedback: "+5% últimos 7 jogos" },
@@ -115,7 +104,7 @@ export default function Dashboard() {
         <div className="relative z-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 ">
           {kpis.map((kpi, idx) => (
             <ScrollReveal key={idx} delay={idx * 0.1} preset="up" duration={0.6}>
-              <KPICard kpi={kpi} idx={idx} imageErrors={imageErrors} handleImageError={handleImageError} />
+              <KPICard kpi={kpi} idx={idx} imageErrors={imageErrors} handleImageError={markImageError} />
             </ScrollReveal>
           ))}
         </div>

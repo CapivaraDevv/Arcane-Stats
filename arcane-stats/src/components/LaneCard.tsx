@@ -10,7 +10,7 @@ type Lane = {
 };
 
 import React from 'react';
-import { useAssets } from '../hooks/useAssets.tsx';
+import { useAssets } from '../hooks/useAssets';
 
 function LaneCardInner({ lane }: { lane: Lane }) {
   const { getChampionIcon, getItemIcon } = useAssets();

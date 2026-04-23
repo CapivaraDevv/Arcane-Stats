@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { configStorage } from '../features/settings/services/configStorage';
 
 export interface ConfigType {
   animacoes: boolean;
@@ -38,8 +39,6 @@ export const defaultConfigs: ConfigType = {
   preloadDados: true,
 };
 
-const STORAGE_KEY = 'arcane-stats-config';
-
 export const useConfig = () => {
   const [configs, setConfigs] = useState<ConfigType>(defaultConfigs);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -47,11 +46,8 @@ export const useConfig = () => {
   // Carregar configurações do localStorage ao montar
   useEffect(() => {
     try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        setConfigs({ ...defaultConfigs, ...parsed });
-      }
+      const saved = configStorage.read<Partial<ConfigType> | null>(null);
+      if (saved) setConfigs({ ...defaultConfigs, ...saved });
     } catch (error) {
       console.error('Erro ao carregar configurações:', error);
     } finally {
@@ -62,7 +58,7 @@ export const useConfig = () => {
   // Salvar configurações no localStorage
   const saveConfigs = (newConfigs: ConfigType) => {
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(newConfigs));
+      configStorage.write(newConfigs);
       setConfigs(newConfigs);
       return true;
     } catch (error) {
@@ -74,7 +70,7 @@ export const useConfig = () => {
   // Restaurar configurações padrão
   const resetConfigs = () => {
     try {
-      localStorage.removeItem(STORAGE_KEY);
+      configStorage.clear();
       setConfigs(defaultConfigs);
       return true;
     } catch (error) {
