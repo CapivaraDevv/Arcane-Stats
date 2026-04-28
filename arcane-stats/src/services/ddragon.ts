@@ -4,6 +4,15 @@
 // between the numeric identifiers that the Riot API returns and the visual atoms
 // that Data Dragon exposes.
 
+type Champion = {
+  id: string;
+  key: string;
+};
+
+type ChampionResponse = {
+  data: Record<string, Champion>;
+};
+
 export const getChampionIcon = (version: string, championName: string) => {
   // Data Dragon uses the internal champion id, e.g. "Vayne", "Aatrox" etc.
   // caller is responsible for normalising/removing accents if necessary
@@ -24,11 +33,14 @@ export const getSpellIcon = (version: string, spellName: string) => {
 // and reuse it for every participant in a match.
 export const fetchChampionMap = async (version: string): Promise<Record<number, string>> => {
   const res = await fetch(`https://ddragon.leagueoflegends.com/cdn/${version}/data/en_US/champion.json`);
+  
   if (!res.ok) throw new Error(`failed to fetch champion list: ${res.status}`);
-  const json = await res.json();
+
+  const json: ChampionResponse = await res.json();
 
   const map: Record<number, string> = {};
-  Object.values(json.data).forEach((champ: any) => {
+
+  Object.values(json.data).forEach((champ) => {
     map[Number(champ.key)] = champ.id;
   });
   return map;

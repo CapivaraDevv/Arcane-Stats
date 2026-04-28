@@ -7,6 +7,13 @@ export interface ScrollStackItemProps {
   children: ReactNode;
 }
 
+type TransformState = {
+  translateY: number;
+  scale: number;
+  rotation: number;
+  blur: number;
+};
+
 export const ScrollStackItem: React.FC<ScrollStackItemProps> = ({ children, itemClassName = '' }) => (
   <div
     className={`scroll-stack-card relative w-full h-80 my-8 p-12 rounded-[40px] shadow-[0_0_30px_rgba(0,0,0,0.1)] box-border origin-top will-change-transform ${itemClassName}`.trim()}
@@ -55,7 +62,7 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
   const animationFrameRef = useRef<number | null>(null);
   const lenisRef = useRef<Lenis | null>(null);
   const cardsRef = useRef<HTMLElement[]>([]);
-  const lastTransformsRef = useRef(new Map<number, any>());
+  const lastTransformsRef = useRef<Map<number, TransformState>>(new Map());
   const isUpdatingRef = useRef(false);
 
   const calculateProgress = useCallback((scrollTop: number, start: number, end: number) => {
@@ -105,7 +112,7 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
 
     isUpdatingRef.current = true;
 
-    const { scrollTop, containerHeight, scrollContainer } = getScrollData();
+    const { scrollTop, containerHeight } = getScrollData();
     const stackPositionPx = parsePercentage(stackPosition, containerHeight);
     const scaleEndPositionPx = parsePercentage(scaleEndPosition, containerHeight);
 

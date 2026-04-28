@@ -4,11 +4,9 @@ import { useConfig } from '../hooks/useConfig';
 import { useImageFallback } from '../shared/hooks/useImageFallback';
 
 import KPICard from '../components/KPICard';
-import EfficiencyChart from '../components/EfficiencyChart';
 import TrendChart from '../components/TrendChart';
 import LaneCard from '../components/LaneCard';
 import DecisionHeatMap from '../components/DecisionHeatmap';
-import DarkVeilBackground from '../components/DarkVeilBackground';
 
 export default function Dashboard() {
   const { configs } = useConfig();
