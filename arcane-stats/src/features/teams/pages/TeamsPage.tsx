@@ -111,7 +111,7 @@ const TeamsPage: React.FC = () => {
 
               <div className="space-y-1.5">
                 {teams.length === 0 && (
-                  <div className="rounded-xl border border-dashed border-[hsl(var(--border))] bg-[hsl(var(--background/40))] px-3 py-8 text-center">
+                  <div className="rounded-xl border border-dashed border-[hsl(var(--border))] bg-[hsl(var(--background) / 0.4)] px-3 py-8 text-center">
                     <Shield className="mx-auto h-8 w-8 text-muted-foreground/50" />
                     <p className="mt-2 text-xs text-muted-foreground">
                       Nenhum time ainda.
@@ -131,21 +131,21 @@ const TeamsPage: React.FC = () => {
                       className={[
                         'group relative flex w-full items-center gap-3 overflow-hidden rounded-xl border px-3 py-3 text-left transition-all',
                         active
-                          ? 'border-[hsl(var(--primary)/0.5)] bg-[hsl(var(--primary/10))] shadow-glow'
-                          : 'border-[hsl(var(--border)/0.4)] bg-[hsl(var(--background/30))] hover:border-[hsl(var(--border))] hover:bg-secondary/40',
+                          ? 'border-primary/50 bg-primary/10 shadow-glow'
+                          : 'border-border/40 bg-background/10 hover:border-[hsl(var(--border))] hover:bg-[hsl(var(--secondary))]/0.4',
                       ].join(' ')}
                     >
                       {active && (
                         <motion.div
                           layoutId="activeTeam"
-                          className="absolute inset-y-0 left-0 w-1 rounded-r-full bg-gradient-to-b from-[hsl(var(--primary))] to-[hsl(var(--primary-glow))]"
+                          className="absolute inset-y-0 left-0 w-1 rounded-r-full bg-linear-to-b from-primary to-primary-glow"
                         />
                       )}
                       <div
                         className={[
                           'flex h-10 w-10 items-center justify-center rounded-lg font-display text-sm font-black transition',
                           active
-                            ? 'bg-[hsl(var(--gradient-primary))] text-primary-foreground shadow-glow'
+                            ? 'bg-(--gradient-primary) text-primary-foreground shadow-glow'
                             : 'bg-secondary text-foreground group-hover:bg-secondary/80',
                         ].join(' ')}
                       >
