@@ -2,11 +2,12 @@ import { motion } from 'framer-motion'
 import ScrollReveal from '../../../components/ScrollReveal'
 import { useConfig } from '../../../hooks/useConfig'
 import { useImageFallback } from '../../../shared/hooks/useImageFallback'
+import DarkVeil from '../../../components/DarkVeilBackground'
 
 import KPICard from '../../../components/KPICard'
 import TrendChart from '../../../components/TrendChart'
 import LaneCard from '../../../components/LaneCard'
-import DecisionHeatMap from '../../../components/DecisionHeatmap'
+
 
 export default function DashboardPage() {
   const { configs } = useConfig()
@@ -92,6 +93,7 @@ export default function DashboardPage() {
 
   return (
     <div className="relative overflow-hidden p-6 flex-1 flex-col gap-8 bg-transparent min-h-screen ">
+      <DarkVeil />
       <div className="relative z-10">
         <div className="relative z-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 ">
           {kpis.map((kpi, idx) => (

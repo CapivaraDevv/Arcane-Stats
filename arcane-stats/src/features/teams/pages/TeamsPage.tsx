@@ -53,14 +53,14 @@ const TeamsPage: React.FC = () => {
   const isOwner = selected && selected.creatorId === userId
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-[hsl(var(--background))] text-[hsl(var(--foreground))]">
+    <div className="relative min-h-screen overflow-hidden bg-background text-foreground">
       {/* Background hextech */}
       <div className="pointer-events-none absolute inset-0 bg-hero" />
       <div className="pointer-events-none absolute inset-0 bg-hex opacity-40" />
       <div className="pointer-events-none absolute -top-40 left-1/2 h-[500px] w-[900px] -translate-x-1/2 rounded-full bg-primary/20 blur-3xl" />
 
       {/* Header */}
-      <header className="sticky top-0 z-30 border-b border-[hsl(var(--border)/0.6)] bg-background/70 backdrop-blur-xl">
+      <header className="sticky top-0 z-30 border-b border-border/60 bg-background/70 backdrop-blur-xl">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
           <div className="flex items-center gap-3">
             <div className="relative">
@@ -109,6 +109,8 @@ const TeamsPage: React.FC = () => {
                 </span>
               </div>
 
+            
+
               <div className="space-y-1.5">
                 {teams.length === 0 && (
                   <div className="rounded-xl border border-dashed border-[hsl(var(--border))] bg-[hsl(var(--background) / 0.4)] px-3 py-8 text-center">
@@ -132,7 +134,7 @@ const TeamsPage: React.FC = () => {
                         'group relative flex w-full items-center gap-3 overflow-hidden rounded-xl border px-3 py-3 text-left transition-all',
                         active
                           ? 'border-primary/50 bg-primary/10 shadow-glow'
-                          : 'border-border/40 bg-background/10 hover:border-[hsl(var(--border))] hover:bg-[hsl(var(--secondary))]/0.4',
+                          : 'border-border/40 bg-background/10 hover:border-border hover:bg-secondary/40',
                       ].join(' ')}
                     >
                       {active && (
@@ -145,7 +147,7 @@ const TeamsPage: React.FC = () => {
                         className={[
                           'flex h-10 w-10 items-center justify-center rounded-lg font-display text-sm font-black transition',
                           active
-                            ? 'bg-(--gradient-primary) text-primary-foreground shadow-glow'
+                            ? 'bg-gradient-primary text-primary-foreground shadow-glow'
                             : 'bg-secondary text-foreground group-hover:bg-secondary/80',
                         ].join(' ')}
                       >
@@ -453,8 +455,8 @@ const TeamDetail: React.FC<{
 const TONE_MAP: Record<string, { bg: string; text: string; ring: string }> = {
   emerald: { bg: 'bg-emerald-500/10', text: 'text-emerald-400', ring: 'border-emerald-500/30' },
   primary: { bg: 'bg-primary/10', text: 'text-primary', ring: 'border-primary/30' },
-  rose:    { bg: 'bg-rose-500/10', text: 'text-rose-400', ring: 'border-rose-500/30' },
-  amber:   { bg: 'bg-amber-500/10', text: 'text-amber-400', ring: 'border-amber-500/30' },
+  rose: { bg: 'bg-rose-500/10', text: 'text-rose-400', ring: 'border-rose-500/30' },
+  amber: { bg: 'bg-amber-500/10', text: 'text-amber-400', ring: 'border-amber-500/30' },
 }
 
 const MiniStat: React.FC<{
@@ -491,9 +493,9 @@ const MiniStat: React.FC<{
 const RankBadge: React.FC<{ position: number }> = ({ position }) => {
   const styles =
     position === 1 ? 'bg-gradient-to-br from-amber-300 to-amber-500 text-background shadow-[0_0_12px_rgba(251,191,36,0.5)]'
-    : position === 2 ? 'bg-gradient-to-br from-slate-200 to-slate-400 text-background'
-    : position === 3 ? 'bg-gradient-to-br from-orange-400 to-orange-600 text-background'
-    : 'bg-secondary text-muted-foreground'
+      : position === 2 ? 'bg-gradient-to-br from-slate-200 to-slate-400 text-background'
+        : position === 3 ? 'bg-gradient-to-br from-orange-400 to-orange-600 text-background'
+          : 'bg-secondary text-muted-foreground'
   return (
     <div className={`flex h-7 w-7 items-center justify-center rounded-lg font-display text-xs font-black ${styles}`}>
       {position}
@@ -510,9 +512,8 @@ const LANE_TONES: Record<string, string> = {
 }
 const LaneBadge: React.FC<{ lane?: string }> = ({ lane }) => (
   <span
-    className={`inline-flex items-center rounded-md border px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider ${
-      lane ? LANE_TONES[lane] : 'border-[hsl(var(--border))] bg-secondary/40 text-muted-foreground'
-    }`}
+    className={`inline-flex items-center rounded-md border px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider ${lane ? LANE_TONES[lane] : 'border-[hsl(var(--border))] bg-secondary/40 text-muted-foreground'
+      }`}
   >
     {lane ?? '—'}
   </span>
@@ -522,8 +523,8 @@ const AggressionBar: React.FC<{ value: number }> = ({ value }) => {
   const v = Math.max(0, Math.min(100, value))
   const tone =
     v > 75 ? 'from-rose-400 to-orange-500'
-    : v > 45 ? 'from-primary to-primary-glow'
-    : 'from-emerald-400 to-cyan-400'
+      : v > 45 ? 'from-primary to-primary-glow'
+        : 'from-emerald-400 to-cyan-400'
   return (
     <div className="flex items-center justify-end gap-2">
       <div className="h-1.5 w-24 overflow-hidden rounded-full bg-secondary/60">
@@ -774,11 +775,10 @@ const TeamBadge: React.FC<{ team: Team; alignment: 'left' | 'right'; winning?: b
   )
   const avatar = (
     <div
-      className={`flex h-12 w-12 items-center justify-center rounded-xl font-display text-base font-black text-primary-foreground ${
-        winning
-          ? 'bg-gradient-primary shadow-glow ring-2 ring-primary/50'
-          : 'bg-secondary text-foreground'
-      }`}
+      className={`flex h-12 w-12 items-center justify-center rounded-xl font-display text-base font-black text-primary-foreground ${winning
+        ? 'bg-gradient-primary shadow-glow ring-2 ring-primary/50'
+        : 'bg-secondary text-foreground'
+        }`}
     >
       {team.nome.slice(0, 2).toUpperCase()}
     </div>
