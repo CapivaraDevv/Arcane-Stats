@@ -3,6 +3,8 @@ import DarkVeil from '../../../components/DarkVeilBackground'
 import { Link } from 'react-router-dom'
 import { useState } from 'react'
 import ScrollReveal from '../../../components/ScrollReveal'
+import { BarChart3, Brain } from 'lucide-react'
+
 
 export default function HomePage() {
   const demoVideoUrl = 'https://www.youtube.com/watch?v=mDYqT0_9VR4'
@@ -34,7 +36,7 @@ export default function HomePage() {
               transition={{ duration: 0.7 }}
               className="space-grotesk-title text-4xl md:text-5xl lg:text-6xl font-bold leading-tight"
             >
-              Entenda partidas de LoL com dados claros, mesmo sem ser especialista.
+              Arcane <span className='text-[#00B4D8]'>Stats</span>
             </motion.h1>
 
             <motion.p
@@ -56,7 +58,7 @@ export default function HomePage() {
                 to="/login"
                 className="bg-[#0077B6] hover:bg-[#00B4D8] px-6 py-3 rounded-xl font-semibold shadow-lg transition"
               >
-                Ver demonstração
+                Começar minha evolução
               </Link>
 
               <Link
@@ -170,6 +172,94 @@ export default function HomePage() {
             </div>
           </div>
         </motion.div>
+      </section>
+
+
+      <section id="dashboard" className="relative z-10 mt-32 px-6">
+        <ScrollReveal>
+          <div className="mx-auto w-full max-w-6xl">
+            <div className="mb-10 flex flex-col items-start justify-between gap-4 md:flex-row md:items-end">
+              <div>
+                <p className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.25em] text-primary">
+                  <BarChart3 className="h-3.5 w-3.5" /> Pós-jogo
+                </p>
+                <h2 className="mt-3 font-display text-3xl font-bold leading-tight md:text-5xl">
+                  Onde você <span className="text-gradient">perdeu o jogo</span>.
+                  <br className="hidden md:block" /> Em 3 cards.
+                </h2>
+              </div>
+              <p className="max-w-sm text-sm text-muted-foreground">
+                Sem 47 abas, sem planilha. Os 3 números que importam — e a decisão errada que ligou tudo.
+              </p>
+            </div>
+
+            <div className="relative">
+              <div className="absolute -inset-4 -z-10 rounded-[2rem] bg-gradient-primary opacity-20 blur-3xl" />
+              <SpotlightCard className="rounded-3xl border-primary/20 p-6 shadow-elevated md:p-8">
+                <div className="grid gap-4 md:grid-cols-3">
+                  {dashboardCards.map((c, i) => (
+                    <motion.div
+                      key={c.label}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: i * 0.1, duration: 0.5 }}
+                      className="group relative overflow-hidden rounded-2xl border border-border bg-background/60 p-5 transition hover:border-primary/40"
+                    >
+                      <div className="absolute -right-8 -top-8 h-24 w-24 rounded-full bg-primary/10 blur-2xl opacity-0 transition group-hover:opacity-100" />
+                      <div className="relative">
+                        <div className="flex items-center justify-between">
+                          <p className="text-xs uppercase tracking-wide text-muted-foreground">{c.label}</p>
+                          <c.icon className="h-4 w-4 text-primary" />
+                        </div>
+                        <div className="mt-3 flex items-baseline gap-1">
+                          <h3 className="font-display text-3xl font-bold text-primary">
+                            <AnimatedCounter
+                              to={c.value}
+                              decimals={c.decimals ?? 0}
+                              prefix={c.prefix ?? ""}
+                              suffix={c.suffix ?? ""}
+                            />
+                          </h3>
+                        </div>
+                        <p className="mt-1 text-xs text-muted-foreground">{c.trend}</p>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.4 }}
+                  className="relative mt-6 overflow-hidden rounded-2xl border border-primary/30 bg-background/80 p-6"
+                >
+                  <div className="absolute inset-0 bg-gradient-primary opacity-[0.04]" />
+                  <div className="relative flex items-start gap-4">
+                    <div className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-gradient-primary text-primary-foreground shadow-glow">
+                      <Brain className="h-5 w-5" />
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2">
+                        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-primary">Insight da IA</p>
+                        <span className="rounded-full bg-destructive/15 px-2 py-0.5 text-[10px] font-medium text-destructive">
+                          crítico
+                        </span>
+                      </div>
+                      <p className="mt-2 text-base text-foreground">
+                        Você perdeu <span className="font-semibold text-primary">3 waves</span> por rotação errada aos{" "}
+                        <span className="font-semibold text-primary">12 minutos</span>.{" "}
+                        Recue para a base após o segundo abate na bot — recupere{" "}
+                        <span className="font-semibold text-primary">+340 ouro</span>.
+                      </p>
+                    </div>
+                  </div>
+                </motion.div>
+              </SpotlightCard>
+            </div>
+          </div>
+        </ScrollReveal>
       </section>
 
       <ScrollReveal>

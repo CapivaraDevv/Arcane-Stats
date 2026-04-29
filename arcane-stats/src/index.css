@@ -7,28 +7,135 @@
 
   color-scheme: dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #0B132B;
+  background-color: #0b132b;
+
+  --background: 222 47% 4%;
+  --foreground: 210 40% 98%;
+
+  --card: 222 40% 7%;
+  --card-foreground: 210 40% 98%;
+
+  --popover: 222 47% 5%;
+  --popover-foreground: 210 40% 98%;
+
+  --primary: 191 95% 55%;
+  --primary-foreground: 222 47% 6%;
+
+  --primary-glow: 187 100% 62%;
+  --primary-deep: 201 96% 32%;
+
+  --secondary: 217 33% 14%;
+  --secondary-foreground: 210 40% 98%;
+
+  --muted: 217 33% 12%;
+  --muted-foreground: 215 20% 65%;
+
+  --accent: 191 95% 55%;
+  --accent-foreground: 222 47% 6%;
+
+  --destructive: 0 75% 55%;
+  --destructive-foreground: 210 40% 98%;
+
+  --border: 217.2 32.6% 17.5%;
+  --input: 217 33% 16%;
+  --ring: 191 95% 55%;
+
+  --radius: 1rem;
+
+  /* Gradients */
+  --gradient-hero:
+    radial-gradient(ellipse at top, hsl(201 96% 18% / 0.55), transparent 60%),
+    radial-gradient(
+      ellipse at bottom right,
+      hsl(191 95% 35% / 0.25),
+      transparent 55%
+    ),
+    linear-gradient(180deg, hsl(222 47% 4%), hsl(222 47% 3%));
+  --gradient-primary: linear-gradient(
+    135deg,
+    hsl(var(--primary)),
+    hsl(var(--primary-glow))
+  );
+  --gradient-card: linear-gradient(
+    160deg,
+    hsl(217 33% 10% / 0.9),
+    hsl(222 47% 6% / 0.7)
+  );
+  --gradient-text: linear-gradient(
+    135deg,
+    hsl(210 40% 98%),
+    hsl(var(--primary-glow))
+  );
+
+  /* Shadows */
+  --shadow-glow: 0 0 60px hsl(var(--primary) / 0.35);
+  --shadow-card: 0 20px 60px -20px hsl(201 96% 10% / 0.6);
+  --shadow-elevated: 0 30px 80px -25px hsl(191 95% 30% / 0.45);
+
+  /* Motion */
+  --transition-smooth: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --sidebar-background: 0 0% 98%;
+
+  --sidebar-foreground: 240 5.3% 26.1%;
+
+  --sidebar-primary: 240 5.9% 10%;
+
+  --sidebar-primary-foreground: 0 0% 98%;
+
+  --sidebar-accent: 240 4.8% 95.9%;
+
+  --sidebar-accent-foreground: 240 5.9% 10%;
+
+  --sidebar-border: 220 13% 91%;
+
+  --sidebar-ring: 217.2 91.2% 59.8%;
 
   /* Paleta Arcane Tech Style */
-  --arcane-deep: #0B132B;
+  --arcane-deep: #0b132b;
   /* Azul Profundo - Fundo principal */
-  --arcane-soft: #1D2D50;
+  --arcane-soft: #1d2d50;
   /* Azul Suave - Cards e painéis */
-  --arcane-primary: #0077B6;
+  --arcane-primary: #0077b6;
   /* Azul Arcano - Botões principais */
-  --arcane-cyan: #00B4D8;
+  --arcane-cyan: #00b4d8;
   /* Ciano Luminoso - Hover e realces */
-  --arcane-gold: #F4A261;
+  --arcane-gold: #f4a261;
   /* Dourado Arcano - Detalhes especiais */
-  --arcane-text: #E0E0E0;
+  --arcane-text: #e0e0e0;
   /* Branco Nebuloso - Texto principal */
-  --arcane-text-secondary: #A8A8A8;
+  --arcane-text-secondary: #a8a8a8;
   /* Cinza Etéreo - Texto secundário */
+  --gradient-hero:
+    radial-gradient(ellipse at top, hsla(201, 99%, 38%, 0.55), transparent 60%),
+    radial-gradient(
+      ellipse at bottom right,
+      hsla(199, 96%, 29%, 0.815),
+      transparent 55%
+    ),
+    linear-gradient(180deg, hsl(222 47% 4%), hsl(222 47% 3%));
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.bg-card-glass {
+    background: var(--gradient-card);
+    backdrop-filter: blur(14px);
+}
+
+.bg-hero {
+  background: var(--gradient-hero);
+}
+
+.bg-hex {
+  background-image: radial-gradient(
+    hsl(var(--primary) / 0.12) 1px,
+    transparent 1px
+  );
+  background-size: 28px 28px;
 }
 
 /* .recharts-tooltip-cursor {
@@ -44,7 +151,6 @@
 }
 
 @keyframes pulse-custom {
-
   0%,
   100% {
     scale: 1;
@@ -57,14 +163,17 @@
 
 /* Animações Arcane Tech Style */
 @keyframes glow {
-
   0%,
   100% {
-    box-shadow: 0 0 5px rgba(0, 119, 182, 0.3), 0 0 10px rgba(0, 180, 216, 0.2);
+    box-shadow:
+      0 0 5px rgba(0, 119, 182, 0.3),
+      0 0 10px rgba(0, 180, 216, 0.2);
   }
 
   50% {
-    box-shadow: 0 0 20px rgba(0, 119, 182, 0.6), 0 0 30px rgba(0, 180, 216, 0.4);
+    box-shadow:
+      0 0 20px rgba(0, 119, 182, 0.6),
+      0 0 30px rgba(0, 180, 216, 0.4);
   }
 }
 
@@ -79,7 +188,6 @@
 }
 
 @keyframes gradient-shift {
-
   0%,
   100% {
     background-position: 0% 50%;
@@ -91,7 +199,6 @@
 }
 
 @keyframes float {
-
   0%,
   100% {
     transform: translateY(0px);
@@ -144,10 +251,12 @@
 }
 
 .animate-shimmer {
-  background: linear-gradient(90deg,
-      rgba(0, 119, 182, 0.1) 0%,
-      rgba(0, 180, 216, 0.3) 50%,
-      rgba(0, 119, 182, 0.1) 100%);
+  background: linear-gradient(
+    90deg,
+    rgba(0, 119, 182, 0.1) 0%,
+    rgba(0, 180, 216, 0.3) 50%,
+    rgba(0, 119, 182, 0.1) 100%
+  );
   background-size: 1000px 100%;
   animation: shimmer 3s infinite;
 }
@@ -157,21 +266,18 @@
 }
 
 .element {
-  background: radial-gradient(circle at var(--x) var(--y),
-      rgba(0, 180, 216, 0.15),
-      transparent 40%);
+  background: radial-gradient(
+    circle at var(--x) var(--y),
+    rgba(0, 180, 216, 0.15),
+    transparent 40%
+  );
 }
 
 .animate-gradient {
-  background: linear-gradient(-45deg,
-      #0B132B,
-      #1D2D50,
-      #0B132B,
-      #1D2D50);
+  background: linear-gradient(-45deg, #0b132b, #1d2d50, #0b132b, #1d2d50);
   background-size: 400% 400%;
   animation: gradient-shift 15s ease infinite;
 }
-
 
 .space-grotesk-title {
   font-family: "Space Grotesk", sans-serif;
@@ -187,8 +293,6 @@
   font-style: normal;
 }
 
-
-
 button {
   border-radius: 8px;
   border: 1px solid transparent;
@@ -196,15 +300,15 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #0077B6;
-  color: #E0E0E0;
+  background-color: #0077b6;
+  color: #e0e0e0;
   cursor: pointer;
   transition: all 0.25s;
 }
 
 button:hover {
-  background-color: #00B4D8;
-  border-color: #00B4D8;
+  background-color: #00b4d8;
+  border-color: #00b4d8;
 }
 
 button:focus,
