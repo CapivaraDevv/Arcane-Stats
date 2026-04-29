@@ -1,6 +1,6 @@
 import React from 'react'
 import { motion } from 'framer-motion'
-import PainelDicas from '../../../pages/PainelDicas'
+import PainelDicas from '../components/PainelDicas'
 import ScrollReveal from '../../../components/ScrollReveal'
 import { useConfig } from '../../../hooks/useConfig'
 import useTeams from '../hooks/useTeams'
