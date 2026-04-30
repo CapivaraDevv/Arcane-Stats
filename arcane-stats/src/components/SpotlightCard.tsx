@@ -34,7 +34,7 @@ const SpotlightCard = ({
       onMouseEnter={() => setActive(true)}
       onMouseLeave={() => setActive(false)}
       className={cn(
-        "group relative overflow-hidden rounded-2xl border border-border bg-card-glass transition-colors duration-300 hover:border-primary/40",
+        "group relative overflow-hidden rounded-2xl border border-border bg-card-glass transition-colors duration-300 hover:border-[hsl(var(--primary)/0.4)]",
         className,
       )}
       style={{
