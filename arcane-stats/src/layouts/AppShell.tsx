@@ -12,7 +12,7 @@ export default function AppShell({ showShell, children }: AppShellProps) {
     <div className="flex min-h-screen">
       {showShell && <Sidebar />}
       <div className="flex-1 flex flex-col">
-        {showShell && <Header />}
+        {/* {showShell && <Header />} */}
         {children}
       </div>
     </div>

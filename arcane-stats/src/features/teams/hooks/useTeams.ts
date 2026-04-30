@@ -11,7 +11,7 @@ export function useTeams() {
 
   const refresh = () => setTeams(readTeams())
 
-  const createTeam = async (nome: string, tag: string, creatorId: string) => {
+  const createTeam = async (nome: string, tag: '', creatorId: string) => {
     if (!nome || !creatorId) return { success: false, message: 'Nome e criador são obrigatórios' }
     const existing = readTeams()
     const id = Date.now()

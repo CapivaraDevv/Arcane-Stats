@@ -20,7 +20,7 @@ const Sidebar = () => {
 
   return (
     <motion.aside
-      className="bg-[#1d2d50] min-h-screen w-56 flex flex-col gap-4 px-4 py-3 shadow-lg border-r border-white/5 relative overflow-hidden"
+      className="bg-[hsl(var(--background)/0.7)] min-h-screen w-56 flex flex-col gap-4 px-4 py-3 shadow-lg border-r border-white/5 relative overflow-hidden"
       initial={{ opacity: 0, x: -50 }}
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: -50 }}

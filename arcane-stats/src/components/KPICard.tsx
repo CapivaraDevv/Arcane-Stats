@@ -11,7 +11,7 @@ export default function KPICard({ kpi, idx, imageErrors, handleImageError }: { k
         scale: 1.05,
         boxShadow: '0 0 30px rgba(0, 180, 216, 0.4)'
       }}
-      className="bg-[#1D2D50] rounded-lg p-4 sm:p-5 md:p-6 shadow-lg flex flex-col justify-center items-center gap-1 sm:gap-2 transition-all hover:bg-[#0077B6] duration-100 border border-white/5 relative overflow-hidden group min-h-[120px] sm:min-h-[140px] md:h-30"
+      className="bg-[hsl(var(--background)/0.3)] rounded-lg p-4 sm:p-5 md:p-6 shadow-lg flex flex-col justify-center items-center gap-1 sm:gap-2 transition-all hover:bg-[#0077B6] duration-100 border border-white/5 relative overflow-hidden group min-h-[120px] sm:min-h-[140px] md:h-30"
     >
       <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
         <div className="absolute inset-0 animate-shimmer" />

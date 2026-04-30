@@ -13,7 +13,7 @@ export default function EfficiencyChart({ data }: { data: EfficiencyDatum[] }) {
           <YAxis dataKey="lane" type="category" width={50} stroke="#A8A8A8" style={{ fontSize: '11px' }} />
           <Tooltip
             cursor={{ fill: '#0B132B', opacity: 0.6 }}
-            contentStyle={{ backgroundColor: '#0B132B', border: '1px solid #0077B6', borderRadius: 8, color: '#E0E0E0' }}
+            contentStyle={{ backgroundColor: '#05080fb3', border: '1px solid #0077B6', borderRadius: 8, color: '#E0E0E0' }}
             formatter={(value: number, name: string) => name === 'Winrate' ? `${value}%` : value.toFixed(1)}
           />
           <Legend wrapperStyle={{ color: '#E0E0E0' }} />

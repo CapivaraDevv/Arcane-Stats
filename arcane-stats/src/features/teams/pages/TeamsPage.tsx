@@ -1,35 +1,53 @@
 // src/pages/TeamsPage.tsx
-import React, { useMemo, useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import React, { useMemo, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import {
-  Users, Plus, Swords, Trophy, Crown, UserPlus, ArrowUpDown,
-  X, Shield, Target, Flame, Sparkles, ChevronRight, Zap,
-} from 'lucide-react'
+  Users,
+  Plus,
+  Swords,
+  Trophy,
+  Crown,
+  UserPlus,
+  ArrowUpDown,
+  X,
+  Shield,
+  Target,
+  Flame,
+  Sparkles,
+  ChevronRight,
+  Zap,
+} from "lucide-react";
 
-import ScrollReveal from '../../../components/ScrollReveal'
-import { useConfig } from '../../../hooks/useConfig'
-import useTeams from '../hooks/useTeams'
-import useAuthContext from '../../../hooks/useAuth'
+import ScrollReveal from "../../../components/ScrollReveal";
+import { useConfig } from "../../../hooks/useConfig";
+import useTeams from "../hooks/useTeams";
+import useAuthContext from "../../../hooks/useAuth";
 
 // ─── Tipos ────────────────────────────────────────────────────────────────────
 type Member = {
-  id: string
-  nome: string
-  tag?: string
-  lane?: 'Top' | 'Jungle' | 'Mid' | 'ADC' | 'Support'
-  winrate?: number
-  kda?: number
-  aggression?: number
-  mainChampion?: string
-}
-type Team = { id: number; nome: string; creatorId: string; members: Member[]; tag?: string }
-type SortKey = 'winrate' | 'kda' | 'aggression'
+  id: string;
+  nome: string;
+  tag?: string;
+  lane?: "Top" | "Jungle" | "Mid" | "ADC" | "Support";
+  winrate?: number;
+  kda?: number;
+  aggression?: number;
+  mainChampion?: string;
+};
+type Team = {
+  id: number;
+  nome: string;
+  creatorId: string;
+  members: Member[];
+  tag?: string;
+};
+type SortKey = "winrate" | "kda" | "aggression";
 
 // ─── Página ───────────────────────────────────────────────────────────────────
-const TeamsPage: React.FC = () => {
-  useConfig()
-  const auth = useAuthContext() as any
-  const userId: string = auth?.user?.id ?? ''
+const TeamsPage: React.FC<{ onCreate: () => void }> = ({ onCreate }) => {
+  useConfig();
+  const auth = useAuthContext() as any;
+  const userId: string = auth?.user?.id ?? "";
 
   const {
     teams = [] as Team[],
@@ -37,60 +55,61 @@ const TeamsPage: React.FC = () => {
     addMemberByEmail,
     addMemberByNameTag,
     findUserById,
-  } = useTeams() as any
+  } = useTeams() as any;
 
-  const [selectedId, setSelectedId] = useState<number | null>(teams[0]?.id ?? null)
+  const [selectedId, setSelectedId] = useState<number | null>(
+    teams[0]?.id ?? null,
+  );
   const selected = useMemo(
     () => teams.find((t: Team) => t.id === selectedId) ?? null,
     [teams, selectedId],
-  )
+  );
 
-  const [showCreate, setShowCreate] = useState(false)
-  const [showAddPlayer, setShowAddPlayer] = useState(false)
-  const [showSim, setShowSim] = useState(false)
-  const [sortKey, setSortKey] = useState<SortKey>('winrate')
+  const [showCreate, setShowCreate] = useState(false);
+  const [showAddPlayer, setShowAddPlayer] = useState(false);
+  const [showSim, setShowSim] = useState(false);
+  const [sortKey, setSortKey] = useState<SortKey>("winrate");
 
-  const isOwner = selected && selected.creatorId === userId
+  const isOwner = selected && selected.creatorId === userId;
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-background text-foreground">
       {/* Background hextech */}
       <div className="pointer-events-none absolute inset-0 bg-hero" />
       <div className="pointer-events-none absolute inset-0 bg-hex opacity-40" />
-      <div className="pointer-events-none absolute -top-40 left-1/2 h-[500px] w-[900px] -translate-x-1/2 rounded-full bg-primary/20 blur-3xl" />
+      <div className="pointer-events-none absolute -top-40 left-1/2 h-[500px] w-[900px] -translate-x-1/2 rounded-full bg-[hsl(var(--primary)/0.2)] blur-3xl" />
 
       {/* Header */}
-      <header className="sticky top-0 z-30 border-b border-border/60 bg-background/70 backdrop-blur-xl">
+      <header className="sticky top-0 z-30 border-b border-[hsl(var(--border)/0.6)] bg-[hsl(var(--background)/0.7)] backdrop-blur-xl">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
           <div className="flex items-center gap-3">
             <div className="relative">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-[hsl(var(--primary)/0.4)] bg-primary/10 text-primary shadow-glow">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-[hsl(var(--primary)/0.4)] bg-[hsl(var(--primary)/0.1)] text-primary shadow-glow">
                 <Users className="h-5 w-5" />
               </div>
               <span className="absolute -right-1 -top-1 h-2.5 w-2.5 animate-glow-pulse rounded-full bg-primary-glow" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h1 className="font-display text-xl font-bold tracking-tight">Times</h1>
-                <span className="rounded-full border border-[hsl(var(--primary)/0.3)] bg-primary/10 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-primary">
-                  Squad
-                </span>
+                <h1 className="font-display text-xl font-bold tracking-tight">
+                  Times
+                </h1>
               </div>
               <p className="text-xs text-muted-foreground">
                 Gerencie squads, escale jogadores e simule embates.
               </p>
             </div>
           </div>
-          <motion.button
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.97 }}
-            onClick={() => setShowCreate(true)}
-            className="group relative inline-flex items-center gap-2 overflow-hidden rounded-xl bg-gradient-primary px-5 py-2.5 text-sm font-bold text-primary-foreground shadow-glow transition"
-          >
-            <Plus className="h-4 w-4" />
-            <span>Novo time</span>
-            <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
-          </motion.button>
+            <motion.button
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
+              onClick={() => setShowCreate(true)}
+              className="group relative inline-flex items-center gap-2 overflow-hidden rounded-xl bg-gradient-primary px-5 py-2.5 text-sm font-bold text-primary-foreground shadow-glow transition cursor-pointer"
+            >
+              <Plus className="h-4 w-4" />
+              <span>Novo time</span>
+              <span className="absolute inset-0 -translate-x-full bg-linear-to-r from-transparent via-[hsl(0_0%_100%_/_0.3)] to-transparent transition-transform duration-700 group-hover:translate-x-full" />
+            </motion.button>
         </div>
       </header>
 
@@ -99,22 +118,20 @@ const TeamsPage: React.FC = () => {
         {/* Sidebar */}
         <aside className="lg:sticky lg:top-24 lg:self-start">
           <ScrollReveal preset="left">
-            <div className="rounded-2xl border border-[hsl(var(--border))] bg-card-glass p-4 shadow-card">
+            <div className="rounded-2xl border border-border bg-card-glass p-4 shadow-card">
               <div className="flex items-center justify-between px-1 pb-3">
-                <span className="text-[11px] font-bold uppercase tracking-widest text-[hsl(var(--muted-foreground))]">
+                <span className="text-[11px] font-bold uppercase tracking-widest text-muted-foreground">
                   Seus times
                 </span>
-                <span className="rounded-full border border-[hsl(var(--primary)/0.3)] bg-primary/10 px-2 py-0.5 text-[10px] font-bold text-[hsl(var(--primary))]">
+                <span className="rounded-full border border-[hsl(var(--primary)/0.3)] bg-[hsl(var(--primary)/0.1)] px-2 py-0.5 text-[10px] font-bold text-primary">
                   {teams.length}
                 </span>
               </div>
 
-            
-
               <div className="space-y-1.5">
                 {teams.length === 0 && (
                   <div className="rounded-xl border border-dashed border-[hsl(var(--border))] bg-[hsl(var(--background) / 0.4)] px-3 py-8 text-center">
-                    <Shield className="mx-auto h-8 w-8 text-muted-foreground/50" />
+                    <Shield className="mx-auto h-8 w-8 text-[hsl(var(--muted-foreground)/0.5)]" />
                     <p className="mt-2 text-xs text-muted-foreground">
                       Nenhum time ainda.
                     </p>
@@ -122,7 +139,7 @@ const TeamsPage: React.FC = () => {
                 )}
 
                 {teams.map((t: Team, i: number) => {
-                  const active = t.id === selectedId
+                  const active = t.id === selectedId;
                   return (
                     <motion.button
                       key={t.id}
@@ -131,11 +148,11 @@ const TeamsPage: React.FC = () => {
                       transition={{ delay: i * 0.04 }}
                       onClick={() => setSelectedId(t.id)}
                       className={[
-                        'group relative flex w-full items-center gap-3 overflow-hidden rounded-xl border px-3 py-3 text-left transition-all',
+                        "group relative flex w-full items-center gap-3 overflow-hidden rounded-xl border px-3 py-3 text-left transition-all cursor-pointer",
                         active
-                          ? 'border-primary/50 bg-primary/10 shadow-glow'
-                          : 'border-border/40 bg-background/10 hover:border-border hover:bg-secondary/40',
-                      ].join(' ')}
+                          ? "border-[hsl(var(--primary)/0.5)] bg-[hsl(var(--primary)/0.2)]"
+                          : "border-[hsl(var(--border)/0.4)] bg-[hsl(var(--background)/0.1)] hover:border-border hover:bg-[hsl(var(--secondary)/0.4)]",
+                      ].join(" ")}
                     >
                       {active && (
                         <motion.div
@@ -145,11 +162,11 @@ const TeamsPage: React.FC = () => {
                       )}
                       <div
                         className={[
-                          'flex h-10 w-10 items-center justify-center rounded-lg font-display text-sm font-black transition',
+                          "flex h-10 w-10 items-center justify-center rounded-lg font-display text-sm font-black transition",
                           active
-                            ? 'bg-gradient-primary text-primary-foreground shadow-glow'
-                            : 'bg-secondary text-foreground group-hover:bg-secondary/80',
-                        ].join(' ')}
+                            ? "bg-gradient-primary text-primary-foreground shadow-glow"
+                            : "bg-secondary text-foreground group-hover:bg-[hsl(var(--secondary)/0.8)]",
+                        ].join(" ")}
                       >
                         {t.nome.slice(0, 2).toUpperCase()}
                       </div>
@@ -158,7 +175,8 @@ const TeamsPage: React.FC = () => {
                           {t.nome}
                         </p>
                         <p className="text-[11px] text-muted-foreground">
-                          {t.members.length} {t.members.length === 1 ? 'membro' : 'membros'}
+                          {t.members.length}{" "}
+                          {t.members.length === 1 ? "membro" : "membros"}
                         </p>
                       </div>
                       {t.creatorId === userId && (
@@ -166,14 +184,14 @@ const TeamsPage: React.FC = () => {
                       )}
                       <ChevronRight
                         className={[
-                          'h-4 w-4 transition',
+                          "h-4 w-4 transition",
                           active
-                            ? 'text-primary'
-                            : 'text-muted-foreground/40 group-hover:translate-x-0.5 group-hover:text-foreground',
-                        ].join(' ')}
+                            ? "text-primary"
+                            : "text-[hsl(var(--muted-foreground)/0.4)] group-hover:translate-x-0.5 group-hover:text-foreground",
+                        ].join(" ")}
                       />
                     </motion.button>
-                  )
+                  );
                 })}
               </div>
             </div>
@@ -206,9 +224,10 @@ const TeamsPage: React.FC = () => {
           <CreateTeamModal
             onClose={() => setShowCreate(false)}
             onCreate={async (name) => {
-              const t = await createTeam?.(name, userId)
-              if (t?.id) setSelectedId(t.id)
-              setShowCreate(false)
+              const result = await createTeam?.(name, userId);
+              if (result?.success && result.team.id) {
+                setSelectedId(result.team.id);
+              }
             }}
           />
         )}
@@ -216,22 +235,26 @@ const TeamsPage: React.FC = () => {
           <AddPlayerModal
             onClose={() => setShowAddPlayer(false)}
             onSubmit={async ({ name, tag }) => {
-              if (typeof addMemberByNameTag === 'function') {
-                await addMemberByNameTag(selected.id, { name, tag }, userId)
+              if (typeof addMemberByNameTag === "function") {
+                await addMemberByNameTag(selected.id, { name, tag }, userId);
               } else {
-                await addMemberByEmail?.(selected.id, `${name}#${tag}`, userId)
+                await addMemberByEmail?.(selected.id, `${name}#${tag}`, userId);
               }
-              setShowAddPlayer(false)
+              setShowAddPlayer(false);
             }}
           />
         )}
         {showSim && selected && (
-          <SimulateModal teams={teams} current={selected} onClose={() => setShowSim(false)} />
+          <SimulateModal
+            teams={teams}
+            current={selected}
+            onClose={() => setShowSim(false)}
+          />
         )}
       </AnimatePresence>
     </div>
-  )
-}
+  );
+};
 
 // ─── Empty state ──────────────────────────────────────────────────────────────
 const EmptyState: React.FC<{ onCreate: () => void }> = ({ onCreate }) => (
@@ -240,48 +263,56 @@ const EmptyState: React.FC<{ onCreate: () => void }> = ({ onCreate }) => (
     <div className="relative text-center">
       <motion.div
         animate={{ y: [0, -8, 0] }}
-        transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-        className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl border border-[hsl(var(--primary)/0.4)] bg-primary/10 shadow-glow"
+        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+        className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl border border-[hsl(var(--primary)/0.4)] bg-[hsl(var(--primary)/0.1)] shadow-glow"
       >
         <Shield className="h-8 w-8 text-primary" />
       </motion.div>
-      <h2 className="mt-5 font-display text-2xl font-bold text-gradient">
+      <h2 className="mt-5 font-display text-2xl font-bold text-primary">
         Selecione um time
       </h2>
       <p className="mx-auto mt-2 max-w-xs text-sm text-muted-foreground">
-        Escolha um squad ao lado ou crie um novo para começar a montar sua composição.
+        Escolha um squad ao lado ou crie um novo para começar a montar sua
+        composição.
       </p>
-      <button
+      <motion.button
+        whileHover={{ scale: 1.03 }}
+        whileTap={{ scale: 0.97 }}
         onClick={onCreate}
-        className="mt-6 inline-flex items-center gap-2 rounded-xl bg-gradient-primary px-5 py-2.5 text-sm font-bold text-primary-foreground shadow-glow"
+        className="group relative inline-flex items-center gap-2 overflow-hidden rounded-xl bg-gradient-primary mt-5 px-5 py-2.5 text-sm font-bold text-primary-foreground shadow-glow transition cursor-pointer"
       >
-        <Plus className="h-4 w-4" /> Criar time
-      </button>
+        <Plus className="h-4 w-4" />
+        <span>Novo time</span>
+        <span className="absolute inset-0 -translate-x-full bg-linear-to-r from-transparent via-white/30 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
+      </motion.button>
     </div>
   </div>
-)
+);
 
 // ─── Detalhe do time ──────────────────────────────────────────────────────────
 const TeamDetail: React.FC<{
-  team: Team
-  isOwner: boolean
-  sortKey: SortKey
-  onChangeSort: (k: SortKey) => void
-  onAddPlayer: () => void
-  onSimulate: () => void
-  findUserById?: (id: string) => any
+  team: Team;
+  isOwner: boolean;
+  sortKey: SortKey;
+  onChangeSort: (k: SortKey) => void;
+  onAddPlayer: () => void;
+  onSimulate: () => void;
+  findUserById?: (id: string) => any;
 }> = ({ team, isOwner, sortKey, onChangeSort, onAddPlayer, onSimulate }) => {
-  const stats = useMemo(() => aggregate(team.members), [team.members])
+  const stats = useMemo(() => aggregate(team.members), [team.members]);
   const sorted = useMemo(
-    () => [...team.members].sort((a, b) => ((b[sortKey] ?? 0) as number) - ((a[sortKey] ?? 0) as number)),
+    () =>
+      [...team.members].sort(
+        (a, b) => ((b[sortKey] ?? 0) as number) - ((a[sortKey] ?? 0) as number),
+      ),
     [team.members, sortKey],
-  )
+  );
 
   return (
     <div className="space-y-6">
       {/* Header do time */}
       <div className="relative overflow-hidden rounded-2xl border border-[hsl(var(--border))] bg-card-glass p-6 shadow-elevated">
-        <div className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-primary/20 blur-3xl" />
+        <div className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-[hsl(var(--primary)/0.2)] blur-3xl" />
         <div className="absolute inset-0 bg-hex opacity-20" />
 
         <div className="relative flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
@@ -289,8 +320,8 @@ const TeamDetail: React.FC<{
             <motion.div
               initial={{ rotate: -10, scale: 0.9 }}
               animate={{ rotate: 0, scale: 1 }}
-              transition={{ type: 'spring', stiffness: 200 }}
-              className="relative flex h-16 w-16 items-center justify-center rounded-2xl bg-[hsl(var(--gradient-primary))] font-display text-2xl font-black text-primary-foreground shadow-glow"
+              transition={{ type: "spring", stiffness: 200 }}
+              className="relative flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-primary font-display text-2xl font-black text-primary-foreground shadow-glow"
             >
               {team.nome.slice(0, 2).toUpperCase()}
               <span className="absolute -bottom-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full border-2 border-background bg-amber-400">
@@ -299,16 +330,17 @@ const TeamDetail: React.FC<{
             </motion.div>
             <div>
               <div className="flex items-center gap-2">
-                <h2 className="font-display text-3xl font-black tracking-tight text-gradient">
+                <h2 className="font-display text-3xl font-black tracking-tight text-primary">
                   {team.nome}
                 </h2>
-                <Sparkles className="h-4 w-4 text-primary-glow" />
               </div>
               <p className="mt-0.5 text-xs text-muted-foreground">
-                <span className="font-semibold text-foreground">{team.members.length}</span> membros •
-                criado por{' '}
                 <span className="font-semibold text-foreground">
-                  {isOwner ? 'você' : 'outro jogador'}
+                  {team.members.length}
+                </span>{" "}
+                membros • criado por{" "}
+                <span className="font-semibold text-foreground">
+                  {isOwner ? "você" : "outro jogador"}
                 </span>
               </p>
             </div>
@@ -319,7 +351,7 @@ const TeamDetail: React.FC<{
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
               onClick={onSimulate}
-              className="inline-flex items-center gap-2 rounded-xl border border-[hsl(var(--border))] bg-secondary/60 px-4 py-2.5 text-sm font-bold backdrop-blur-sm transition hover:border-[hsl(var(--primary)/0.4)] hover:bg-secondary"
+              className="inline-flex items-center gap-2 rounded-xl border border-border bg-[hsl(var(--secondary)/0.6)] px-4 py-2.5 text-sm font-bold backdrop-blur-sm transition hover:border-[hsl(var(--primary)/0.4)] hover:bg-secondary"
             >
               <Swords className="h-4 w-4" /> Simular embate
             </motion.button>
@@ -328,7 +360,7 @@ const TeamDetail: React.FC<{
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
                 onClick={onAddPlayer}
-                className="inline-flex items-center gap-2 rounded-xl bg-[hsl(var(--gradient-primary))] px-4 py-2.5 text-sm font-bold text-primary-foreground shadow-glow"
+                className="inline-flex items-center gap-2 rounded-xl bg-gradient-primary px-4 py-2.5 text-sm font-bold text-primary-foreground shadow-glow"
               >
                 <UserPlus className="h-4 w-4" /> Adicionar jogador
               </motion.button>
@@ -338,10 +370,34 @@ const TeamDetail: React.FC<{
 
         {/* Mini stats */}
         <div className="relative mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
-          <MiniStat icon={Trophy} label="Winrate médio" value={`${stats.wr}%`} tone="emerald" delay={0} />
-          <MiniStat icon={Swords} label="KDA médio" value={stats.kda.toFixed(2)} tone="primary" delay={0.05} />
-          <MiniStat icon={Flame} label="Agressividade" value={`${stats.agg}`} tone="rose" delay={0.1} />
-          <MiniStat icon={Target} label="Rotas cobertas" value={`${stats.lanes}/5`} tone="amber" delay={0.15} />
+          <MiniStat
+            icon={Trophy}
+            label="Winrate médio"
+            value={`${stats.wr}%`}
+            tone="emerald"
+            delay={0}
+          />
+          <MiniStat
+            icon={Swords}
+            label="KDA médio"
+            value={stats.kda.toFixed(2)}
+            tone="primary"
+            delay={0.05}
+          />
+          <MiniStat
+            icon={Flame}
+            label="Agressividade"
+            value={`${stats.agg}`}
+            tone="rose"
+            delay={0.1}
+          />
+          <MiniStat
+            icon={Target}
+            label="Rotas cobertas"
+            value={`${stats.lanes}/5`}
+            tone="amber"
+            delay={0.15}
+          />
         </div>
       </div>
 
@@ -351,23 +407,25 @@ const TeamDetail: React.FC<{
           <div>
             <div className="flex items-center gap-2">
               <Zap className="h-4 w-4 text-primary" />
-              <h3 className="font-display text-xl font-bold">Ranking interno</h3>
+              <h3 className="font-display text-xl font-bold">
+                Ranking interno
+              </h3>
             </div>
             <p className="mt-0.5 text-xs text-muted-foreground">
               Membros ordenados por desempenho.
             </p>
           </div>
-          <div className="inline-flex items-center gap-1 rounded-xl border border-[hsl(var(--border))] bg-background/60 p-1 backdrop-blur-sm">
-            {(['winrate', 'kda', 'aggression'] as SortKey[]).map((k) => (
+          <div className="inline-flex items-center gap-1 rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--background)/0.6)] p-1 backdrop-blur-sm">
+            {(["winrate", "kda", "aggression"] as SortKey[]).map((k) => (
               <button
                 key={k}
                 onClick={() => onChangeSort(k)}
                 className={[
-                  'relative rounded-lg px-3.5 py-1.5 text-xs font-bold transition',
+                  "relative rounded-lg px-3.5 py-1.5 text-xs font-bold transition",
                   sortKey === k
-                    ? 'text-primary-foreground'
-                    : 'text-muted-foreground hover:text-foreground',
-                ].join(' ')}
+                    ? "text-primary-foreground"
+                    : "text-muted-foreground hover:text-foreground",
+                ].join(" ")}
               >
                 {sortKey === k && (
                   <motion.span
@@ -376,7 +434,7 @@ const TeamDetail: React.FC<{
                   />
                 )}
                 <span className="relative">
-                  {k === 'winrate' ? 'WR' : k === 'kda' ? 'KDA' : 'Agressão'}
+                  {k === "winrate" ? "WR" : k === "kda" ? "KDA" : "Agressão"}
                 </span>
               </button>
             ))}
@@ -385,7 +443,7 @@ const TeamDetail: React.FC<{
 
         <div className="overflow-hidden rounded-xl border border-[hsl(var(--border)/0.6)]">
           <table className="w-full text-sm">
-            <thead className="bg-secondary/40 text-[10px] uppercase tracking-widest text-muted-foreground">
+            <thead className="bg-[hsl(var(--secondary)/0.4)] text-[10px] uppercase tracking-widest text-muted-foreground">
               <tr>
                 <th className="px-4 py-3 text-left">#</th>
                 <th className="px-4 py-3 text-left">Jogador</th>
@@ -403,7 +461,7 @@ const TeamDetail: React.FC<{
               {sorted.length === 0 && (
                 <tr>
                   <td colSpan={6} className="px-4 py-12 text-center">
-                    <UserPlus className="mx-auto h-8 w-8 text-muted-foreground/40" />
+                    <UserPlus className="mx-auto h-8 w-8 text-[hsl(var(--muted-foreground)/0.4)]" />
                     <p className="mt-2 text-xs text-muted-foreground">
                       Nenhum membro ainda. Adicione jogadores por Nome + Tag.
                     </p>
@@ -424,14 +482,22 @@ const TeamDetail: React.FC<{
                   <td className="px-4 py-3">
                     <div className="font-display font-bold">{m.nome}</div>
                     {m.tag && (
-                      <div className="text-[11px] text-muted-foreground">#{m.tag}</div>
+                      <div className="text-[11px] text-muted-foreground">
+                        #{m.tag}
+                      </div>
                     )}
                   </td>
                   <td className="px-4 py-3">
                     <LaneBadge lane={m.lane} />
                   </td>
                   <td className="px-4 py-3 text-right font-display font-bold tabular-nums">
-                    <span className={(m.winrate ?? 0) >= 50 ? 'text-emerald-400' : 'text-rose-400'}>
+                    <span
+                      className={
+                        (m.winrate ?? 0) >= 50
+                          ? "text-emerald-400"
+                          : "text-rose-400"
+                      }
+                    >
                       {m.winrate ?? 0}%
                     </span>
                   </td>
@@ -448,86 +514,118 @@ const TeamDetail: React.FC<{
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 // ─── Auxiliares visuais ───────────────────────────────────────────────────────
 const TONE_MAP: Record<string, { bg: string; text: string; ring: string }> = {
-  emerald: { bg: 'bg-emerald-500/10', text: 'text-emerald-400', ring: 'border-emerald-500/30' },
-  primary: { bg: 'bg-primary/10', text: 'text-primary', ring: 'border-primary/30' },
-  rose: { bg: 'bg-rose-500/10', text: 'text-rose-400', ring: 'border-rose-500/30' },
-  amber: { bg: 'bg-amber-500/10', text: 'text-amber-400', ring: 'border-amber-500/30' },
-}
+  emerald: {
+    bg: "bg-[hsl(157_72%_40%_/_0.1)]",
+    text: "text-emerald-400",
+    ring: "border-[hsl(157_72%_40%_/_0.3)]",
+  },
+  primary: {
+    bg: "bg-[hsl(var(--primary)/0.1)]",
+    text: "text-primary",
+    ring: "border-[hsl(var(--primary)/0.3)]",
+  },
+  rose: {
+    bg: "bg-[hsl(344_84%_57%_/_0.1)]",
+    text: "text-rose-400",
+    ring: "border-[hsl(344_84%_57%_/_0.3)]",
+  },
+  amber: {
+    bg: "bg-[hsl(42_96%_56%_/_0.1)]",
+    text: "text-amber-400",
+    ring: "border-[hsl(42_96%_56%_/_0.3)]",
+  },
+};
 
 const MiniStat: React.FC<{
-  icon: React.ComponentType<{ className?: string }>
-  label: string
-  value: string
-  tone?: keyof typeof TONE_MAP
-  delay?: number
-}> = ({ icon: Icon, label, value, tone = 'primary', delay = 0 }) => {
-  const t = TONE_MAP[tone]
+  icon: React.ComponentType<{ className?: string }>;
+  label: string;
+  value: string;
+  tone?: keyof typeof TONE_MAP;
+  delay?: number;
+}> = ({ icon: Icon, label, value, tone = "primary", delay = 0 }) => {
+  const t = TONE_MAP[tone];
   return (
     <motion.div
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay, duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-      className={`group relative overflow-hidden rounded-xl border ${t.ring} bg-background/40 p-3.5 backdrop-blur-sm transition hover:bg-background/60`}
+      className={`group relative overflow-hidden rounded-xl border ${t.ring} bg-[hsl(var(--background)/0.4)] p-3.5 backdrop-blur-sm transition hover:bg-[hsl(var(--background)/0.6)]`}
     >
-      <div className={`absolute -right-4 -top-4 h-16 w-16 rounded-full ${t.bg} blur-2xl transition group-hover:scale-150`} />
+      <div
+        className={`absolute -right-4 -top-4 h-16 w-16 rounded-full ${t.bg} blur-2xl transition group-hover:scale-150`}
+      />
       <div className="relative">
-        <div className={`inline-flex h-7 w-7 items-center justify-center rounded-lg ${t.bg} ${t.text}`}>
+        <div
+          className={`inline-flex h-7 w-7 items-center justify-center rounded-lg ${t.bg} ${t.text}`}
+        >
           <Icon className="h-3.5 w-3.5" />
         </div>
         <div className="mt-2 text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
           {label}
         </div>
-        <div className={`mt-0.5 font-display text-2xl font-black tabular-nums ${t.text}`}>
+        <div
+          className={`mt-0.5 font-display text-2xl font-black tabular-nums ${t.text}`}
+        >
           {value}
         </div>
       </div>
     </motion.div>
-  )
-}
+  );
+};
 
 const RankBadge: React.FC<{ position: number }> = ({ position }) => {
   const styles =
-    position === 1 ? 'bg-gradient-to-br from-amber-300 to-amber-500 text-background shadow-[0_0_12px_rgba(251,191,36,0.5)]'
-      : position === 2 ? 'bg-gradient-to-br from-slate-200 to-slate-400 text-background'
-        : position === 3 ? 'bg-gradient-to-br from-orange-400 to-orange-600 text-background'
-          : 'bg-secondary text-muted-foreground'
+    position === 1
+      ? "bg-gradient-to-br from-amber-300 to-amber-500 text-background shadow-[0_0_12px_rgba(251,191,36,0.5)]"
+      : position === 2
+        ? "bg-gradient-to-br from-slate-200 to-slate-400 text-background"
+        : position === 3
+          ? "bg-gradient-to-br from-orange-400 to-orange-600 text-background"
+          : "bg-secondary text-muted-foreground";
   return (
-    <div className={`flex h-7 w-7 items-center justify-center rounded-lg font-display text-xs font-black ${styles}`}>
+    <div
+      className={`flex h-7 w-7 items-center justify-center rounded-lg font-display text-xs font-black ${styles}`}
+    >
       {position}
     </div>
-  )
-}
+  );
+};
 
 const LANE_TONES: Record<string, string> = {
-  Top: 'border-rose-500/30 bg-rose-500/10 text-rose-300',
-  Jungle: 'border-emerald-500/30 bg-emerald-500/10 text-emerald-300',
-  Mid: 'border-primary/30 bg-primary/10 text-primary',
-  ADC: 'border-amber-500/30 bg-amber-500/10 text-amber-300',
-  Support: 'border-violet-500/30 bg-violet-500/10 text-violet-300',
-}
+  Top: "border-rose-500/30 bg-rose-500/10 text-rose-300",
+  Jungle: "border-emerald-500/30 bg-emerald-500/10 text-emerald-300",
+  Mid: "border-primary/30 bg-primary/10 text-primary",
+  ADC: "border-amber-500/30 bg-amber-500/10 text-amber-300",
+  Support: "border-[hsl(248_86%_70%_/_0.3)] bg-[hsl(248_86%_70%_/_0.1)] text-violet-300",
+};
 const LaneBadge: React.FC<{ lane?: string }> = ({ lane }) => (
   <span
-    className={`inline-flex items-center rounded-md border px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider ${lane ? LANE_TONES[lane] : 'border-[hsl(var(--border))] bg-secondary/40 text-muted-foreground'
-      }`}
+    className={`inline-flex items-center rounded-md border px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider ${
+      lane
+        ? LANE_TONES[lane]
+        : "border-[hsl(var(--border))] bg-[hsl(var(--secondary)/0.4)] text-muted-foreground"
+    }`}
   >
-    {lane ?? '—'}
+    {lane ?? "—"}
   </span>
-)
+);
 
 const AggressionBar: React.FC<{ value: number }> = ({ value }) => {
-  const v = Math.max(0, Math.min(100, value))
+  const v = Math.max(0, Math.min(100, value));
   const tone =
-    v > 75 ? 'from-rose-400 to-orange-500'
-      : v > 45 ? 'from-primary to-primary-glow'
-        : 'from-emerald-400 to-cyan-400'
+    v > 75
+      ? "from-rose-400 to-orange-500"
+      : v > 45
+        ? "from-primary to-primary-glow"
+        : "from-emerald-400 to-cyan-400";
   return (
     <div className="flex items-center justify-end gap-2">
-      <div className="h-1.5 w-24 overflow-hidden rounded-full bg-secondary/60">
+      <div className="h-1.5 w-24 overflow-hidden rounded-full bg-[hsl(var(--secondary)/0.6)]">
         <motion.div
           initial={{ width: 0 }}
           animate={{ width: `${v}%` }}
@@ -535,18 +633,25 @@ const AggressionBar: React.FC<{ value: number }> = ({ value }) => {
           className={`h-full rounded-full bg-gradient-to-r ${tone} shadow-[0_0_8px_currentColor]`}
         />
       </div>
-      <span className="w-8 text-right font-display text-xs font-bold tabular-nums">{v}</span>
+      <span className="w-8 text-right font-display text-xs font-bold tabular-nums">
+        {v}
+      </span>
     </div>
-  )
-}
+  );
+};
 
 // ─── Modal: Criar time ────────────────────────────────────────────────────────
-const CreateTeamModal: React.FC<{ onClose: () => void; onCreate: (name: string) => void }> = ({
-  onClose, onCreate,
-}) => {
-  const [name, setName] = useState('')
+const CreateTeamModal: React.FC<{
+  onClose: () => void;
+  onCreate: (name: string) => void;
+}> = ({ onClose, onCreate }) => {
+  const [name, setName] = useState("");
   return (
-    <ModalShell title="Criar novo time" subtitle="Dê um nome de impacto ao seu squad" onClose={onClose}>
+    <ModalShell
+      title="Criar novo time"
+      subtitle="Dê um nome de impacto ao seu time"
+      onClose={onClose}
+    >
       <label className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
         Nome do time
       </label>
@@ -555,23 +660,33 @@ const CreateTeamModal: React.FC<{ onClose: () => void; onCreate: (name: string) 
         value={name}
         onChange={(e) => setName(e.target.value)}
         placeholder="Ex: Hextech Vanguards"
-        className="mt-2 w-full rounded-xl border border-[hsl(var(--border))] bg-background/60 px-4 py-3 text-sm font-medium backdrop-blur-sm transition focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30"
+        className="mt-2 w-full rounded-xl border border-border bg-[hsl(var(--background)/0.6)] px-4 py-3 text-sm font-medium backdrop-blur-sm transition focus:border-primary focus:outline-none focus:ring-2 focus:ring-[hsl(var(--primary)/0.3)]"
       />
-      <ModalFooter onCancel={onClose} onConfirm={() => onCreate(name.trim())} disabled={!name.trim()} confirmLabel="Criar time" />
+      <ModalFooter
+        onCancel={onClose}
+        onConfirm={() => onCreate(name.trim())}
+        disabled={!name.trim()}
+        confirmLabel="Criar time"
+      />
     </ModalShell>
-  )
-}
+  );
+};
 
 // ─── Modal: Adicionar jogador ─────────────────────────────────────────────────
-const AddPlayerModal: React.FC<{ onClose: () => void; onSubmit: (p: { name: string; tag: string }) => void }> = ({
-  onClose, onSubmit,
-}) => {
-  const [name, setName] = useState('')
-  const [tag, setTag] = useState('')
-  const valid = name.trim().length >= 2 && tag.trim().length >= 2
+const AddPlayerModal: React.FC<{
+  onClose: () => void;
+  onSubmit: (p: { name: string; tag: string }) => void;
+}> = ({ onClose, onSubmit }) => {
+  const [name, setName] = useState("");
+  const [tag, setTag] = useState("");
+  const valid = name.trim().length >= 2 && tag.trim().length >= 2;
 
   return (
-    <ModalShell title="Adicionar jogador" subtitle="Use o Riot ID (Nome + Tag)" onClose={onClose}>
+    <ModalShell
+      title="Adicionar jogador"
+      subtitle="Use o Riot ID (Nome + Tag)"
+      onClose={onClose}
+    >
       <div className="grid grid-cols-[1fr_140px] gap-3">
         <div>
           <label className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
@@ -582,18 +697,20 @@ const AddPlayerModal: React.FC<{ onClose: () => void; onSubmit: (p: { name: stri
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Faker"
-            className="mt-2 w-full rounded-xl border border-[hsl(var(--border))] bg-background/60 px-4 py-3 text-sm font-medium focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30"
+            className="mt-2 w-full rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--background)/0.6)] px-4 py-3 text-sm font-medium focus:border-primary focus:outline-none focus:ring-2 focus:ring-[hsl(var(--primary)/0.3)]"
           />
         </div>
         <div>
           <label className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
             Tag
           </label>
-          <div className="mt-2 flex items-center rounded-xl border border-[hsl(var(--border))] bg-background/60 focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/30">
-            <span className="px-3 font-display text-sm font-bold text-primary">#</span>
+          <div className="mt-2 flex items-center rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--background)/0.6)] focus-within:border-primary focus-within:ring-2 focus-within:ring-[hsl(var(--primary)/0.3)]">
+            <span className="px-3 font-display text-sm font-bold text-primary">
+              #
+            </span>
             <input
               value={tag}
-              onChange={(e) => setTag(e.target.value.replace('#', ''))}
+              onChange={(e) => setTag(e.target.value.replace("#", ""))}
               placeholder="KR1"
               className="w-full bg-transparent py-3 pr-3 text-sm font-medium focus:outline-none"
             />
@@ -601,61 +718,83 @@ const AddPlayerModal: React.FC<{ onClose: () => void; onSubmit: (p: { name: stri
         </div>
       </div>
 
-      <div className="mt-4 rounded-xl border border-[hsl(var(--primary)/0.2)] bg-primary/5 p-3">
+      <div className="mt-4 rounded-xl border border-[hsl(var(--primary)/0.2)] bg-[hsl(var(--primary)/0.05)] p-3">
         <div className="flex items-start gap-2">
           <Sparkles className="mt-0.5 h-3.5 w-3.5 shrink-0 text-primary" />
           <p className="text-[11px] leading-relaxed text-muted-foreground">
-            Buscaremos as estatísticas reais do jogador via Riot API após confirmar.
+            Buscaremos as estatísticas reais do jogador via Riot API após
+            confirmar.
           </p>
         </div>
       </div>
 
-      <ModalFooter onCancel={onClose} onConfirm={() => onSubmit({ name: name.trim(), tag: tag.trim() })} disabled={!valid} confirmLabel="Adicionar" />
+      <ModalFooter
+        onCancel={onClose}
+        onConfirm={() => onSubmit({ name: name.trim(), tag: tag.trim() })}
+        disabled={!valid}
+        confirmLabel="Adicionar"
+      />
     </ModalShell>
-  )
-}
+  );
+};
 
 // ─── Modal: Simular embate ────────────────────────────────────────────────────
-const LANES: Member['lane'][] = ['Top', 'Jungle', 'Mid', 'ADC', 'Support']
+const LANES: Member["lane"][] = ["Top", "Jungle", "Mid", "ADC", "Support"];
 
-const SimulateModal: React.FC<{ teams: Team[]; current: Team; onClose: () => void }> = ({
-  teams, current, onClose,
-}) => {
-  const opponents = teams.filter((t) => t.id !== current.id)
-  const [opponentId, setOpponentId] = useState<number | null>(opponents[0]?.id ?? null)
-  const opponent = opponents.find((t) => t.id === opponentId) ?? null
+const SimulateModal: React.FC<{
+  teams: Team[];
+  current: Team;
+  onClose: () => void;
+}> = ({ teams, current, onClose }) => {
+  const opponents = teams.filter((t) => t.id !== current.id);
+  const [opponentId, setOpponentId] = useState<number | null>(
+    opponents[0]?.id ?? null,
+  );
+  const opponent = opponents.find((t) => t.id === opponentId) ?? null;
 
-  const aByLane = byLane(current.members)
-  const bByLane = opponent ? byLane(opponent.members) : ({} as Record<string, Member | undefined>)
+  const aByLane = byLane(current.members);
+  const bByLane = opponent
+    ? byLane(opponent.members)
+    : ({} as Record<string, Member | undefined>);
 
   const score = useMemo(() => {
-    if (!opponent) return { a: 0, b: 0 }
-    let a = 0, b = 0
+    if (!opponent) return { a: 0, b: 0 };
+    let a = 0,
+      b = 0;
     LANES.forEach((l) => {
-      const av = laneStrength(aByLane[l!])
-      const bv = laneStrength(bByLane[l!])
-      if (av > bv) a += 1
-      else if (bv > av) b += 1
-    })
-    return { a, b }
-  }, [opponent, aByLane, bByLane])
+      const av = laneStrength(aByLane[l!]);
+      const bv = laneStrength(bByLane[l!]);
+      if (av > bv) a += 1;
+      else if (bv > av) b += 1;
+    });
+    return { a, b };
+  }, [opponent, aByLane, bByLane]);
 
-  const winning = score.a > score.b ? 'a' : score.b > score.a ? 'b' : 'tie'
+  const winning = score.a > score.b ? "a" : score.b > score.a ? "b" : "tie";
 
   return (
-    <ModalShell title="Simular embate" subtitle="Comparativo lado a lado, rota por rota" onClose={onClose} wide>
+    <ModalShell
+      title="Simular embate"
+      subtitle="Comparativo lado a lado, rota por rota"
+      onClose={onClose}
+      wide
+    >
       <div className="mb-5 flex items-center justify-end gap-2">
         <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
           Adversário
         </span>
         <select
-          value={opponentId ?? ''}
+          value={opponentId ?? ""}
           onChange={(e) => setOpponentId(Number(e.target.value))}
-          className="rounded-xl border border-[hsl(var(--border))] bg-background/60 px-3 py-2 text-sm font-semibold focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30"
+          className="rounded-xl border border-border bg-[hsl(var(--background)/0.6)] px-3 py-2 text-sm font-semibold focus:border-primary focus:outline-none focus:ring-2 focus:ring-[hsl(var(--primary)/0.3)]"
         >
-          {opponents.length === 0 && <option value="">Nenhum time disponível</option>}
+          {opponents.length === 0 && (
+            <option value="">Nenhum time disponível</option>
+          )}
           {opponents.map((t) => (
-            <option key={t.id} value={t.id}>{t.nome}</option>
+            <option key={t.id} value={t.id}>
+              {t.nome}
+            </option>
           ))}
         </select>
       </div>
@@ -663,10 +802,14 @@ const SimulateModal: React.FC<{ teams: Team[]; current: Team; onClose: () => voi
       {opponent && (
         <>
           {/* Placar */}
-          <div className="relative mb-5 grid grid-cols-3 items-center gap-3 overflow-hidden rounded-2xl border border-[hsl(var(--border))] bg-background/40 p-5">
+          <div className="relative mb-5 grid grid-cols-3 items-center gap-3 overflow-hidden rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--background)/0.4)] p-5">
             <div className="absolute inset-0 bg-hex opacity-30" />
             <div className="relative">
-              <TeamBadge team={current} alignment="left" winning={winning === 'a'} />
+              <TeamBadge
+                team={current}
+                alignment="left"
+                winning={winning === "a"}
+              />
             </div>
             <div className="relative text-center">
               <div className="font-display text-4xl font-black tabular-nums">
@@ -674,16 +817,24 @@ const SimulateModal: React.FC<{ teams: Team[]; current: Team; onClose: () => voi
                   key={`a-${score.a}`}
                   initial={{ scale: 0.5, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
-                  className={winning === 'a' ? 'text-primary drop-shadow-[0_0_12px_hsl(var(--primary))]' : 'text-muted-foreground'}
+                  className={
+                    winning === "a"
+                      ? "text-primary drop-shadow-[0_0_12px_hsl(var(--primary))]"
+                      : "text-muted-foreground"
+                  }
                 >
                   {score.a}
                 </motion.span>
-                <span className="mx-3 text-muted-foreground/50">:</span>
+                <span className="mx-3 text-[hsl(var(--muted-foreground)/0.5)]">:</span>
                 <motion.span
                   key={`b-${score.b}`}
                   initial={{ scale: 0.5, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
-                  className={winning === 'b' ? 'text-rose-400 drop-shadow-[0_0_12px_rgba(251,113,133,0.6)]' : 'text-muted-foreground'}
+                  className={
+                    winning === "b"
+                      ? "text-rose-400 drop-shadow-[0_0_12px_rgba(251,113,133,0.6)]"
+                      : "text-muted-foreground"
+                  }
                 >
                   {score.b}
                 </motion.span>
@@ -693,21 +844,25 @@ const SimulateModal: React.FC<{ teams: Team[]; current: Team; onClose: () => voi
               </div>
             </div>
             <div className="relative">
-              <TeamBadge team={opponent} alignment="right" winning={winning === 'b'} />
+              <TeamBadge
+                team={opponent}
+                alignment="right"
+                winning={winning === "b"}
+              />
             </div>
           </div>
 
           {/* Rotas */}
           <div className="space-y-2">
             {LANES.map((l, idx) => {
-              const a = aByLane[l!]
-              const b = bByLane[l!]
-              const av = laneStrength(a)
-              const bv = laneStrength(b)
-              const total = Math.max(1, av + bv)
-              const aPct = (av / total) * 100
-              const bPct = 100 - aPct
-              const winner = av > bv ? 'a' : bv > av ? 'b' : 'tie'
+              const a = aByLane[l!];
+              const b = bByLane[l!];
+              const av = laneStrength(a);
+              const bv = laneStrength(b);
+              const total = Math.max(1, av + bv);
+              const aPct = (av / total) * 100;
+              const bPct = 100 - aPct;
+              const winner = av > bv ? "a" : bv > av ? "b" : "tie";
               return (
                 <motion.div
                   key={l}
@@ -717,15 +872,19 @@ const SimulateModal: React.FC<{ teams: Team[]; current: Team; onClose: () => voi
                   className="rounded-xl border border-[hsl(var(--border))] bg-card-glass p-3"
                 >
                   <div className="mb-2 grid grid-cols-[1fr_auto_1fr] items-center gap-3 text-xs">
-                    <div className={`text-left font-display font-bold ${winner === 'a' ? 'text-primary' : 'text-foreground'}`}>
-                      {a?.nome ?? '—'}
+                    <div
+                      className={`text-left font-display font-bold ${winner === "a" ? "text-primary" : "text-foreground"}`}
+                    >
+                      {a?.nome ?? "—"}
                     </div>
                     <LaneBadge lane={l ?? undefined} />
-                    <div className={`text-right font-display font-bold ${winner === 'b' ? 'text-rose-400' : 'text-foreground'}`}>
-                      {b?.nome ?? '—'}
+                    <div
+                      className={`text-right font-display font-bold ${winner === "b" ? "text-rose-400" : "text-foreground"}`}
+                    >
+                      {b?.nome ?? "—"}
                     </div>
                   </div>
-                  <div className="flex h-2.5 overflow-hidden rounded-full bg-background/60">
+                  <div className="flex h-2.5 overflow-hidden rounded-full bg-[hsl(var(--background)/0.6)]">
                     <motion.div
                       initial={{ width: 0 }}
                       animate={{ width: `${aPct}%` }}
@@ -744,7 +903,7 @@ const SimulateModal: React.FC<{ teams: Team[]; current: Team; onClose: () => voi
                     <span>Força {bv.toFixed(0)}</span>
                   </div>
                 </motion.div>
-              )
+              );
             })}
           </div>
         </>
@@ -753,56 +912,71 @@ const SimulateModal: React.FC<{ teams: Team[]; current: Team; onClose: () => voi
       <div className="mt-6 flex justify-end">
         <button
           onClick={onClose}
-          className="rounded-xl border border-[hsl(var(--border))] bg-secondary/60 px-5 py-2.5 text-sm font-bold transition hover:bg-secondary"
+          className="rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--secondary)/0.6)] px-5 py-2.5 text-sm font-bold transition hover:bg-secondary"
         >
           Fechar
         </button>
       </div>
     </ModalShell>
-  )
-}
+  );
+};
 
-const TeamBadge: React.FC<{ team: Team; alignment: 'left' | 'right'; winning?: boolean }> = ({
-  team, alignment, winning,
-}) => {
+const TeamBadge: React.FC<{
+  team: Team;
+  alignment: "left" | "right";
+  winning?: boolean;
+}> = ({ team, alignment, winning }) => {
   const info = (
-    <div className={alignment === 'right' ? 'text-right' : 'text-left'}>
+    <div className={alignment === "right" ? "text-right" : "text-left"}>
       <div className="font-display text-sm font-black">{team.nome}</div>
       <div className="text-[10px] uppercase tracking-widest text-muted-foreground">
         {team.members.length} membros
       </div>
     </div>
-  )
+  );
   const avatar = (
     <div
-      className={`flex h-12 w-12 items-center justify-center rounded-xl font-display text-base font-black text-primary-foreground ${winning
-        ? 'bg-gradient-primary shadow-glow ring-2 ring-primary/50'
-        : 'bg-secondary text-foreground'
-        }`}
+      className={`flex h-12 w-12 items-center justify-center rounded-xl font-display text-base font-black text-primary-foreground ${
+        winning
+          ? "bg-gradient-primary shadow-glow ring-2 ring-[hsl(var(--primary)/0.5)]"
+          : "bg-secondary text-foreground"
+      }`}
     >
       {team.nome.slice(0, 2).toUpperCase()}
     </div>
-  )
+  );
   return (
-    <div className={`flex items-center gap-3 ${alignment === 'right' ? 'justify-end' : 'justify-start'}`}>
-      {alignment === 'right' ? (<>{info}{avatar}</>) : (<>{avatar}{info}</>)}
+    <div
+      className={`flex items-center gap-3 ${alignment === "right" ? "justify-end" : "justify-start"}`}
+    >
+      {alignment === "right" ? (
+        <>
+          {info}
+          {avatar}
+        </>
+      ) : (
+        <>
+          {avatar}
+          {info}
+        </>
+      )}
     </div>
-  )
-}
+  );
+};
 
 // ─── Modal shell ──────────────────────────────────────────────────────────────
 const ModalShell: React.FC<{
-  title: string
-  subtitle?: string
-  onClose: () => void
-  wide?: boolean
-  children: React.ReactNode
+  title: string;
+  subtitle?: string;
+  onClose: () => void;
+  wide?: boolean;
+  children: React.ReactNode;
 }> = ({ title, subtitle, onClose, wide, children }) => (
   <motion.div
     initial={{ opacity: 0 }}
     animate={{ opacity: 1 }}
     exit={{ opacity: 0 }}
-    className="fixed inset-0 z-50 flex items-center justify-center bg-background/80 p-4 backdrop-blur-md"
+    className="fixed inset-0 z-50 flex items-center justify-center bg-[hsl(var(--background)/0.8)] p-4 backdrop-blur-md"
     onClick={onClose}
   >
     <motion.div
@@ -812,36 +986,40 @@ const ModalShell: React.FC<{
       transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
       onClick={(e) => e.stopPropagation()}
       className={[
-        'relative w-full overflow-hidden rounded-2xl border border-[hsl(var(--border))] bg-card-glass p-6 shadow-elevated',
-        wide ? 'max-w-2xl' : 'max-w-md',
-      ].join(' ')}
+        "relative w-full overflow-hidden rounded-2xl border border-border bg-card-glass p-6 shadow-elevated",
+        wide ? "max-w-2xl" : "max-w-md",
+      ].join(" ")}
     >
-      <div className="absolute -right-20 -top-20 h-48 w-48 rounded-full bg-primary/10 blur-3xl" />
+      <div className="absolute -right-20 -top-20 h-48 w-48 rounded-full bg-[hsl(var(--primary)/0.1)] blur-3xl" />
       <button
         onClick={onClose}
-        className="absolute right-3 top-3 z-10 rounded-lg border border-[hsl(var(--border))] bg-background/40 p-1.5 text-muted-foreground backdrop-blur-sm transition hover:border-[hsl(var(--border))] hover:bg-secondary hover:text-foreground"
+        className="absolute right-3 top-3 z-10 rounded-lg border border-[hsl(var(--border))] bg-[hsl(var(--background)/0.4)] p-1.5 text-muted-foreground backdrop-blur-sm transition hover:border-[hsl(var(--border))] hover:bg-secondary hover:text-foreground"
       >
         <X className="h-4 w-4" />
       </button>
       <div className="relative">
-        <h3 className="font-display text-xl font-black text-gradient">{title}</h3>
-        {subtitle && <p className="mt-1 text-xs text-muted-foreground">{subtitle}</p>}
+        <h3 className="font-display text-xl font-black text-primary">
+          {title}
+        </h3>
+        {subtitle && (
+          <p className="mt-1 text-xs text-muted-foreground">{subtitle}</p>
+        )}
         <div className="mt-5">{children}</div>
       </div>
     </motion.div>
   </motion.div>
-)
+);
 
 const ModalFooter: React.FC<{
-  onCancel: () => void
-  onConfirm: () => void
-  disabled?: boolean
-  confirmLabel: string
+  onCancel: () => void;
+  onConfirm: () => void;
+  disabled?: boolean;
+  confirmLabel: string;
 }> = ({ onCancel, onConfirm, disabled, confirmLabel }) => (
   <div className="mt-6 flex justify-end gap-2">
     <button
       onClick={onCancel}
-      className="rounded-xl border border-[hsl(var(--border))] bg-background/40 px-4 py-2.5 text-sm font-bold transition hover:bg-secondary"
+      className="rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--background)/0.4)] px-4 py-2.5 text-sm font-bold transition hover:bg-secondary"
     >
       Cancelar
     </button>
@@ -855,25 +1033,31 @@ const ModalFooter: React.FC<{
       {confirmLabel}
     </motion.button>
   </div>
-)
+);
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 function aggregate(members: Member[]) {
-  if (members.length === 0) return { wr: 0, kda: 0, agg: 0, lanes: 0 }
-  const wr = Math.round(members.reduce((s, m) => s + (m.winrate ?? 0), 0) / members.length)
-  const kda = members.reduce((s, m) => s + (m.kda ?? 0), 0) / members.length
-  const agg = Math.round(members.reduce((s, m) => s + (m.aggression ?? 0), 0) / members.length)
-  const lanes = new Set(members.map((m) => m.lane).filter(Boolean)).size
-  return { wr, kda, agg, lanes }
+  if (members.length === 0) return { wr: 0, kda: 0, agg: 0, lanes: 0 };
+  const wr = Math.round(
+    members.reduce((s, m) => s + (m.winrate ?? 0), 0) / members.length,
+  );
+  const kda = members.reduce((s, m) => s + (m.kda ?? 0), 0) / members.length;
+  const agg = Math.round(
+    members.reduce((s, m) => s + (m.aggression ?? 0), 0) / members.length,
+  );
+  const lanes = new Set(members.map((m) => m.lane).filter(Boolean)).size;
+  return { wr, kda, agg, lanes };
 }
 function byLane(members: Member[]) {
-  const map: Record<string, Member | undefined> = {}
-  members.forEach((m) => { if (m.lane && !map[m.lane]) map[m.lane] = m })
-  return map
+  const map: Record<string, Member | undefined> = {};
+  members.forEach((m) => {
+    if (m.lane && !map[m.lane]) map[m.lane] = m;
+  });
+  return map;
 }
 function laneStrength(m?: Member) {
-  if (!m) return 0
-  return (m.winrate ?? 0) + (m.kda ?? 0) * 10 + (m.aggression ?? 0) * 0.3
+  if (!m) return 0;
+  return (m.winrate ?? 0) + (m.kda ?? 0) * 10 + (m.aggression ?? 0) * 0.3;
 }
 
-export default TeamsPage
+export default TeamsPage;

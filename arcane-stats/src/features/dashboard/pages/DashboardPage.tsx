@@ -122,7 +122,7 @@ export default function DashboardPage() {
 
             <div className="md:col-span-2">
               <ScrollReveal preset="right" delay={0.3} duration={0.7}>
-                <motion.div whileHover={{ scale: 1.02 }} className="bg-[#1D2D50] rounded-xl p-4 flex flex-col border border-white/5 shadow-lg hover:border-[#00B4D8]/50 transition-all relative overflow-hidden group">
+                <motion.div whileHover={{ scale: 1.02 }} className="bg-background rounded-xl p-4 flex flex-col border border-white/5 shadow-lg hover:border-[#00B4D8]/50 transition-all relative overflow-hidden group">
                   <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                     <div className="absolute inset-0 animate-shimmer" />
                   </div>
