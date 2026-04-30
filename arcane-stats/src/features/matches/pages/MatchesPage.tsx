@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { useState } from 'react'
 import ScrollReveal from '../../../components/ScrollReveal'
+import { Link } from "react-router-dom";
 import { useAssets } from '../../../hooks/useAssets'
 import { useImageFallback } from '../../../shared/hooks/useImageFallback'
 
@@ -127,6 +128,15 @@ const MatchesPage = () => {
         <p className="sora-text text-[#A8A8A8]">Histórico completo de suas partidas</p>
       </div>
 
+      <div className='m-auto py-8'>
+        <Link
+          to="/analisar"
+          className="font-display bg-[#0077B6] hover:bg-[#00B4D8] px-6 py-3 rounded-xl font-semibold shadow-lg transition"
+        >
+          Analisar Partidas
+        </Link>
+      </div>
+
       <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 mb-6">
         <ScrollReveal preset="up" delay={0} duration={0.5}>
           <div className="bg-[#1D2D50] p-4 rounded-lg border border-white/5 shadow-lg">
@@ -159,11 +169,10 @@ const MatchesPage = () => {
           <button
             key={opcao}
             onClick={() => setFiltro(opcao)}
-            className={`px-4 py-2 rounded-lg transition-all ${
-              filtro === opcao
-                ? 'bg-[#0077B6] text-[#E0E0E0] shadow-lg'
-                : 'bg-[#1D2D50] text-[#A8A8A8] hover:bg-[#0077B6]/50 border border-white/5'
-            }`}
+            className={`px-4 py-2 rounded-lg transition-all ${filtro === opcao
+              ? 'bg-[#0077B6] text-[#E0E0E0] shadow-lg'
+              : 'bg-[#1D2D50] text-[#A8A8A8] hover:bg-[#0077B6]/50 border border-white/5'
+              }`}
           >
             {opcao}
           </button>
@@ -175,23 +184,20 @@ const MatchesPage = () => {
           <ScrollReveal key={partida.id} preset="up" delay={idx * 0.1} duration={0.6}>
             <motion.div
               whileHover={{ scale: 1.02 }}
-              className={`bg-[#1D2D50] p-6 rounded-lg border shadow-lg transition-all ${
-                partida.resultado === 'Vitória'
-                  ? 'border-[#4CAF50]/30 hover:border-[#4CAF50]/50'
-                  : 'border-[#F44336]/30 hover:border-[#F44336]/50'
-              }`}
+              className={`bg-[#1D2D50] p-6 rounded-lg border shadow-lg transition-all ${partida.resultado === 'Vitória'
+                ? 'border-[#4CAF50]/30 hover:border-[#4CAF50]/50'
+                : 'border-[#F44336]/30 hover:border-[#F44336]/50'
+                }`}
             >
               <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                 <div className="flex items-center gap-4">
-                  <div className={`relative w-16 h-16 rounded-lg overflow-hidden ${
-                    partida.resultado === 'Vitória'
-                      ? 'ring-2 ring-[#4CAF50]/50'
-                      : 'ring-2 ring-[#F44336]/50'
-                  }`}>
+                  <div className={`relative w-16 h-16 rounded-lg overflow-hidden ${partida.resultado === 'Vitória'
+                    ? 'ring-2 ring-[#4CAF50]/50'
+                    : 'ring-2 ring-[#F44336]/50'
+                    }`}>
                     {imageErrors.has(partida.campeao) ? (
-                      <div className={`w-full h-full flex items-center justify-center text-2xl font-bold ${
-                        partida.resultado === 'Vitória' ? 'bg-[#4CAF50]/20 text-[#4CAF50]' : 'bg-[#F44336]/20 text-[#F44336]'
-                      }`}>
+                      <div className={`w-full h-full flex items-center justify-center text-2xl font-bold ${partida.resultado === 'Vitória' ? 'bg-[#4CAF50]/20 text-[#4CAF50]' : 'bg-[#F44336]/20 text-[#F44336]'
+                        }`}>
                         {partida.resultado === 'Vitória' ? '✓' : '✗'}
                       </div>
                     ) : (
@@ -202,18 +208,16 @@ const MatchesPage = () => {
                         onError={() => markImageError(partida.campeao)}
                       />
                     )}
-                    <div className={`absolute inset-0 ${
-                      partida.resultado === 'Vitória' ? 'bg-[#4CAF50]/10' : 'bg-[#F44336]/10'
-                    }`} />
+                    <div className={`absolute inset-0 ${partida.resultado === 'Vitória' ? 'bg-[#4CAF50]/10' : 'bg-[#F44336]/10'
+                      }`} />
                   </div>
                   <div>
                     <div className="flex items-center gap-3 mb-1">
                       <h3 className="space-grotesk-title text-lg font-semibold text-[#E0E0E0]">
                         {partida.campeao} - {partida.role}
                       </h3>
-                      <span className={`px-2 py-1 rounded text-xs font-semibold ${
-                        partida.resultado === 'Vitória' ? 'bg-[#4CAF50]/20 text-[#4CAF50]' : 'bg-[#F44336]/20 text-[#F44336]'
-                      }`}>
+                      <span className={`px-2 py-1 rounded text-xs font-semibold ${partida.resultado === 'Vitória' ? 'bg-[#4CAF50]/20 text-[#4CAF50]' : 'bg-[#F44336]/20 text-[#F44336]'
+                        }`}>
                         {partida.resultado}
                       </span>
                     </div>

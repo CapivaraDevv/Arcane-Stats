@@ -19,7 +19,7 @@ interface PerformanceRadarProps {
 
 export default function PerformanceRadar({ data }: PerformanceRadarProps) {
   return (
-    <div className="w-full h-[220px] bg-[#05080fb3] rounded-3xl p-2">
+    <div className="w-full h-[267px] bg-[#05080fb3] rounded-3xl p-2">
       <ResponsiveContainer width="100%" height="100%">
         <RadarChart data={data}>
           <PolarGrid stroke="rgba(255,255,255,0.20)" />

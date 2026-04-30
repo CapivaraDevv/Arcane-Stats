@@ -1,5 +1,6 @@
 import { Link, useLocation } from 'react-router-dom'
 import { motion } from 'framer-motion'
+import { path } from 'framer-motion/client'
 
 const Sidebar = () => {
   const location = useLocation()
@@ -51,6 +52,7 @@ const Sidebar = () => {
           { path: '/times', label: 'Times', index: 1 },
           { path: '/jogadores', label: 'Jogadores', index: 2 },
           { path: '/partidas', label: 'Partidas', index: 3 },
+          // { path: '/analisar', label: 'Analisar Partida', index: 1 },
           { path: '/configuracoes', label: 'Configurações', index: 4 },
         ].map(({ path, label, index }) => (
           <motion.div key={path} custom={index} initial="hidden" animate="visible" variants={linkVariants}>

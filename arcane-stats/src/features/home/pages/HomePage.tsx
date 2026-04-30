@@ -69,7 +69,7 @@ export default function HomePage() {
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7 }}
-              className="space-grotesk-title text-4xl md:text-5xl lg:text-6xl font-bold leading-tight"
+              className="font-display text-4xl md:text-5xl lg:text-6xl font-bold leading-tight"
             >
               Arcane <span className="text-[#00B4D8]">Stats</span>
             </motion.h1>

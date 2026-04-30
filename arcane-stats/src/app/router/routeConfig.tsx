@@ -4,6 +4,7 @@ import DashboardPage from '../../features/dashboard/pages/DashboardPage'
 import TeamsPage from '../../features/teams/pages/TeamsPage'
 import PlayersPage from '../../features/players/pages/PlayersPage'
 import MatchesPage from '../../features/matches/pages/MatchesPage'
+import AnalyzePage from '../../features/players/pages/AnalyzePage'
 import SettingsPage from '../../features/settings/pages/SettingsPage'
 import LoginPage from '../../features/auth/pages/LoginPage'
 import RegisterPage from '../../features/auth/pages/RegisterPage'
@@ -23,6 +24,7 @@ export const appRoutes: AppRoute[] = [
   { path: '/times', element: <TeamsPage />, requiresAuth: true, showShell: true },
   { path: '/jogadores', element: <PlayersPage />, requiresAuth: true, showShell: true },
   { path: '/partidas', element: <MatchesPage />, requiresAuth: true, showShell: true },
+  { path: '/analisar', element: <AnalyzePage />, requiresAuth: true, showShell: true },
   { path: '/configuracoes', element: <SettingsPage />, requiresAuth: true, showShell: true },
 ]
 

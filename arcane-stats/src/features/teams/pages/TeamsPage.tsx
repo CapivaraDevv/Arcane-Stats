@@ -44,7 +44,7 @@ type Team = {
 type SortKey = "winrate" | "kda" | "aggression";
 
 // ─── Página ───────────────────────────────────────────────────────────────────
-const TeamsPage: React.FC<{ onCreate: () => void }> = ({ onCreate }) => {
+const TeamsPage: React.FC = () => {
   useConfig();
   const auth = useAuthContext() as any;
   const userId: string = auth?.user?.id ?? "";

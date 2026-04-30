@@ -7,7 +7,7 @@ import DarkVeil from "../../../components/DarkVeilBackground";
 import KPICard from "../../../components/KPICard";
 import TrendChart from "../../../components/TrendChart";
 import LaneCard from "../../../components/LaneCard";
-import { ChartSpline, ChartNoAxesCombined } from "lucide-react";
+import { ChartSpline, ChartNoAxesCombined, ChevronRight } from "lucide-react";
 import PerformanceRadar from "../../../components/PerformanceRadar";
 
 export default function DashboardPage() {
@@ -170,9 +170,18 @@ export default function DashboardPage() {
                     <PerformanceRadar data={radarData} />
 
                     <div className="mt-3 pt-3 border-t border-white/10 text-xs text-[#A8A8A8]">
-                      <p>🔥 Forte em lutas</p>
-                      <p>📈 Boa consistência geral</p>
-                      <p>⚠️ Pode melhorar controle de objetivos</p>
+                      <div className="flex flex-row items-center">
+                        <ChevronRight className="text-white"/> 
+                        <p className="font-display text-3xl font-bold text-primary"> Forte em lutas</p>
+                      </div>
+                      <div className="flex flex-row items-center">
+                        <ChevronRight className="text-white"/> 
+                        <p className="font-display text-3xl font-bold text-primary">Boa consistência geral</p>
+                      </div>
+                      <div className="flex flex-row items-center">
+                        <ChevronRight className="text-white"/> 
+                         <p className="font-display text-3xl font-bold text-[hsl(var(--primary))]">Pode melhorar controle de objetivos</p>
+                      </div>   
                     </div>
                   </div>
                 </motion.div>
