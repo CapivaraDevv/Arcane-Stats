@@ -83,10 +83,10 @@ const PlayersPage = () => {
   }, [selectedPlayer])
 
   return (
-    <main className="flex-1 p-8 bg-[#0B132B] min-h-screen">
+    <main className="flex-1 p-8 bg-[hsl(var(--background))] min-h-screen">
       <div className="mb-6">
-        <h2 className="space-grotesk-title text-3xl font-bold mb-2 text-[#E0E0E0]">Jogadores</h2>
-        <p className="sora-text text-[#A8A8A8]">Gerencie e visualize estatísticas dos jogadores</p>
+        <h2 className="space-grotesk-title text-3xl font-bold mb-2 text-[hsl(var(--foreground))]">Jogadores</h2>
+        <p className="sora-text text-[hsl(var(--muted-foreground))]">Gerencie e visualize estatísticas dos jogadores</p>
       </div>
 
       <fieldset className="mb-6">
@@ -101,10 +101,10 @@ const PlayersPage = () => {
               }}
               aria-pressed={filtroRole === role}
               aria-label={`Filtrar por role ${role}`}
-              className={`px-4 py-2 rounded-lg transition-all focus:outline-none focus:ring-2 focus:ring-[#00B4D8] ${
+              className={`px-4 py-2 rounded-lg transition-all focus:outline-none focus:ring-2 focus:ring-[hsl(var(--primary-glow))] ${
                 filtroRole === role
-                  ? 'bg-[#0077B6] text-[#E0E0E0] shadow-lg'
-                  : 'bg-[#1D2D50] text-[#A8A8A8] hover:bg-[#0077B6]/50 border border-white/5'
+                  ? 'bg-[hsl(var(--primary))] text-[hsl(var(--foreground))] shadow-lg'
+                  : 'bg-[hsl(var(--secondary))] text-[hsl(var(--muted-foreground))] hover:bg-[hsl(var(--primary))]/50 border border-white/5'
               }`}
             >
               {role}
@@ -113,15 +113,15 @@ const PlayersPage = () => {
         </div>
       </fieldset>
 
-      <div className="bg-[#1D2D50] rounded-lg p-4 border border-white/5 shadow-lg">
+      <div className="bg-[hsl(var(--secondary))] rounded-lg p-4 border border-white/5 shadow-lg">
         <ScrollReveal preset="up" delay={0.05} duration={0.6}>
           <div className="overflow-x-auto">
             <table className="min-w-full table-auto">
               <thead>
-                <tr className="text-left text-sm text-[#A8A8A8] border-b border-white/10">
+                <tr className="text-left text-sm text-[hsl(var(--muted-foreground))] border-b border-white/10">
                   <th className="py-3 px-4 w-12" role="columnheader">
                     <button
-                      className="cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#00B4D8] p-1 rounded"
+                      className="cursor-pointer focus:outline-none focus:ring-2 focus:ring-[hsl(var(--primary-glow))] p-1 rounded"
                       onClick={() => {
                         if (sortKey === 'rank') setSortDir(sortDir === 'asc' ? 'desc' : 'asc')
                         else {
@@ -139,7 +139,7 @@ const PlayersPage = () => {
                   <th className="py-3 px-4" role="columnheader">Role</th>
                   <th className="py-3 px-4" role="columnheader">
                     <button
-                      className="cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#00B4D8] p-1 rounded"
+                      className="cursor-pointer focus:outline-none focus:ring-2 focus:ring-[hsl(var(--primary-glow))] p-1 rounded"
                       onClick={() => {
                         if (sortKey === 'kda') setSortDir(sortDir === 'asc' ? 'desc' : 'asc')
                         else {
@@ -154,7 +154,7 @@ const PlayersPage = () => {
                   </th>
                   <th className="py-3 px-4" role="columnheader">
                     <button
-                      className="cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#00B4D8] p-1 rounded"
+                      className="cursor-pointer focus:outline-none focus:ring-2 focus:ring-[hsl(var(--primary-glow))] p-1 rounded"
                       onClick={() => {
                         if (sortKey === 'winrate') setSortDir(sortDir === 'asc' ? 'desc' : 'asc')
                         else {
@@ -169,7 +169,7 @@ const PlayersPage = () => {
                   </th>
                   <th className="py-3 px-4" role="columnheader">
                     <button
-                      className="cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#00B4D8] p-1 rounded"
+                      className="cursor-pointer focus:outline-none focus:ring-2 focus:ring-[hsl(var(--primary-glow))] p-1 rounded"
                       onClick={() => {
                         if (sortKey === 'games') setSortDir(sortDir === 'asc' ? 'desc' : 'asc')
                         else {
@@ -188,7 +188,7 @@ const PlayersPage = () => {
                 {pageItems.map((p, idx) => (
                   <tr
                     key={p.rank}
-                    className={`border-b border-white/5 ${idx % 2 === 0 ? 'bg-[#14223A]/20' : ''} cursor-pointer hover:bg-[#0077B6]/20`}
+                    className={`border-b border-white/5 ${idx % 2 === 0 ? 'bg-[hsl(var(--secondary))]/20' : ''} cursor-pointer hover:bg-[hsl(var(--primary))]/20`}
                     onClick={() => setSelectedPlayer(p)}
                     role="button"
                     tabIndex={0}
@@ -200,23 +200,23 @@ const PlayersPage = () => {
                     }}
                     aria-label={`Ver detalhes de ${p.nick}`}
                   >
-                    <td className="py-3 px-4 font-semibold text-[#E0E0E0]">{p.rank}</td>
+                    <td className="py-3 px-4 font-semibold text-[hsl(var(--foreground))]">{p.rank}</td>
                     <td className="py-3 px-4">
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-full flex items-center justify-center bg-linear-to-br from-[#0077B6] to-[#00B4D8] text-white font-bold">
+                        <div className="w-10 h-10 rounded-full flex items-center justify-center bg-linear-to-br from-[hsl(var(--primary))] to-[hsl(var(--primary-glow))] text-white font-bold">
                           {getInitials(p.nick)}
                         </div>
                         <div>
-                          <div className="text-sm font-semibold text-[#E0E0E0]">{p.nick}</div>
-                          <div className="text-xs text-[#A8A8A8]">{p.name} • {p.country}</div>
+                          <div className="text-sm font-semibold text-[hsl(var(--foreground))]">{p.nick}</div>
+                          <div className="text-xs text-[hsl(var(--muted-foreground))]">{p.name} • {p.country}</div>
                         </div>
                       </div>
                     </td>
-                    <td className="py-3 px-4 text-sm text-[#A8A8A8]">{p.team}</td>
-                    <td className="py-3 px-4 text-sm text-[#A8A8A8]">{p.role}</td>
-                    <td className="py-3 px-4 text-sm text-[#00B4D8] font-semibold">{p.kda.toFixed(1)}</td>
-                    <td className="py-3 px-4 text-sm text-[#4CAF50] font-semibold">{p.winrate}%</td>
-                    <td className="py-3 px-4 text-sm text-[#F4A261]">{p.games}</td>
+                    <td className="py-3 px-4 text-sm text-[hsl(var(--muted-foreground))]">{p.team}</td>
+                    <td className="py-3 px-4 text-sm text-[hsl(var(--muted-foreground))]">{p.role}</td>
+                    <td className="py-3 px-4 text-sm text-[hsl(var(--primary-glow))] font-semibold">{p.kda.toFixed(1)}</td>
+                    <td className="py-3 px-4 text-sm text-[hsl(142 71% 45%)] font-semibold">{p.winrate}%</td>
+                    <td className="py-3 px-4 text-sm text-[hsl(28 87% 67%)]">{p.games}</td>
                   </tr>
                 ))}
               </tbody>
@@ -225,8 +225,8 @@ const PlayersPage = () => {
         </ScrollReveal>
 
         <div className="mt-4 flex items-center justify-between">
-          <div className="text-sm text-[#A8A8A8]">
-            Mostrando <span className="text-[#E0E0E0]">{(page - 1) * pageSize + 1}</span>–<span className="text-[#E0E0E0]">{Math.min(page * pageSize, sorted.length)}</span> de <span className="text-[#E0E0E0]">{sorted.length}</span>
+          <div className="text-sm text-[hsl(var(--muted-foreground))]">
+            Mostrando <span className="text-[hsl(var(--foreground))]">{(page - 1) * pageSize + 1}</span>–<span className="text-[hsl(var(--foreground))]">{Math.min(page * pageSize, sorted.length)}</span> de <span className="text-[hsl(var(--foreground))]">{sorted.length}</span>
           </div>
 
           <nav className="flex items-center gap-2" aria-label="Controles de paginação">
@@ -234,9 +234,9 @@ const PlayersPage = () => {
               onClick={() => setPage((p) => Math.max(1, p - 1))}
               disabled={page === 1}
               aria-label="Página anterior"
-              className="px-3 py-1 rounded bg-[#0B132B] text-[#A8A8A8] disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-[#00B4D8]"
+              className="px-3 py-1 rounded bg-[hsl(var(--background))] text-[hsl(var(--muted-foreground))] disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-[hsl(var(--primary-glow))]"
             >Prev</button>
-            <label htmlFor="page-input" className="text-sm text-[#A8A8A8]">Página</label>
+            <label htmlFor="page-input" className="text-sm text-[hsl(var(--muted-foreground))]">Página</label>
             <input
               id="page-input"
               type="number"
@@ -245,19 +245,19 @@ const PlayersPage = () => {
               max={totalPages}
               onChange={(e) => setPage(Math.min(Math.max(1, Number(e.target.value || 1)), totalPages))}
               aria-label="Número da página"
-              className="w-12 text-center bg-[#0B132B] text-[#E0E0E0] rounded focus:outline-none focus:ring-2 focus:ring-[#00B4D8]"
+              className="w-12 text-center bg-[hsl(var(--background))] text-[hsl(var(--foreground))] rounded focus:outline-none focus:ring-2 focus:ring-[hsl(var(--primary-glow))]"
             />
-            <div className="text-sm text-[#A8A8A8]">de {totalPages}</div>
+            <div className="text-sm text-[hsl(var(--muted-foreground))]">de {totalPages}</div>
             <button
               onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
               disabled={page === totalPages}
               aria-label="Próxima página"
-              className="px-3 py-1 rounded bg-[#0B132B] text-[#A8A8A8] disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-[#00B4D8]"
+              className="px-3 py-1 rounded bg-[hsl(var(--background))] text-[hsl(var(--muted-foreground))] disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-[hsl(var(--primary-glow))]"
             >Next</button>
           </nav>
 
           <div className="flex items-center gap-2">
-            <label htmlFor="page-size-select" className="text-sm text-[#A8A8A8]">Linhas</label>
+            <label htmlFor="page-size-select" className="text-sm text-[hsl(var(--muted-foreground))]">Linhas</label>
             <select
               id="page-size-select"
               value={pageSize}
@@ -266,7 +266,7 @@ const PlayersPage = () => {
                 setPage(1)
               }}
               aria-label="Quantidade de linhas por página"
-              className="bg-[#0B132B] text-[#E0E0E0] rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-[#00B4D8]"
+              className="bg-[hsl(var(--background))] text-[hsl(var(--foreground))] rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-[hsl(var(--primary-glow))]"
             >
               <option value={5}>5</option>
               <option value={10}>10</option>
@@ -280,27 +280,27 @@ const PlayersPage = () => {
         <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4" onClick={() => setSelectedPlayer(null)} role="presentation">
           <div
             ref={modalRef}
-            className="bg-[#1D2D50] rounded-lg w-full max-w-2xl max-h-[90vh] overflow-y-auto border border-white/10 shadow-2xl focus:outline-none"
+            className="bg-[hsl(var(--secondary))] rounded-lg w-full max-w-2xl max-h-[90vh] overflow-y-auto border border-white/10 shadow-2xl focus:outline-none"
             onClick={(e) => e.stopPropagation()}
             role="dialog"
             aria-modal="true"
             aria-labelledby="modal-title"
             tabIndex={-1}
           >
-            <div className="sticky top-0 bg-[#0B132B] p-6 border-b border-white/10 flex justify-between items-center">
+            <div className="sticky top-0 bg-[hsl(var(--background))] p-6 border-b border-white/10 flex justify-between items-center">
               <div className="flex items-center gap-4">
-                <div className="w-16 h-16 rounded-full flex items-center justify-center bg-linear-to-br from-[#0077B6] to-[#00B4D8] text-white font-bold text-2xl" aria-hidden="true">
+                <div className="w-16 h-16 rounded-full flex items-center justify-center bg-linear-to-br from-[hsl(var(--primary))] to-[hsl(var(--primary-glow))] text-white font-bold text-2xl" aria-hidden="true">
                   {getInitials(selectedPlayer.nick)}
                 </div>
                 <div>
-                  <h2 id="modal-title" className="text-2xl font-bold text-[#E0E0E0]">{selectedPlayer.nick}</h2>
-                  <p className="text-sm text-[#A8A8A8]">{selectedPlayer.name} • {selectedPlayer.country}</p>
+                  <h2 id="modal-title" className="text-2xl font-bold text-[hsl(var(--foreground))]">{selectedPlayer.nick}</h2>
+                  <p className="text-sm text-[hsl(var(--muted-foreground))]">{selectedPlayer.name} • {selectedPlayer.country}</p>
                 </div>
               </div>
               <button
                 onClick={() => setSelectedPlayer(null)}
                 aria-label="Fechar perfil do jogador"
-                className="text-[#A8A8A8] hover:text-[#E0E0E0] text-2xl focus:outline-none focus:ring-2 focus:ring-[#00B4D8] rounded px-2"
+                className="text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--foreground))] text-2xl focus:outline-none focus:ring-2 focus:ring-[hsl(var(--primary-glow))] rounded px-2"
                 title="Fechar (ESC)"
               >
                 ✕
@@ -309,52 +309,52 @@ const PlayersPage = () => {
 
             <div className="p-6 space-y-6">
               <div className="grid grid-cols-2 gap-4">
-                <div className="bg-[#0B132B] p-4 rounded-lg border border-white/5">
-                  <div className="text-xs text-[#A8A8A8] mb-1">Time</div>
-                  <div className="text-lg font-semibold text-[#E0E0E0]">{selectedPlayer.team}</div>
+                <div className="bg-[hsl(var(--background))] p-4 rounded-lg border border-white/5">
+                  <div className="text-xs text-[hsl(var(--muted-foreground))] mb-1">Time</div>
+                  <div className="text-lg font-semibold text-[hsl(var(--foreground))]">{selectedPlayer.team}</div>
                 </div>
-                <div className="bg-[#0B132B] p-4 rounded-lg border border-white/5">
-                  <div className="text-xs text-[#A8A8A8] mb-1">Role</div>
-                  <div className="text-lg font-semibold text-[#E0E0E0]">{selectedPlayer.role}</div>
+                <div className="bg-[hsl(var(--background))] p-4 rounded-lg border border-white/5">
+                  <div className="text-xs text-[hsl(var(--muted-foreground))] mb-1">Role</div>
+                  <div className="text-lg font-semibold text-[hsl(var(--foreground))]">{selectedPlayer.role}</div>
                 </div>
               </div>
 
               <div>
-                <h3 className="text-lg font-bold text-[#E0E0E0] mb-3">Estatísticas</h3>
+                <h3 className="text-lg font-bold text-[hsl(var(--foreground))] mb-3">Estatísticas</h3>
                 <div className="grid grid-cols-4 gap-3">
-                  <div className="bg-[#0B132B] p-3 rounded-lg border border-white/5 text-center">
-                    <div className="text-2xl font-bold text-[#00B4D8]">{selectedPlayer.kda.toFixed(1)}</div>
-                    <div className="text-xs text-[#A8A8A8]">KDA</div>
+                  <div className="bg-[hsl(var(--background))] p-3 rounded-lg border border-white/5 text-center">
+                    <div className="text-2xl font-bold text-[hsl(var(--primary-glow))]">{selectedPlayer.kda.toFixed(1)}</div>
+                    <div className="text-xs text-[hsl(var(--muted-foreground))]">KDA</div>
                   </div>
-                  <div className="bg-[#0B132B] p-3 rounded-lg border border-white/5 text-center">
-                    <div className="text-2xl font-bold text-[#00B4D8]">{selectedPlayer.winrate}%</div>
-                    <div className="text-xs text-[#A8A8A8]">Winrate</div>
+                  <div className="bg-[hsl(var(--background))] p-3 rounded-lg border border-white/5 text-center">
+                    <div className="text-2xl font-bold text-[hsl(var(--primary-glow))]">{selectedPlayer.winrate}%</div>
+                    <div className="text-xs text-[hsl(var(--muted-foreground))]">Winrate</div>
                   </div>
-                  <div className="bg-[#0B132B] p-3 rounded-lg border border-white/5 text-center">
-                    <div className="text-2xl font-bold text-[#00B4D8]">{selectedPlayer.games}</div>
-                    <div className="text-xs text-[#A8A8A8]">Partidas</div>
+                  <div className="bg-[hsl(var(--background))] p-3 rounded-lg border border-white/5 text-center">
+                    <div className="text-2xl font-bold text-[hsl(var(--primary-glow))]">{selectedPlayer.games}</div>
+                    <div className="text-xs text-[hsl(var(--muted-foreground))]">Partidas</div>
                   </div>
-                  <div className="bg-[#0B132B] p-3 rounded-lg border border-white/5 text-center">
-                    <div className="text-2xl font-bold text-[#00B4D8]">#1</div>
-                    <div className="text-xs text-[#A8A8A8]">Posição</div>
+                  <div className="bg-[hsl(var(--background))] p-3 rounded-lg border border-white/5 text-center">
+                    <div className="text-2xl font-bold text-[hsl(var(--primary-glow))]">#1</div>
+                    <div className="text-xs text-[hsl(var(--muted-foreground))]">Posição</div>
                   </div>
                 </div>
               </div>
 
               <div>
-                <h3 className="text-lg font-bold text-[#E0E0E0] mb-3">Histórico Recente</h3>
+                <h3 className="text-lg font-bold text-[hsl(var(--foreground))] mb-3">Histórico Recente</h3>
                 <div className="space-y-2">
                   {getMatchHistory().map((match) => (
-                    <div key={match.id} className="flex items-center justify-between bg-[#0B132B] p-3 rounded-lg border border-white/5">
+                    <div key={match.id} className="flex items-center justify-between bg-[hsl(var(--background))] p-3 rounded-lg border border-white/5">
                       <div>
-                        <div className="text-sm font-semibold text-[#E0E0E0]">{match.champion}</div>
-                        <div className="text-xs text-[#A8A8A8]">{match.date}</div>
+                        <div className="text-sm font-semibold text-[hsl(var(--foreground))]">{match.champion}</div>
+                        <div className="text-xs text-[hsl(var(--muted-foreground))]">{match.date}</div>
                       </div>
                       <div className="text-right">
-                        <div className={`text-sm font-bold ${match.result === 'Vitória' ? 'text-[#4CAF50]' : 'text-[#FF6B6B]'}`}>
+                        <div className={`text-sm font-bold ${match.result === 'Vitória' ? 'text-[hsl(142 71% 45%)]' : 'text-[hsl(var(--destructive))]'}`}>
                           {match.result}
                         </div>
-                        <div className="text-xs text-[#A8A8A8]">{match.kda}</div>
+                        <div className="text-xs text-[hsl(var(--muted-foreground))]">{match.kda}</div>
                       </div>
                     </div>
                   ))}
@@ -362,8 +362,8 @@ const PlayersPage = () => {
               </div>
 
               <div className="grid grid-cols-2 gap-3">
-                <button aria-label={`Seguir ${selectedPlayer.nick}`} className="bg-[#0077B6] hover:bg-[#00B4D8] text-[#E0E0E0] font-semibold py-2 rounded-lg transition focus:outline-none focus:ring-2 focus:ring-[#00B4D8] focus:ring-offset-2 focus:ring-offset-[#1D2D50]">Seguir</button>
-                <button aria-label={`Comparar com ${selectedPlayer.nick}`} className="bg-[#1D2D50] hover:bg-[#0077B6]/50 text-[#E0E0E0] font-semibold py-2 rounded-lg border border-white/10 transition focus:outline-none focus:ring-2 focus:ring-[#00B4D8] focus:ring-offset-2 focus:ring-offset-[#1D2D50]">Comparar</button>
+                <button aria-label={`Seguir ${selectedPlayer.nick}`} className="bg-[hsl(var(--primary))] hover:bg-[hsl(var(--primary-glow))] text-[hsl(var(--foreground))] font-semibold py-2 rounded-lg transition focus:outline-none focus:ring-2 focus:ring-[hsl(var(--primary-glow))] focus:ring-offset-2 focus:ring-offset-[hsl(var(--secondary))]">Seguir</button>
+                <button aria-label={`Comparar com ${selectedPlayer.nick}`} className="bg-[hsl(var(--secondary))] hover:bg-[hsl(var(--primary))]/50 text-[hsl(var(--foreground))] font-semibold py-2 rounded-lg border border-white/10 transition focus:outline-none focus:ring-2 focus:ring-[hsl(var(--primary-glow))] focus:ring-offset-2 focus:ring-offset-[hsl(var(--secondary))]">Comparar</button>
               </div>
             </div>
           </div>

@@ -50,8 +50,8 @@ const SettingsPage = () => {
 
   const ConfigSection = ({ title, children }: { title: string; children: ReactNode }) => (
     <ScrollReveal preset="up" duration={0.5}>
-      <div className="bg-[#1D2D50] p-6 rounded-lg border border-white/5 shadow-lg mb-6">
-        <h3 className="space-grotesk-title text-xl font-semibold text-[#E0E0E0] mb-4 pb-3 border-b border-white/10">
+      <div className="bg-[hsl(var(--secondary))] p-6 rounded-lg border border-white/5 shadow-lg mb-6">
+        <h3 className="space-grotesk-title text-xl font-semibold text-[hsl(var(--foreground))] mb-4 pb-3 border-b border-white/10">
           {title}
         </h3>
         {children}
@@ -72,12 +72,12 @@ const SettingsPage = () => {
   }) => (
     <div className="flex items-center justify-between py-3 border-b border-white/5 last:border-0">
       <div className="flex-1">
-        <div className="sora-text text-[#E0E0E0] font-medium">{label}</div>
-        {description && <div className="sora-text text-sm text-[#A8A8A8] mt-1">{description}</div>}
+        <div className="sora-text text-[hsl(var(--foreground))] font-medium">{label}</div>
+        {description && <div className="sora-text text-sm text-[hsl(var(--muted-foreground))] mt-1">{description}</div>}
       </div>
       <button
         onClick={onChange}
-        className={`relative w-14 h-7 rounded-full transition-colors duration-200 ${checked ? 'bg-[#0077B6]' : 'bg-[#4A5568]'}`}
+        className={`relative w-14 h-7 rounded-full transition-colors duration-200 ${checked ? 'bg-[hsl(var(--primary))]' : 'bg-[hsl(var(--muted))]'}`}
       >
         <motion.div
           className="absolute top-1 left-1 w-5 h-5 bg-white rounded-full shadow-lg"
@@ -89,10 +89,10 @@ const SettingsPage = () => {
   )
 
   return (
-    <main className="flex-1 p-8 bg-[#0B132B] min-h-screen">
+    <main className="flex-1 p-8 bg-[hsl(var(--background))] min-h-screen">
       <div className="mb-6">
-        <h2 className="space-grotesk-title text-3xl font-bold mb-2 text-[#E0E0E0]">Configurações</h2>
-        <p className="sora-text text-[#A8A8A8]">Personalize sua experiência na plataforma</p>
+        <h2 className="space-grotesk-title text-3xl font-bold mb-2 text-[hsl(var(--foreground))]">Configurações</h2>
+        <p className="sora-text text-[hsl(var(--muted-foreground))]">Personalize sua experiência na plataforma</p>
       </div>
 
       <div className="max-w-4xl">
@@ -165,7 +165,7 @@ const SettingsPage = () => {
           />
           {localConfigs.autoRefresh && (
             <div className="mt-4 pt-4 border-t border-white/10">
-              <label className="sora-text text-[#E0E0E0] block mb-2">
+              <label className="sora-text text-[hsl(var(--foreground))] block mb-2">
                 Intervalo de Atualização: {localConfigs.intervaloRefresh}s
               </label>
               <input
@@ -175,9 +175,9 @@ const SettingsPage = () => {
                 step="10"
                 value={localConfigs.intervaloRefresh}
                 onChange={(e) => updateInterval(Number(e.target.value))}
-                className="w-full h-2 bg-[#0B132B] rounded-lg appearance-none cursor-pointer accent-[#0077B6]"
+                className="w-full h-2 bg-[hsl(var(--background))] rounded-lg appearance-none cursor-pointer accent-[hsl(var(--primary))]"
               />
-              <div className="flex justify-between text-xs text-[#A8A8A8] mt-1">
+              <div className="flex justify-between text-xs text-[hsl(var(--muted-foreground))] mt-1">
                 <span>10s</span>
                 <span>300s</span>
               </div>
@@ -225,13 +225,13 @@ const SettingsPage = () => {
           <div className="flex gap-4 mt-6 items-center">
             <button
               onClick={handleSave}
-              className="px-6 py-3 bg-[#0077B6] text-white rounded-lg font-semibold hover:bg-[#00B4D8] transition-colors"
+              className="px-6 py-3 bg-[hsl(var(--primary))] text-white rounded-lg font-semibold hover:bg-[hsl(var(--primary-glow))] transition-colors"
             >
               Salvar Configurações
             </button>
             <button
               onClick={handleReset}
-              className="px-6 py-3 bg-[#1D2D50] text-[#E0E0E0] rounded-lg font-semibold hover:bg-[#2D3D60] border border-white/5 transition-colors"
+              className="px-6 py-3 bg-[hsl(var(--secondary))] text-[hsl(var(--foreground))] rounded-lg font-semibold hover:bg-[hsl(var(--secondary))] border border-white/5 transition-colors"
             >
               Restaurar Padrões
             </button>
@@ -240,7 +240,7 @@ const SettingsPage = () => {
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0 }}
-                className="flex items-center gap-2 px-4 py-2 bg-[#4CAF50]/20 text-[#4CAF50] rounded-lg border border-[#4CAF50]/30"
+                className="flex items-center gap-2 px-4 py-2 bg-[hsl(142 71% 45%)]/20 text-[hsl(142 71% 45%)] rounded-lg border border-[hsl(142 71% 45%)]/30"
               >
                 <span>✓</span>
                 <span className="text-sm font-medium">Configurações salvas!</span>

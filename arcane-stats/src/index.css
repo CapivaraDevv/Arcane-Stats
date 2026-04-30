@@ -4,6 +4,9 @@
    THEME (TAILWIND V4 LIMPO)
 ========================= */
 @theme {
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-display: "Space Grotesk", system-ui, sans-serif;
+
   --background: 222 47% 4%;
   --foreground: 210 40% 98%;
 
@@ -72,6 +75,7 @@
   body {
     background-color: hsl(var(--background));
     color: hsl(var(--foreground));
+    font-feature-settings: "ss01", "cv11";
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -103,6 +107,10 @@
 
   .text-muted-foreground {
     color: hsl(var(--muted-foreground));
+  }
+
+  .text-destructive {
+    color: hsl(var(--destructive));
   }
 
   .bg-gradient-primary {

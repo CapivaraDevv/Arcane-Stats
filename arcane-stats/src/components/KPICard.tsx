@@ -11,7 +11,7 @@ export default function KPICard({ kpi, idx, imageErrors, handleImageError }: { k
         scale: 1.05,
         boxShadow: '0 0 30px rgba(0, 180, 216, 0.4)'
       }}
-      className="bg-[hsl(var(--primary-foreground))] cursor-pointer rounded-lg p-4 sm:p-5 md:p-6 shadow-lg flex flex-col justify-center items-center gap-1 sm:gap-2 transition-all hover:bg-[#0077B6] duration-100 border border-border relative overflow-hidden group min-h-[120px] sm:min-h-[140px] md:h-30"
+      className="bg-[hsl(var(--primary-foreground))] cursor-pointer rounded-lg p-4 sm:p-5 md:p-6 shadow-lg flex flex-col justify-center items-center gap-1 sm:gap-2 transition-all hover:bg-[hsl(var(--primary))] duration-100 border border-border relative overflow-hidden group min-h-[120px] sm:min-h-[140px] md:h-30"
     >
       <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
         <div className="absolute inset-0 animate-shimmer" />
@@ -24,7 +24,7 @@ export default function KPICard({ kpi, idx, imageErrors, handleImageError }: { k
               <img
                 src={getChampionIcon(kpi.value)}
                 alt={kpi.value}
-                className="w-full h-full rounded-lg object-cover border border-[#00B4D8]/40 transition-all"
+                className="w-full h-full rounded-lg object-cover border border-[hsl(var(--primary-glow))]/40 transition-all"
                 onError={() => handleImageError(kpi.value)}
               />
             ) : (
@@ -39,10 +39,10 @@ export default function KPICard({ kpi, idx, imageErrors, handleImageError }: { k
           </div>
         ) : null}
 
-        <div className="space-grotesk-title text-lg sm:text-2xl font-bold text-[#E0E0E0] relative z-10">{kpi.value}</div>
+        <div className="space-grotesk-title text-lg sm:text-2xl font-bold text-[hsl(var(--foreground))] relative z-10">{kpi.value}</div>
       </div>
-      <div className="sora-text text-xs sm:text-sm text-[#2fd8fa] relative z-10 text-center">{kpi.title}</div>
-      <div className="sora-text text-xs sm:text-sm text-[#8ca5aa] relative z-10 text-center">{kpi.feedback}</div>
+      <div className="sora-text text-xs sm:text-sm text-primary relative z-10 text-center">{kpi.title}</div>
+      <div className="sora-text text-xs sm:text-sm text-muted-foreground relative z-10 text-center">{kpi.feedback}</div>
     </motion.div>
   );
 }

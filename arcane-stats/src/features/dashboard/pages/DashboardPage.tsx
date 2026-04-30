@@ -107,13 +107,13 @@ export default function DashboardPage() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6 my-12 relative z-10">
             {/* <div className="md:col-span-2">
               <ScrollReveal preset="left" delay={0.2} duration={0.7}>
-                <motion.div whileHover={{ scale: 1.02 }} className="bg-[#1D2D50] rounded-xl p-4 flex flex-col items-center justify-center border border-white/5 shadow-lg hover:border-[#00B4D8]/50 transition-all relative overflow-hidden group">
+                <motion.div whileHover={{ scale: 1.02 }} className="bg-[hsl(var(--secondary))] rounded-xl p-4 flex flex-col items-center justify-center border border-white/5 shadow-lg hover:border-[hsl(var(--primary-glow))]/50 transition-all relative overflow-hidden group">
                   <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                     <div className="absolute inset-0 animate-shimmer"></div>
                   </div>
 
                   <div className="relative z-10 w-full">
-                    <h2 className="space-grotesk-title text-lg font-semibold mb-4 text-[#E0E0E0]">Mapa de Pressão Estratégica</h2>
+                    <h2 className="space-grotesk-title text-lg font-semibold mb-4 text-[hsl(var(--foreground))]">Mapa de Pressão Estratégica</h2>
                     <DecisionHeatMap data={decisionHeatMap} />
                   </div>
                 </motion.div>
@@ -122,19 +122,19 @@ export default function DashboardPage() {
 
             <div className="md:col-span-2">
               <ScrollReveal preset="right" delay={0.3} duration={0.7}>
-                <motion.div whileHover={{ scale: 1.02 }} className="bg-background rounded-xl p-4 flex flex-col border border-white/5 shadow-lg hover:border-[#00B4D8]/50 transition-all relative overflow-hidden group">
+                <motion.div whileHover={{ scale: 1.02 }} className="bg-background rounded-xl p-4 flex flex-col border border-white/5 shadow-lg hover:border-[hsl(var(--primary-glow))]/50 transition-all relative overflow-hidden group">
                   <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                     <div className="absolute inset-0 animate-shimmer" />
                   </div>
 
                   <div className="relative z-10 w-full">
                     <div className="flex items-center justify-between mb-4">
-                      <h2 className="space-grotesk-title text-lg font-semibold text-[#E0E0E0]">Tendência de Performance</h2>
+                      <h2 className="space-grotesk-title text-lg font-semibold text-[hsl(var(--foreground))]">Tendência de Performance</h2>
                     </div>
                     <TrendChart data={tendenciaPerformance} />
 
                     <div className="mt-3 pt-3 border-t border-white/10">
-                      <p className="sora-text text-xs text-[#A8A8A8] italic text-center">Últimas 7 partidas • Tendência: <span className="text-[#4CAF50] font-semibold">↑ Melhorando</span></p>
+                      <p className="sora-text text-xs text-[hsl(var(--muted-foreground))] italic text-center">Últimas 7 partidas • Tendência: <span className="text-[hsl(142 71% 45%)] font-semibold">↑ Melhorando</span></p>
                     </div>
                   </div>
                 </motion.div>
@@ -144,7 +144,7 @@ export default function DashboardPage() {
         )}
 
         <div className="relative z-10">
-          <h2 className="space-grotesk-title text-2xl font-bold mb-4 text-[#E0E0E0]">Análise por Rota</h2>
+          <h2 className="space-grotesk-title text-2xl font-bold mb-4 text-[hsl(var(--foreground))]">Análise por Rota</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
             {laneAnalysis.map((lane, idx) => (
               <ScrollReveal key={idx} delay={idx * 0.1} preset="up" duration={0.6}>

@@ -6,13 +6,13 @@ const dicasExemplo = [
 
 export default function PainelDicas() {
   return (
-    <aside className="bg-[#1D2D50] p-4 rounded-lg shadow-lg w-full max-w-md mx-auto mt-4 border border-white/5">
-      <h2 className="text-lg font-bold mb-2 text-[#E0E0E0] space-grotesk-title">Dicas de Estratégia</h2>
+    <aside className="bg-[hsl(var(--secondary))] p-4 rounded-lg shadow-lg w-full max-w-md mx-auto mt-4 border border-white/5">
+      <h2 className="text-lg font-bold mb-2 text-[hsl(var(--foreground))] space-grotesk-title">Dicas de Estratégia</h2>
       <ul>
         {dicasExemplo.map((dica) => (
           <li
             key={dica.id}
-            className="dicas bg-[#0B132B] my-2 p-3 rounded flex items-center text-[#E0E0E0] transition-all hover:bg-[#0077B6] hover:shadow-lg hover:shadow-[#00B4D8]/50 border border-white/5"
+            className="dicas bg-[hsl(var(--background))] my-2 p-3 rounded flex items-center text-[hsl(var(--foreground))] transition-all hover:bg-[hsl(var(--primary))] hover:shadow-lg hover:shadow-[hsl(var(--primary-glow))]/50 border border-white/5"
           >
             <span className="text-2xl mr-3">{dica.icone}</span>
             <span className="sora-text text-white">{dica.texto}</span>

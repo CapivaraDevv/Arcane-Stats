@@ -40,7 +40,7 @@ export default function HomePage() {
   
 
 return (
-  <div className="relative min-h-screen w-full overflow-hidden bg-[#020617] text-white">
+  <div className="relative min-h-screen w-full overflow-hidden bg-[hsl(var(--background))] text-white">
     <DarkVeil />
 
     <section className="relative z-10 px-6 pt-16 md:pt-20">
@@ -52,7 +52,7 @@ return (
             transition={{ duration: 0.7 }}
             className="space-grotesk-title text-4xl md:text-5xl lg:text-6xl font-bold leading-tight"
           >
-            Arcane <span className='text-[#00B4D8]'>Stats</span>
+            Arcane <span className='text-[hsl(var(--primary-glow))]'>Stats</span>
           </motion.h1>
 
           <motion.p
@@ -72,7 +72,7 @@ return (
           >
             <Link
               to="/login"
-              className="bg-[#0077B6] hover:bg-[#00B4D8] px-6 py-3 rounded-xl font-semibold shadow-lg transition"
+              className="bg-[hsl(var(--primary))] hover:bg-[hsl(var(--primary-glow))] px-6 py-3 rounded-xl font-semibold shadow-lg transition"
             >
               Começar minha evolução
             </Link>
@@ -110,7 +110,7 @@ return (
                 alt="Thumbnail da demonstração do Arcane Stats"
                 className="h-full w-full object-cover opacity-60"
               />
-              <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-[#020617]/60">
+              <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-[hsl(var(--background))]/60">
                 <button
                   type="button"
                   className="h-16 w-16 rounded-full border border-white/60 bg-white/10 text-2xl text-white"
@@ -137,7 +137,7 @@ return (
       >
         <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
-            <p className="text-sm font-semibold uppercase tracking-wide text-[#00B4D8]">
+            <p className="text-sm font-semibold uppercase tracking-wide text-[hsl(var(--primary-glow))]">
               Novo em LoL/eSports?
             </p>
             <h2 className="mt-2 text-2xl font-bold md:text-3xl">
@@ -155,21 +155,21 @@ return (
 
         <div className="mt-6 grid gap-4 md:grid-cols-3">
           <article className="rounded-xl border border-slate-800 bg-slate-800/70 p-4">
-            <h3 className="text-lg font-semibold text-[#00B4D8]">O que é LoL?</h3>
+            <h3 className="text-lg font-semibold text-[hsl(var(--primary-glow))]">O que é LoL?</h3>
             <p className="mt-2 text-sm text-slate-300">
               League of Legends é um jogo de equipe 5 contra 5. Cada pessoa escolhe um personagem e trabalha com o time para chegar até a base inimiga.
             </p>
           </article>
 
           <article className="rounded-xl border border-slate-800 bg-slate-800/70 p-4">
-            <h3 className="text-lg font-semibold text-[#00B4D8]">O que é uma partida competitiva?</h3>
+            <h3 className="text-lg font-semibold text-[hsl(var(--primary-glow))]">O que é uma partida competitiva?</h3>
             <p className="mt-2 text-sm text-slate-300">
               É uma partida organizada entre times treinados, com estratégia e funções bem definidas. Vence quem toma melhores decisões ao longo do jogo.
             </p>
           </article>
 
           <article className="rounded-xl border border-slate-800 bg-slate-800/70 p-4">
-            <h3 className="text-lg font-semibold text-[#00B4D8]">O que é eSports e por que existem estatísticas?</h3>
+            <h3 className="text-lg font-semibold text-[hsl(var(--primary-glow))]">O que é eSports e por que existem estatísticas?</h3>
             <p className="mt-2 text-sm text-slate-300">
               eSports são campeonatos de jogos. As estatísticas ajudam a mostrar o que funcionou ou não, para entender desempenho de forma justa e melhorar mais rápido.
             </p>
@@ -287,7 +287,7 @@ return (
                 <article
                   className="rounded-2xl border border-slate-800 bg-slate-800/60 p-5"
                 >
-                  <h2 className="text-xl font-bold text-[#00B4D8]">Para quem é</h2>
+                  <h2 className="text-xl font-bold text-[hsl(var(--primary-glow))]">Para quem é</h2>
                   <p className="mt-2 text-sm text-slate-300 md:text-base">
                     Feito para fãs que querem entender o jogo além do placar, jogadores que buscam evolução prática,
                     analistas que precisam de sinais rápidos e curiosos que querem aprender eSports sem jargão.
@@ -297,7 +297,7 @@ return (
 
               <ScrollReveal preset="right">
                 <article className="rounded-2xl border border-slate-800 bg-slate-800/60 p-5">
-                  <h2 className="text-xl font-bold text-[#00B4D8]">Por que criamos</h2>
+                  <h2 className="text-xl font-bold text-[hsl(var(--primary-glow))]">Por que criamos</h2>
                   <p className="mt-2 text-sm text-slate-300 md:text-base">
                     Nossa missão é democratizar análise competitiva em LoL: transformar dados difíceis em decisões
                     acionáveis para qualquer pessoa melhorar, acompanhar e discutir partidas com confiança.
@@ -313,16 +313,16 @@ return (
 
                   <motion.li variants={itemVariants} transition={{ duration: 0.35, delay: 0.5 }} className="flex items-center justify-between rounded-lg border border-slate-800 bg-slate-900/70 px-3 py-2">
                     <span>Partidas analisadas</span>
-                    <strong className="text-[#00B4D8]">12.4k</strong>
+                    <strong className="text-[hsl(var(--primary-glow))]">12.4k</strong>
                   </motion.li>
 
                   <motion.li variants={itemVariants} transition={{ duration: 0.35, delay: 0.53 }} className="flex items-center justify-between rounded-lg border border-slate-800 bg-slate-900/70 px-3 py-2">
                     <span>Atualizações de modelo</span>
-                    <strong className="text-[#00B4D8]">Semanais</strong>
+                    <strong className="text-[hsl(var(--primary-glow))]">Semanais</strong>
                   </motion.li>
                   <motion.li variants={itemVariants} transition={{ duration: 0.35, delay: 0.56 }} className="flex items-center justify-between rounded-lg border border-slate-800 bg-slate-900/70 px-3 py-2">
                     <span>Fontes de dados</span>
-                    <strong className="text-[#00B4D8]">Riot + APIs públicas</strong>
+                    <strong className="text-[hsl(var(--primary-glow))]">Riot + APIs públicas</strong>
                   </motion.li>
                 </ul>
               </aside>
@@ -359,7 +359,7 @@ return (
       <div className="fixed inset-0 z-30 flex items-center justify-center bg-black/70 px-4">
         <div className="w-full max-w-2xl rounded-2xl border border-slate-700 bg-slate-950 p-6 shadow-2xl">
           <div className="flex items-start justify-between gap-4">
-            <h3 className="text-xl font-bold text-[#00B4D8]">Guia estendido para iniciantes</h3>
+            <h3 className="text-xl font-bold text-[hsl(var(--primary-glow))]">Guia estendido para iniciantes</h3>
             <button
               type="button"
               onClick={() => setIsLearnMoreOpen(false)}

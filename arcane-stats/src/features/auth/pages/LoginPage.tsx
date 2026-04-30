@@ -26,7 +26,7 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#020617] px-6">
+    <div className="min-h-screen flex items-center justify-center bg-[hsl(var(--background))] px-6">
       
       <motion.div
         initial={{ opacity: 0, y: 40 }}

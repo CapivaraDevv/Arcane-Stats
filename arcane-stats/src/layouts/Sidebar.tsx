@@ -26,7 +26,7 @@ const Sidebar = () => {
       exit={{ opacity: 0, x: -50 }}
       transition={{ duration: 0.5, ease: 'easeOut' }}
     >
-      <div className="absolute top-0 right-0 w-32 h-32 bg-[#0077B6]/10 rounded-full blur-3xl animate-float" />
+      <div className="absolute top-0 right-0 w-32 h-32 bg-[hsl(var(--primary))]/10 rounded-full blur-3xl animate-float" />
 
       <motion.div
         initial={{ opacity: 0, scale: 0.9, rotate: -2 }}
@@ -45,7 +45,7 @@ const Sidebar = () => {
           <img src="/LogoBrancoSemFundo.png" alt="Logo" className="w-32 relative z-10" />
         </Link>
       </motion.div>
-      <nav className="sora-text text-[#E0E0E0] *:flex flex-col gap-2 relative z-10">
+      <nav className="sora-text text-[hsl(var(--foreground))] *:flex flex-col gap-2 relative z-10">
         {[
           { path: '/dashboard', label: 'Dashboard', index: 0 },
           { path: '/times', label: 'Times', index: 1 },
@@ -58,8 +58,8 @@ const Sidebar = () => {
               to={path}
               className={`px-3 py-2 rounded transition-all relative overflow-hidden ${
                 isActive(path) || (path === '/dashboard' && isActive('/'))
-                  ? 'font-semibold text-[#E0E0E0] '
-                  : 'text-[#A8A8A8] hover:bg-[#00B4D8] hover:text-[#E0E0E0]'
+                  ? 'font-semibold text-[hsl(var(--foreground))] '
+                  : 'text-[hsl(var(--muted-foreground))] hover:bg-[hsl(var(--primary-glow))] hover:text-[hsl(var(--foreground))]'
               }`}
             >
               <span className="relative z-10 block">{label}</span>
@@ -67,11 +67,11 @@ const Sidebar = () => {
                 <>
                   <motion.div
                     layoutId="activeTab"
-                    className="absolute inset-0 bg-[#0077B6] rounded z-0"
+                    className="absolute inset-0 bg-[hsl(var(--primary))] rounded z-0"
                     initial={false}
                     transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }}
                   />
-                  <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#00B4D8] rounded-r z-10" />
+                  <div className="absolute left-0 top-0 bottom-0 w-1 bg-[hsl(var(--primary-glow))] rounded-r z-10" />
                 </>
               ) : null}
             </Link>

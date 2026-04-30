@@ -15,7 +15,7 @@ const Header = () => {
       exit={{ opacity: 0, y: -20 }}
       transition={{ delay: 0.1, duration: 0.5, ease: 'easeOut' }}
       style={{ height, backdropFilter: blur, opacity }}
-      className="w-full sticky top-0 z-50 px-8 bg-[#1D2D50]/70 border-b border-white/10 shadow-lg flex items-center justify-between transition-all duration-300"
+      className="w-full sticky top-0 z-50 px-8 bg-[hsl(var(--secondary))]/70 border-b border-white/10 shadow-lg flex items-center justify-between transition-all duration-300"
     >
       <motion.h1
         initial={{ opacity: 0, y: 10 }}
@@ -45,10 +45,10 @@ function AuthArea() {
   if (!user) {
     return (
       <div className="flex items-center gap-3">
-        <Link to="/login" className="text-sm text-[#E0E0E0] hover:text-white">
+        <Link to="/login" className="text-sm text-[hsl(var(--foreground))] hover:text-white">
           Entrar
         </Link>
-        <Link to="/register" className="text-sm text-[#00B4D8] font-semibold">
+        <Link to="/register" className="text-sm text-[hsl(var(--primary-glow))] font-semibold">
           Cadastrar
         </Link>
       </div>
@@ -57,10 +57,10 @@ function AuthArea() {
 
   return (
     <div className="flex items-center gap-4">
-      <div className="text-sm text-[#E0E0E0]">
+      <div className="text-sm text-[hsl(var(--foreground))]">
         Olá, <span className="font-semibold text-white">{user.name}</span>
       </div>
-      <button onClick={handleLogout} className="bg-[#FF6B6B] text-white px-3 py-1 rounded text-sm">
+      <button onClick={handleLogout} className="bg-[hsl(var(--destructive))] text-white px-3 py-1 rounded text-sm">
         Sair
       </button>
     </div>

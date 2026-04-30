@@ -24,7 +24,7 @@ export default function LoadingScreen({ onLoadingComplete }: LoadingScreenProps)
         <motion.div
           initial={{ opacity: 1 }}
           exit={{ opacity: 0, transition: { duration: 1 } }}
-          className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-white text-[#0B132B]"
+          className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-white text-[hsl(var(--background))]"
         >
           <motion.div
             initial={{ scale: 0, rotate: -30, opacity: 0 }}
@@ -38,7 +38,7 @@ export default function LoadingScreen({ onLoadingComplete }: LoadingScreenProps)
             initial={{ width: '0%' }}
             animate={{ width: '100%' }}
             transition={{ duration: 3.5, delay: 0.4 }}
-            className="mt-2 h-1 bg-gradient-to-r from-[#0077B6] via-[#00B4D8] to-[#0077B6] rounded-full w-full max-w-xs relative z-10 overflow-hidden"
+            className="mt-2 h-1 bg-gradient-to-r from-[hsl(var(--primary))] via-[hsl(var(--primary-glow))] to-[hsl(var(--primary))] rounded-full w-full max-w-xs relative z-10 overflow-hidden"
           >
             <motion.div
               className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
