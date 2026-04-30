@@ -58,7 +58,7 @@ export default function LoginPage() {
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
             disabled={loading}
-            className="mt-2 bg-indigo-500 hover:bg-indigo-600 py-3 rounded-xl font-semibold text-white shadow-lg transition disabled:opacity-50"
+            className="mt-2 bg-[hsl(var(--primary)/0.8)] hover:bg-[hsl(var(--primary)/0.9)] py-3 rounded-xl font-semibold text-white shadow-lg transition disabled:opacity-50 cursor-pointer"
           >
             {loading ? 'Entrando...' : 'Entrar'}
           </motion.button>
@@ -66,7 +66,7 @@ export default function LoginPage() {
 
         <p className="mt-6 text-sm text-center text-slate-400">
           Não tem conta?{' '}
-          <Link to="/register" className="text-indigo-400 hover:underline">
+          <Link to="/register" className="text-[hsl(var(--primary)/0.6)] hover:underline">
             Criar conta
           </Link>
         </p>

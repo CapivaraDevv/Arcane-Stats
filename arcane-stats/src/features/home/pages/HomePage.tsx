@@ -3,11 +3,19 @@ import DarkVeil from "../../../components/DarkVeilBackground";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import ScrollReveal from "../../../components/ScrollReveal";
-import { BarChart3, Brain } from "lucide-react";
+import { BarChart3, BookOpenText, Brain } from "lucide-react";
 import SpotlightCard from "../../../components/SpotlightCard";
 import AnimatedCounter from "../../../components/AnimatedCounter";
 
-import { TrendingUp, Crosshair, Flame } from "lucide-react";
+import {
+  TrendingUp,
+  Crosshair,
+  Flame,
+  Gamepad2,
+  ChessKnight,
+  Swords,
+  ChessRook,
+} from "lucide-react";
 
 const dashboardCards = [
   {
@@ -90,12 +98,12 @@ export default function HomePage() {
                 Começar minha evolução
               </Link>
 
-              <Link
+              {/* <Link
                 to="/register"
                 className="border border-slate-600 px-6 py-3 rounded-xl hover:bg-slate-800 transition font-semibold"
               >
                 Explorar funcionalidades
-              </Link>
+              </Link> */}
             </motion.div>
           </div>
 
@@ -146,7 +154,7 @@ export default function HomePage() {
           <div className="mb-10 flex flex-col items-start justify-between gap-4 md:flex-row md:items-end">
             <div>
               <p className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.25em] text-primary">
-                <BarChart3 className="h-3.5 w-3.5" /> Novo em LoL/eSports?
+                <ChessRook className="h-3.5 w-3.5" /> Novo em LoL/eSports?
               </p>
               <h2 className="mt-3 font-display text-3xl font-bold leading-tight md:text-5xl">
                 Um guia rápido para entender o básico.
@@ -158,7 +166,7 @@ export default function HomePage() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.5 }}
-          className="mx-auto w-full max-w-6xl rounded-3xl border border-slate-800 bg-card-glass p-6 backdrop-blur hover:border-[hsl(var(--primary)/0.5)] transition md:p-8"
+          className="mx-auto w-full max-w-6xl rounded-3xl border border-slate-800 bg-card-glass p-6 backdrop-blur  transition md:p-8"
         >
           {/* <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
             <button
@@ -171,9 +179,9 @@ export default function HomePage() {
           </div> */}
 
           <div className="grid gap-4 md:grid-cols-3">
-            <article className="rounded-xl border border-border bg-[hsl(var(--background)/0.6)] hover:border-[hsl(var(--primary)/0.5)] transition cursor-pointer p-4">
+            <article className="rounded-xl border border-border bg-[hsl(var(--background)/0.6)] hover:border-[hsl(var(--primary)/0.5)] hover:scale-105 transition cursor-pointer p-4">
               <h3 className="font-display text-lg font-semibold text-[#00B4D8]">
-                O que é LoL?
+                <Gamepad2 className="h-3.5 w-3.5" /> O que é LoL?
               </h3>
               <p className="font-sans mt-2 text-sm text-slate-300">
                 League of Legends é um jogo de equipe 5 contra 5. Cada pessoa
@@ -182,9 +190,10 @@ export default function HomePage() {
               </p>
             </article>
 
-            <article className="rounded-xl border bg-[hsl(var(--background)/0.6)] hover:border-[hsl(var(--primary)/0.5)] transition cursor-pointer p-4">
+            <article className="rounded-xl border bg-[hsl(var(--background)/0.6)] hover:border-[hsl(var(--primary)/0.5)] hover:scale-105 transition cursor-pointer p-4">
               <h3 className="font-display text-lg font-semibold text-[#00B4D8]">
-                O que é uma partida competitiva?
+                <ChessKnight className="h-3.5 w-3.5" /> O que é uma partida
+                competitiva?
               </h3>
               <p className="font-sans mt-2 text-sm text-slate-300">
                 É uma partida organizada entre times treinados, com estratégia e
@@ -193,21 +202,21 @@ export default function HomePage() {
               </p>
             </article>
 
-            <article className="rounded-xl border border-slate-800 bg-[hsl(var(--background)/0.6)] hover:border-[hsl(var(--primary)/0.5)] transition cursor-pointer p-4">
+            <article className="group rounded-xl border border-slate-800 bg-[hsl(var(--background)/0.6)] hover:border-[hsl(var(--primary)/0.5)] hover:scale-105 transition cursor-pointer p-4">
               <h3 className="font-display text-lg font-semibold text-[#00B4D8]">
+                <Swords className="h-3.5 w-3.5 group-hover:scale-110 group-hover:rotate-3 transition-all" />{" "}
                 O que é eSports?
               </h3>
               <p className="font-sans mt-2 text-sm text-slate-300">
-                eSports são campeonatos de jogos. As estatísticas ajudam a
-                mostrar o que funcionou ou não, para entender desempenho de
-                forma justa e melhorar mais rápido.
+                Esports são competições profissionais de videogames, onde
+                jogadores e equipes disputam campeonatos com estratégia.
               </p>
             </article>
           </div>
 
           <div className="mt-6 rounded-xl border border-slate-800 bg-black/40 p-4">
-            <p className="text-sm font-semibold text-slate-100">
-              Microglossário
+            <p className="text-sm font-semibold text-primary">
+              <BookOpenText className="h-3.5 w-3.5"/> Microglossário
             </p>
             <div className="mt-3 grid gap-2 text-sm text-slate-300 md:grid-cols-2">
               <p>
@@ -304,14 +313,14 @@ export default function HomePage() {
                   <div className="absolute inset-0 bg-gradient-primary opacity-[0.04]" />
                   <div className="relative flex items-start gap-4">
                     <div className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-gradient-primary text-primary-foreground shadow-glow">
-                      <Brain className="h-5 w-5" />
+                      <Brain className="text-black h-5 w-5" />
                     </div>
                     <div className="flex-1">
                       <div className="flex items-center gap-2">
                         <p className="text-xs font-semibold uppercase tracking-[0.25em] text-primary">
                           Insight da IA
                         </p>
-                        <span className="rounded-full bg-destructive/15 px-2 py-0.5 text-[10px] font-medium text-destructive">
+                        <span className="rounded-full bg-[hsl(var(--destructive)/0.15)] px-2 py-0.5 text-[10px] font-medium uppercase text-destructive">
                           crítico
                         </span>
                       </div>

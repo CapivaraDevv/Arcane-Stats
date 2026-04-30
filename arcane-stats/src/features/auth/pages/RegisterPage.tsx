@@ -48,7 +48,7 @@ export default function RegisterPage() {
           <motion.button
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
-            className="mt-2 bg-indigo-500 hover:bg-indigo-600 py-3 rounded-xl font-semibold text-white shadow-lg transition"
+            className="mt-2 bg-[hsl(var(--primary)/0.8)] hover:bg-[hsl(var(--primary)/0.9)] py-3 rounded-xl font-semibold text-white shadow-lg cursor-pointer transition"
           >
             Criar conta
           </motion.button>
@@ -56,7 +56,7 @@ export default function RegisterPage() {
 
         <p className="mt-6 text-sm text-center text-slate-400">
           Já tem conta?{' '}
-          <Link to="/login" className="text-indigo-400 hover:underline">
+          <Link to="/login" className="text-[hsl(var(--primary)/0.6)] hover:underline">
             Entrar
           </Link>
         </p>
