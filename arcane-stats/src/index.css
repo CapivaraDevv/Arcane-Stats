@@ -57,7 +57,7 @@
   --gradient-text: linear-gradient(
     135deg,
     hsl(210 40% 98%),
-    hsl(var(--primary-glow))
+    hsl(var(--primary))
   );
 
   --shadow-glow: 0 0 60px hsl(var(--primary) / 0.35);
@@ -100,7 +100,10 @@
   .text-primary {
     color: hsl(var(--primary));
   }
-
+  
+  .text-destructive {
+    color: hsl(var(--destructive));
+  }
   .bg-secondary {
     background-color: hsl(var(--secondary));
   }
@@ -128,6 +131,7 @@
     background-clip: text;
     color: transparent;
   }
+
 
   .shadow-glow {
     box-shadow: var(--shadow-glow);
