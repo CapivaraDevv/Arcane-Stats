@@ -104,7 +104,7 @@ export default function DashboardPage() {
         </div>
 
         {configs.mostrarGraficos && (
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mt-8 mb-6 relative z-10">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 my-12 relative z-10">
             {/* <div className="md:col-span-2">
               <ScrollReveal preset="left" delay={0.2} duration={0.7}>
                 <motion.div whileHover={{ scale: 1.02 }} className="bg-[#1D2D50] rounded-xl p-4 flex flex-col items-center justify-center border border-white/5 shadow-lg hover:border-[#00B4D8]/50 transition-all relative overflow-hidden group">
