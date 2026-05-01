@@ -18,6 +18,7 @@ import {
   Zap,
 } from "lucide-react";
 
+import { Navigate, useNavigate } from "react-router-dom";
 import ScrollReveal from "../../../components/ScrollReveal";
 import { useConfig } from "../../../hooks/useConfig";
 import useTeams from "../hooks/useTeams";
@@ -67,8 +68,8 @@ const TeamsPage: React.FC = () => {
 
   const [showCreate, setShowCreate] = useState(false);
   const [showAddPlayer, setShowAddPlayer] = useState(false);
-  const [showSim, setShowSim] = useState(false);
   const [sortKey, setSortKey] = useState<SortKey>("winrate");
+  
 
   const isOwner = selected && selected.creatorId === userId;
 
@@ -100,16 +101,16 @@ const TeamsPage: React.FC = () => {
               </p>
             </div>
           </div>
-            <motion.button
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.97 }}
-              onClick={() => setShowCreate(true)}
-              className="group relative inline-flex items-center gap-2 overflow-hidden rounded-xl bg-gradient-primary px-5 py-2.5 text-sm font-bold text-primary-foreground shadow-glow transition cursor-pointer"
-            >
-              <Plus className="h-4 w-4" />
-              <span>Novo time</span>
-              <span className="absolute inset-0 -translate-x-full bg-linear-to-r from-transparent via-[hsl(0_0%_100%_/_0.3)] to-transparent transition-transform duration-700 group-hover:translate-x-full" />
-            </motion.button>
+          <motion.button
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.97 }}
+            onClick={() => setShowCreate(true)}
+            className="group relative inline-flex items-center gap-2 overflow-hidden rounded-xl bg-gradient-primary px-5 py-2.5 text-sm font-bold text-primary-foreground shadow-glow transition cursor-pointer"
+          >
+            <Plus className="h-4 w-4" />
+            <span>Novo time</span>
+            <span className="absolute inset-0 -translate-x-full bg-linear-to-r from-transparent via-[hsl(0_0%_100%_/_0.3)] to-transparent transition-transform duration-700 group-hover:translate-x-full" />
+          </motion.button>
         </div>
       </header>
 
@@ -210,7 +211,6 @@ const TeamsPage: React.FC = () => {
                 sortKey={sortKey}
                 onChangeSort={setSortKey}
                 onAddPlayer={() => setShowAddPlayer(true)}
-                onSimulate={() => setShowSim(true)}
                 findUserById={findUserById}
               />
             </ScrollReveal>
@@ -242,13 +242,6 @@ const TeamsPage: React.FC = () => {
               }
               setShowAddPlayer(false);
             }}
-          />
-        )}
-        {showSim && selected && (
-          <SimulateModal
-            teams={teams}
-            current={selected}
-            onClose={() => setShowSim(false)}
           />
         )}
       </AnimatePresence>
@@ -296,9 +289,9 @@ const TeamDetail: React.FC<{
   sortKey: SortKey;
   onChangeSort: (k: SortKey) => void;
   onAddPlayer: () => void;
-  onSimulate: () => void;
   findUserById?: (id: string) => any;
-}> = ({ team, isOwner, sortKey, onChangeSort, onAddPlayer, onSimulate }) => {
+}> = ({ team, isOwner, sortKey, onChangeSort, onAddPlayer }) => {
+  const navigate = useNavigate();
   const stats = useMemo(() => aggregate(team.members), [team.members]);
   const sorted = useMemo(
     () =>
@@ -350,7 +343,7 @@ const TeamDetail: React.FC<{
             <motion.button
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
-              onClick={onSimulate}
+              onClick={() => navigate(`/times/${team.id}/simulate`)}
               className="inline-flex items-center gap-2 rounded-xl border border-border bg-[hsl(var(--secondary)/0.6)] px-4 py-2.5 text-sm font-bold backdrop-blur-sm transition hover:border-[hsl(var(--primary)/0.4)] hover:bg-secondary"
             >
               <Swords className="h-4 w-4" /> Simular embate
@@ -601,7 +594,8 @@ const LANE_TONES: Record<string, string> = {
   Jungle: "border-emerald-500/30 bg-emerald-500/10 text-emerald-300",
   Mid: "border-primary/30 bg-primary/10 text-primary",
   ADC: "border-amber-500/30 bg-amber-500/10 text-amber-300",
-  Support: "border-[hsl(248_86%_70%_/_0.3)] bg-[hsl(248_86%_70%_/_0.1)] text-violet-300",
+  Support:
+    "border-[hsl(248_86%_70%_/_0.3)] bg-[hsl(248_86%_70%_/_0.1)] text-violet-300",
 };
 const LaneBadge: React.FC<{ lane?: string }> = ({ lane }) => (
   <span
@@ -825,7 +819,9 @@ const SimulateModal: React.FC<{
                 >
                   {score.a}
                 </motion.span>
-                <span className="mx-3 text-[hsl(var(--muted-foreground)/0.5)]">:</span>
+                <span className="mx-3 text-[hsl(var(--muted-foreground)/0.5)]">
+                  :
+                </span>
                 <motion.span
                   key={`b-${score.b}`}
                   initial={{ scale: 0.5, opacity: 0 }}
@@ -986,25 +982,26 @@ const ModalShell: React.FC<{
       transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
       onClick={(e) => e.stopPropagation()}
       className={[
-        "relative w-full overflow-hidden rounded-2xl border border-border bg-card-glass p-6 shadow-elevated",
+        "relative w-full max-h-[85vh] overflow-hidden rounded-2xl border border-border bg-card-glass p-6 shadow-elevated flex flex-col",
         wide ? "max-w-2xl" : "max-w-md",
       ].join(" ")}
     >
-      <div className="absolute -right-20 -top-20 h-48 w-48 rounded-full bg-[hsl(var(--primary)/0.1)] blur-3xl" />
+      <div className="absolute -right-20 -top-20 h-36 w-48 rounded-full bg-[hsl(var(--primary)/0.1)] blur-3xl" />
       <button
         onClick={onClose}
         className="absolute right-3 top-3 z-10 rounded-lg border border-[hsl(var(--border))] bg-[hsl(var(--background)/0.4)] p-1.5 text-muted-foreground backdrop-blur-sm transition hover:border-[hsl(var(--border))] hover:bg-secondary hover:text-foreground"
       >
         <X className="h-4 w-4" />
       </button>
-      <div className="relative">
+      <div className="relative flex flex-col max-h-[80vh]">
         <h3 className="font-display text-xl font-black text-primary">
           {title}
         </h3>
+
         {subtitle && (
           <p className="mt-1 text-xs text-muted-foreground">{subtitle}</p>
         )}
-        <div className="mt-5">{children}</div>
+        <div className="mt-5 flex-1 overflow-y-auto pr-2">{children}</div>
       </div>
     </motion.div>
   </motion.div>
@@ -1061,4 +1058,3 @@ function laneStrength(m?: Member) {
 }
 
 export default TeamsPage;
-                          
