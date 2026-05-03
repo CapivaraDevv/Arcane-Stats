@@ -1,27 +1,26 @@
-import { motion } from 'framer-motion'
-import type { ReactNode } from 'react'
+import { motion } from "framer-motion";
+import type { ReactNode } from "react";
 
 type PageFadeProps = {
-  children: ReactNode
-  isReady?: boolean
-}
+  children: ReactNode;
+  isReady?: boolean;
+};
 
 const PageFade = ({ children, isReady = true }: PageFadeProps) => {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={isReady ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-      exit={{ opacity: 0, y: -20 }}
+      initial={{ opacity: 0, scale: 0.96, filter: "blur(6px)" }}
+      animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+      exit={{ opacity: 0, scale: 0.96, filter: "blur(6px)" }}
       transition={{
-        duration: 0.6,
+        duration: 0.4,
         ease: [0.4, 0, 0.2, 1],
-        delay: isReady ? 0.2 : 0,
       }}
       className="w-full h-full"
     >
       {children}
     </motion.div>
-  )
-}
+  );
+};
 
-export default PageFade
+export default PageFade;

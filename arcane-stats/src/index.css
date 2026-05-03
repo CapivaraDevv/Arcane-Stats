@@ -39,6 +39,9 @@
     hsl(var(--primary-glow))
   );
 
+  --gradient-secundary: 
+    linear-gradient(90deg,  hsl(222 47% 0%), hsl(200 67% 10%));
+
   --gradient-card: linear-gradient(
     160deg,
     hsl(217 33% 10% / 0.9),
@@ -69,6 +72,7 @@
 @layer base {
   * {
     border-color: hsl(var(--border));
+    
   }
 
   html,
@@ -95,6 +99,10 @@
 
   .bg-primary {
     background-color: hsl(var(--primary));
+  }
+
+  .bg-gradient-secundary{
+    background: var(--gradient-secundary);
   }
 
   .text-primary {
