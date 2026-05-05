@@ -1,6 +1,6 @@
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { Link, useNavigate } from 'react-router-dom'
-import useAuthContext from '../hooks/useAuth'
+import useAuthContext from '../features/auth/hooks/useAuth'
 
 const Header = () => {
   const { scrollY } = useScroll()

@@ -1,4 +1,4 @@
-import type { Team } from "../hooks/useTeams";
+import type { Team } from "../features/teams/types";
 
 export const TeamBadge: React.FC<{
   team: Team;

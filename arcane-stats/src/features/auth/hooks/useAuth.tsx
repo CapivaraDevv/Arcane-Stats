@@ -1,6 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { authStorage } from '../features/auth/services/authStorage';
+import { authStorage } from '../services/authStorage';
 
 type User = {
   id: string;

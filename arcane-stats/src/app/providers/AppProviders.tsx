@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react'
 import { BrowserRouter } from 'react-router-dom'
 import { AssetProvider } from '../../hooks/useAssets'
-import { AuthProvider } from '../../hooks/useAuth'
+import { AuthProvider } from '../../features/auth/hooks/useAuth'
 
 type AppProvidersProps = {
   children: ReactNode

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import useAuthContext from "../../../hooks/useAuth";
+import useAuthContext from "../hooks/useAuth";
 
 import EkkoImg from "../../../../public/Ekko.png";
 

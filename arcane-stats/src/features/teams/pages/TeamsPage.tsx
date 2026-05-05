@@ -22,7 +22,7 @@ import { Navigate, useNavigate } from "react-router-dom";
 import ScrollReveal from "../../../components/ScrollReveal";
 import { useConfig } from "../../../hooks/useConfig";
 import useTeams from "../hooks/useTeams";
-import useAuthContext from "../../../hooks/useAuth";
+import useAuthContext from "../../../features/auth/hooks/useAuth";
 
 // ─── Tipos ────────────────────────────────────────────────────────────────────
 type Member = {
