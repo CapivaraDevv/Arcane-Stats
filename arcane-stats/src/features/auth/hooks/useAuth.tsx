@@ -2,11 +2,13 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { authStorage } from '../services/authStorage';
 
-type User = {
+export type User = {
   id: string;
   name: string;
   email: string;
 };
+
+
 
 type AuthContextType = {
   user: User | null;

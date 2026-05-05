@@ -5,27 +5,25 @@ export type StoredUser = {
   password?: string
 }
 
-export type Member = {
+export type Lane = 'Top' | 'Jungle' | 'Mid' | 'ADC' | 'Support'
+
+export interface Member {
   id: string
   nome: string
   tag?: string
-  lane?: "Top" | "Jungle" | "Mid" | "ADC" | "Support"
+  lane?: Lane
   winrate?: number
   kda?: number
   aggression?: number
+  mainChampion?: string
 }
 
-export type Team = {
+export interface Team {
   id: number
   nome: string
-  tag: string
   creatorId: string
-  members: string[] // 👈 storage (IDs)
-  createdAt: number
-  winrate?: number
-  partidas?: number
-  vitorias?: number
-  derrotas?: number
+  members: Member[] 
+  tag?: string
 }
 
 export type TeamWithMembers = {

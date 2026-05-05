@@ -1,6 +1,5 @@
 import { Link, useLocation } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { path } from 'framer-motion/client'
 
 const Sidebar = () => {
   const location = useLocation()

@@ -4,7 +4,7 @@ import ScrollReveal from '../../../components/ScrollReveal'
 import { Link } from "react-router-dom";
 import { useAssets } from '../../../hooks/useAssets'
 import { useImageFallback } from '../../../shared/hooks/useImageFallback'
-import { Users, Plus } from 'lucide-react';
+import { Users } from 'lucide-react';
 import MatchDebrief from '../MatchDebrief';
 
 

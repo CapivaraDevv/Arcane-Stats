@@ -13,7 +13,7 @@ import React from 'react';
 import { useAssets } from '../hooks/useAssets';
 
 function LaneCardInner({ lane }: { lane: Lane }) {
-  const { getChampionIcon, getItemIcon } = useAssets();
+  const { getChampionIcon } = useAssets();
   return (
     <div className="bg-[hsl(var(--primary)/0.1)] rounded-lg p-3 sm:p-4 shadow-lg border border-border hover:border-[hsl(var(--primary)/0.3)] transition-all relative overflow-hidden group focus:outline-none focus:ring-2 focus:ring-[#00B4D8] cursor-pointer">
       <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200">

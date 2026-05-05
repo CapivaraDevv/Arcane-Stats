@@ -6,7 +6,7 @@ type PageFadeProps = {
   isReady?: boolean;
 };
 
-const PageFade = ({ children, isReady = true }: PageFadeProps) => {
+const PageFade = ({ children = true }: PageFadeProps) => {
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.96, filter: "blur(6px)" }}

@@ -7,7 +7,7 @@ import DarkVeil from "../../../components/DarkVeilBackground";
 import KPICard from "../../../components/KPICard";
 import TrendChart from "../../../components/TrendChart";
 import LaneCard from "../../../components/LaneCard";
-import { ChartSpline, ChartNoAxesCombined, ChevronRight } from "lucide-react";
+import { ChartSpline, ChevronRight } from "lucide-react";
 import PerformanceRadar from "../../../components/PerformanceRadar";
 
 export default function DashboardPage() {
@@ -43,13 +43,13 @@ export default function DashboardPage() {
     { subject: "Farm", value: 70, fullMark: 100 },
   ];
 
-  const decisionHeatMap = [
-    { x: 20, y: 65, intensity: 1.2 },
-    { x: 25, y: 60, intensity: 0.9 },
-    { x: 55, y: 45, intensity: 1.5 },
-    { x: 70, y: 30, intensity: 0.7 },
-    { x: 80, y: 20, intensity: 1.3 },
-  ];
+  // const decisionHeatMap = [
+  //   { x: 20, y: 65, intensity: 1.2 },
+  //   { x: 25, y: 60, intensity: 0.9 },
+  //   { x: 55, y: 45, intensity: 1.5 },
+  //   { x: 70, y: 30, intensity: 0.7 },
+  //   { x: 80, y: 20, intensity: 1.3 },
+  // ];
 
   const laneAnalysis = [
     {

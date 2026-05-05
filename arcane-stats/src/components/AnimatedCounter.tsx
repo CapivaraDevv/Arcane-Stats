@@ -1,4 +1,4 @@
-import { animate, useInView, useMotionValue, useTransform } from "framer-motion";
+import { animate, useInView, useMotionValue } from "framer-motion";
 import { useEffect, useRef } from "react";
 
 interface AnimatedCounterProps {
@@ -23,9 +23,6 @@ const AnimatedCounter = ({
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
   const value = useMotionValue(from);
-  const display = useTransform(value, (v) =>
-    `${prefix}${v.toFixed(decimals)}${suffix}`,
-  );
 
   useEffect(() => {
     if (!inView) return;

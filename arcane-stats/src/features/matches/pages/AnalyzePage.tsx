@@ -11,7 +11,7 @@ type AnalysisResult = {
   planoAcao: string[];
 };
 
-const mockMatches = Array.from({ length: 20 }).map((_, i) => ({
+const mockMatches = Array.from({ length: 20 }).map(() => ({
   kda: Math.random() * 6,
   win: Math.random() > 0.45 ? 1 : 0,
   gold: 11000 + Math.random() * 6000,

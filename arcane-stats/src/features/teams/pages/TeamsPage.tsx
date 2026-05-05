@@ -18,10 +18,11 @@ import {
   Zap,
 } from "lucide-react";
 
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import ScrollReveal from "../../../components/ScrollReveal";
 import { useConfig } from "../../../hooks/useConfig";
 import useTeams from "../hooks/useTeams";
+import type { User } from "../../../features/auth/hooks/useAuth";
 import useAuthContext from "../../../features/auth/hooks/useAuth";
 
 // ─── Tipos ────────────────────────────────────────────────────────────────────
@@ -47,16 +48,16 @@ type SortKey = "winrate" | "kda" | "aggression";
 // ─── Página ───────────────────────────────────────────────────────────────────
 const TeamsPage: React.FC = () => {
   useConfig();
-  const auth = useAuthContext() as any;
-  const userId: string = auth?.user?.id ?? "";
+  const { user } = useAuthContext();
+  const userId = user?.id ?? "";
 
   const {
-    teams = [] as Team[],
+    teams,
     createTeam,
     addMemberByEmail,
     addMemberByNameTag,
     findUserById,
-  } = useTeams() as any;
+  } = useTeams();
 
   const [selectedId, setSelectedId] = useState<number | null>(
     teams[0]?.id ?? null,
@@ -69,7 +70,6 @@ const TeamsPage: React.FC = () => {
   const [showCreate, setShowCreate] = useState(false);
   const [showAddPlayer, setShowAddPlayer] = useState(false);
   const [sortKey, setSortKey] = useState<SortKey>("winrate");
-  
 
   const isOwner = selected && selected.creatorId === userId;
 
@@ -109,7 +109,7 @@ const TeamsPage: React.FC = () => {
           >
             <Plus className="h-4 w-4" />
             <span>Novo time</span>
-            <span className="absolute inset-0 -translate-x-full bg-linear-to-r from-transparent via-[hsl(0_0%_100%_/_0.3)] to-transparent transition-transform duration-700 group-hover:translate-x-full" />
+            <span className="absolute inset-0 -translate-x-full bg-linear-to-r from-transparent via-[hsl(0_0%_100%/0.3)] to-transparent transition-transform duration-700 group-hover:translate-x-full" />
           </motion.button>
         </div>
       </header>
@@ -225,7 +225,7 @@ const TeamsPage: React.FC = () => {
             onClose={() => setShowCreate(false)}
             onCreate={async (name) => {
               const result = await createTeam?.(name, userId);
-              if (result?.success && result.team.id) {
+              if (result?.success && result.team?.id) {
                 setSelectedId(result.team.id);
               }
             }}
@@ -289,7 +289,7 @@ const TeamDetail: React.FC<{
   sortKey: SortKey;
   onChangeSort: (k: SortKey) => void;
   onAddPlayer: () => void;
-  findUserById?: (id: string) => any;
+  findUserById?: (id: string) => Member | null;
 }> = ({ team, isOwner, sortKey, onChangeSort, onAddPlayer }) => {
   const navigate = useNavigate();
   const stats = useMemo(() => aggregate(team.members), [team.members]);
@@ -624,7 +624,7 @@ const AggressionBar: React.FC<{ value: number }> = ({ value }) => {
           initial={{ width: 0 }}
           animate={{ width: `${v}%` }}
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-          className={`h-full rounded-full bg-gradient-to-r ${tone} shadow-[0_0_8px_currentColor]`}
+          className={`h-full rounded-full bg-linear-to-r ${tone} shadow-[0_0_8px_currentColor]`}
         />
       </div>
       <span className="w-8 text-right font-display text-xs font-bold tabular-nums">
@@ -732,233 +732,7 @@ const AddPlayerModal: React.FC<{
   );
 };
 
-// ─── Modal: Simular embate ────────────────────────────────────────────────────
-const LANES: Member["lane"][] = ["Top", "Jungle", "Mid", "ADC", "Support"];
 
-const SimulateModal: React.FC<{
-  teams: Team[];
-  current: Team;
-  onClose: () => void;
-}> = ({ teams, current, onClose }) => {
-  const opponents = teams.filter((t) => t.id !== current.id);
-  const [opponentId, setOpponentId] = useState<number | null>(
-    opponents[0]?.id ?? null,
-  );
-  const opponent = opponents.find((t) => t.id === opponentId) ?? null;
-
-  const aByLane = byLane(current.members);
-  const bByLane = opponent
-    ? byLane(opponent.members)
-    : ({} as Record<string, Member | undefined>);
-
-  const score = useMemo(() => {
-    if (!opponent) return { a: 0, b: 0 };
-    let a = 0,
-      b = 0;
-    LANES.forEach((l) => {
-      const av = laneStrength(aByLane[l!]);
-      const bv = laneStrength(bByLane[l!]);
-      if (av > bv) a += 1;
-      else if (bv > av) b += 1;
-    });
-    return { a, b };
-  }, [opponent, aByLane, bByLane]);
-
-  const winning = score.a > score.b ? "a" : score.b > score.a ? "b" : "tie";
-
-  return (
-    <ModalShell
-      title="Simular embate"
-      subtitle="Comparativo lado a lado, rota por rota"
-      onClose={onClose}
-      wide
-    >
-      <div className="mb-5 flex items-center justify-end gap-2">
-        <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
-          Adversário
-        </span>
-        <select
-          value={opponentId ?? ""}
-          onChange={(e) => setOpponentId(Number(e.target.value))}
-          className="rounded-xl border border-border bg-[hsl(var(--background)/0.6)] px-3 py-2 text-sm font-semibold focus:border-primary focus:outline-none focus:ring-2 focus:ring-[hsl(var(--primary)/0.3)]"
-        >
-          {opponents.length === 0 && (
-            <option value="">Nenhum time disponível</option>
-          )}
-          {opponents.map((t) => (
-            <option key={t.id} value={t.id}>
-              {t.nome}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      {opponent && (
-        <>
-          {/* Placar */}
-          <div className="relative mb-5 grid grid-cols-3 items-center gap-3 overflow-hidden rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--background)/0.4)] p-5">
-            <div className="absolute inset-0 bg-hex opacity-30" />
-            <div className="relative">
-              <TeamBadge
-                team={current}
-                alignment="left"
-                winning={winning === "a"}
-              />
-            </div>
-            <div className="relative text-center">
-              <div className="font-display text-4xl font-black tabular-nums">
-                <motion.span
-                  key={`a-${score.a}`}
-                  initial={{ scale: 0.5, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  className={
-                    winning === "a"
-                      ? "text-primary drop-shadow-[0_0_12px_hsl(var(--primary))]"
-                      : "text-muted-foreground"
-                  }
-                >
-                  {score.a}
-                </motion.span>
-                <span className="mx-3 text-[hsl(var(--muted-foreground)/0.5)]">
-                  :
-                </span>
-                <motion.span
-                  key={`b-${score.b}`}
-                  initial={{ scale: 0.5, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  className={
-                    winning === "b"
-                      ? "text-rose-400 drop-shadow-[0_0_12px_rgba(251,113,133,0.6)]"
-                      : "text-muted-foreground"
-                  }
-                >
-                  {score.b}
-                </motion.span>
-              </div>
-              <div className="mt-1 text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
-                Vitórias por rota
-              </div>
-            </div>
-            <div className="relative">
-              <TeamBadge
-                team={opponent}
-                alignment="right"
-                winning={winning === "b"}
-              />
-            </div>
-          </div>
-
-          {/* Rotas */}
-          <div className="space-y-2">
-            {LANES.map((l, idx) => {
-              const a = aByLane[l!];
-              const b = bByLane[l!];
-              const av = laneStrength(a);
-              const bv = laneStrength(b);
-              const total = Math.max(1, av + bv);
-              const aPct = (av / total) * 100;
-              const bPct = 100 - aPct;
-              const winner = av > bv ? "a" : bv > av ? "b" : "tie";
-              return (
-                <motion.div
-                  key={l}
-                  initial={{ opacity: 0, x: -10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: idx * 0.06 }}
-                  className="rounded-xl border border-[hsl(var(--border))] bg-card-glass p-3"
-                >
-                  <div className="mb-2 grid grid-cols-[1fr_auto_1fr] items-center gap-3 text-xs">
-                    <div
-                      className={`text-left font-display font-bold ${winner === "a" ? "text-primary" : "text-foreground"}`}
-                    >
-                      {a?.nome ?? "—"}
-                    </div>
-                    <LaneBadge lane={l ?? undefined} />
-                    <div
-                      className={`text-right font-display font-bold ${winner === "b" ? "text-rose-400" : "text-foreground"}`}
-                    >
-                      {b?.nome ?? "—"}
-                    </div>
-                  </div>
-                  <div className="flex h-2.5 overflow-hidden rounded-full bg-[hsl(var(--background)/0.6)]">
-                    <motion.div
-                      initial={{ width: 0 }}
-                      animate={{ width: `${aPct}%` }}
-                      transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-                      className="bg-gradient-to-r from-primary to-primary-glow shadow-[0_0_8px_hsl(var(--primary))]"
-                    />
-                    <motion.div
-                      initial={{ width: 0 }}
-                      animate={{ width: `${bPct}%` }}
-                      transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-                      className="bg-gradient-to-r from-rose-500 to-orange-400 shadow-[0_0_8px_rgba(251,113,133,0.6)]"
-                    />
-                  </div>
-                  <div className="mt-1.5 flex justify-between font-mono text-[10px] tabular-nums text-muted-foreground">
-                    <span>Força {av.toFixed(0)}</span>
-                    <span>Força {bv.toFixed(0)}</span>
-                  </div>
-                </motion.div>
-              );
-            })}
-          </div>
-        </>
-      )}
-
-      <div className="mt-6 flex justify-end">
-        <button
-          onClick={onClose}
-          className="rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--secondary)/0.6)] px-5 py-2.5 text-sm font-bold transition hover:bg-secondary"
-        >
-          Fechar
-        </button>
-      </div>
-    </ModalShell>
-  );
-};
-
-const TeamBadge: React.FC<{
-  team: Team;
-  alignment: "left" | "right";
-  winning?: boolean;
-}> = ({ team, alignment, winning }) => {
-  const info = (
-    <div className={alignment === "right" ? "text-right" : "text-left"}>
-      <div className="font-display text-sm font-black">{team.nome}</div>
-      <div className="text-[10px] uppercase tracking-widest text-muted-foreground">
-        {team.members.length} membros
-      </div>
-    </div>
-  );
-  const avatar = (
-    <div
-      className={`flex h-12 w-12 items-center justify-center rounded-xl font-display text-base font-black text-primary-foreground ${
-        winning
-          ? "bg-gradient-primary shadow-glow ring-2 ring-[hsl(var(--primary)/0.5)]"
-          : "bg-secondary text-foreground"
-      }`}
-    >
-      {team.nome.slice(0, 2).toUpperCase()}
-    </div>
-  );
-  return (
-    <div
-      className={`flex items-center gap-3 ${alignment === "right" ? "justify-end" : "justify-start"}`}
-    >
-      {alignment === "right" ? (
-        <>
-          {info}
-          {avatar}
-        </>
-      ) : (
-        <>
-          {avatar}
-          {info}
-        </>
-      )}
-    </div>
-  );
-};
 
 // ─── Modal shell ──────────────────────────────────────────────────────────────
 const ModalShell: React.FC<{
@@ -1032,6 +806,8 @@ const ModalFooter: React.FC<{
   </div>
 );
 
+
+
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 function aggregate(members: Member[]) {
   if (members.length === 0) return { wr: 0, kda: 0, agg: 0, lanes: 0 };
@@ -1043,18 +819,8 @@ function aggregate(members: Member[]) {
     members.reduce((s, m) => s + (m.aggression ?? 0), 0) / members.length,
   );
   const lanes = new Set(members.map((m) => m.lane).filter(Boolean)).size;
-  return { wr, kda, agg, lanes };
-}
-function byLane(members: Member[]) {
-  const map: Record<string, Member | undefined> = {};
-  members.forEach((m) => {
-    if (m.lane && !map[m.lane]) map[m.lane] = m;
-  });
-  return map;
-}
-function laneStrength(m?: Member) {
-  if (!m) return 0;
-  return (m.winrate ?? 0) + (m.kda ?? 0) * 10 + (m.aggression ?? 0) * 0.3;
+  
+  return { wr, kda, agg, lanes};
 }
 
 export default TeamsPage;
