@@ -1,32 +1,36 @@
-import { AnimatePresence } from 'framer-motion'
-import { Route, Routes, useLocation } from 'react-router-dom'
-import { appRoutes } from './routeConfig'
-import PageFade from '../../shared/ui/PageFade'
-import ProtectedRoute from '../../shared/routing/ProtectedRoute'
+import { Route, Routes, useLocation } from "react-router-dom";
+import { appRoutes, isPrivateRoute } from "./routeConfig";
+
+import PageFade from "../../shared/ui/PageFade";
+import ProtectedRoute from "../../shared/routing/ProtectedRoute";
+import AppShell from "../../layouts/AppShell";
 
 type AppRouterProps = {
-  isReady: boolean
-}
+  isReady: boolean;
+};
 
 export default function AppRouter({ isReady }: AppRouterProps) {
-  const location = useLocation()
-  if (!isReady) return null
+  const location = useLocation();
+  if (!isReady) return null;
 
   return (
-    <AnimatePresence mode="wait">
-      <Routes location={location} key={location.pathname}>
-        {appRoutes.map((route) => (
-          <Route
-            key={route.path}
-            path={route.path}
-            element={
-              <PageFade isReady={isReady}>
-                {route.requiresAuth ? <ProtectedRoute>{route.element}</ProtectedRoute> : route.element}
-              </PageFade>
-            }
-          />
-        ))}
-      </Routes>
-    </AnimatePresence>
-  )
+    <Routes location={location}>
+      {appRoutes.map((route) => {
+        const content = isPrivateRoute(route.meta) ? (
+          <ProtectedRoute>{route.element}</ProtectedRoute>
+        ) : (
+          route.element
+        );
+
+        const page = <PageFade isReady={isReady}>{content}</PageFade>;
+
+        const withLayout =
+          route.meta.layout === "shell" ? <AppShell>{page}</AppShell> : page;
+
+        return (
+          <Route key={route.path} path={route.path} element={withLayout} />
+        );
+      })}
+    </Routes>
+  );
 }

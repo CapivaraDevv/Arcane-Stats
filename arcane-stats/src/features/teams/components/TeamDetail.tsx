@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import type { Team, Member, SortKey } from "../types";
-import { MiniStat } from "./ui/ministat";
+import { MiniStat } from "./ui/MiniStat";
 import { RankBadge } from "./ui/RankBadge";
 import { LaneBadge } from "./ui/LaneBadge";
 import { AggressionBar } from "./ui/AggressionBar";
@@ -88,7 +88,9 @@ export default function TeamDetail({
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
               onClick={() => navigate(`/times/${team.id}/simulate`)}
-              className="inline-flex items-center gap-2 rounded-xl border border-border bg-[hsl(var(--secondary)/0.6)] px-4 py-2.5 text-sm font-bold backdrop-blur-sm transition hover:border-[hsl(var(--primary)/0.4)] hover:bg-secondary"
+              className="inline-flex items-center gap-2 rounded-xl border border-border
+               bg-[hsl(var(--secondary)/0.6)] px-4 py-2.5 text-sm font-bold backdrop-blur-sm 
+               transition hover:border-[hsl(var(--primary)/0.4)] hover:bg-secondary cursor-pointer"
             >
               <Swords className="h-4 w-4" /> Simular embate
             </motion.button>
@@ -97,7 +99,7 @@ export default function TeamDetail({
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
                 onClick={onAddPlayer}
-                className="inline-flex items-center gap-2 rounded-xl bg-gradient-primary px-4 py-2.5 text-sm font-bold text-primary-foreground shadow-glow"
+                className="inline-flex items-center gap-2 rounded-xl bg-gradient-primary px-4 py-2.5 text-sm font-bold text-primary-foreground shadow-glow cursor-pointer"
               >
                 <UserPlus className="h-4 w-4" /> Adicionar jogador
               </motion.button>

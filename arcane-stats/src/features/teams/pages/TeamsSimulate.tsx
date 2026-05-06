@@ -4,24 +4,15 @@ import { motion } from "framer-motion";
 import useTeams from "../hooks/useTeams";
 import { TeamBadge } from "../../../components/TeamBadge";
 import { LaneBadge } from "../../../components/LaneBadge";
-
-type Member = {
-  id: string;
-  nome: string;
-  tag?: string;
-  lane?: "Top" | "Jungle" | "Mid" | "ADC" | "Support";
-  winrate?: number;
-  kda?: number;
-  aggression?: number;
-};
-
-
+import { LANES, type Lane, type Member } from "../types";
 
 function byLane(members: Member[]) {
-  const map: Record<string, Member | undefined> = {};
+  const map: Partial<Record<Lane, Member>> = {};
+
   members.forEach((m) => {
     if (m.lane && !map[m.lane]) map[m.lane] = m;
   });
+
   return map;
 }
 function laneStrength(m?: Member) {
@@ -37,43 +28,52 @@ const TeamsSimulate: React.FC = () => {
   const [opponentId, setOpponentId] = useState<number | null>(null);
 
   const current = teams.find((t) => t.id === Number(id));
-  const opponents = current ? teams.filter((t) => t.id !== current.id) : [];
+  const opponents = useMemo(() => {
+    if (!current) return [];
+    return teams.filter((t) => t.id !== current.id);
+  }, [teams, current]);
 
   const opponent = opponents.find((t) => t.id === opponentId) ?? null;
 
-  const LANES: Member["lane"][] = ["Top", "Jungle", "Mid", "ADC", "Support"];
+  const aByLane = useMemo(
+    () =>
+      current
+        ? byLane(current.members)
+        : ({} as Record<string, Member | undefined>),
+    [current],
+  );
 
-  const aByLane = current 
-    ? byLane(current.members as unknown as Member[])
-    : ({} as Record<string, Member | undefined>);
-  
-  const bByLane = opponent
-    ? byLane(opponent.members as unknown as Member[])
-    : ({} as Record<string, Member | undefined>);
+  const bByLane = useMemo(
+    () =>
+      opponent
+        ? byLane(opponent.members)
+        : ({} as Record<string, Member | undefined>),
+    [opponent],
+  );
 
   // Initialize opponent ID on first render
   useEffect(() => {
     if (opponents.length > 0 && opponentId === null) {
       setOpponentId(opponents[0]?.id ?? null);
     }
-  }, [opponents.length]);
+  }, [opponents, opponentId]);
 
   const score = useMemo(() => {
     if (!opponent || !current) return { a: 0, b: 0 };
 
-    let a = 0,
-      b = 0;
+    let a = 0;
+    let b = 0;
 
-    LANES.forEach((l) => {
-      const av = laneStrength(aByLane[l!]);
-      const bv = laneStrength(bByLane[l!]);
+    LANES.forEach((lane) => {
+      const av = laneStrength(aByLane[lane]);
+      const bv = laneStrength(bByLane[lane]);
 
       if (av > bv) a++;
       else if (bv > av) b++;
     });
 
     return { a, b };
-  }, [opponent, current, aByLane, bByLane, LANES]);
+  }, [opponent, current, aByLane, bByLane]);
 
   const winning = score.a > score.b ? "a" : score.b > score.a ? "b" : "tie";
 
@@ -179,13 +179,13 @@ const TeamsSimulate: React.FC = () => {
                     <div
                       className={`text-left font-display font-bold ${winner === "a" ? "text-primary" : "text-foreground"}`}
                     >
-                      {a?.nome ?? "—"}
+                      {a?.name ?? "—"}
                     </div>
                     <LaneBadge lane={l ?? undefined} />
                     <div
                       className={`text-right font-display font-bold ${winner === "b" ? "text-rose-400" : "text-foreground"}`}
                     >
-                      {b?.nome ?? "—"}
+                      {b?.name ?? "—"}
                     </div>
                   </div>
                   <div className="flex h-2.5 overflow-hidden rounded-full bg-[hsl(var(--background)/0.6)]">

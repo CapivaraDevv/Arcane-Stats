@@ -1,15 +1,17 @@
 // types.ts
+export const LANES = ["Top", "Jungle", "Mid", "ADC", "Support"] as const;
+
+export type Lane = (typeof LANES)[number];
+
 export type Member = {
   id: string;
   name: string;
   tag?: string;
-  lane?: "Top" | "Jungle" | "Mid" | "ADC" | "Support";
+  lane?: Lane;
   winrate?: number;
   kda?: number;
   aggression?: number;
   mainChampion?: string;
-
-  // opcional: se quiser linkar com usuário do sistema
   userId?: string;
 };
 
