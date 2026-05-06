@@ -29,7 +29,7 @@ export default function KPICard({
 
       <div className="flex items-center gap-2 sm:gap-3">
         {kpi.title === "Melhor Campeão" ? (
-          <div className="relative z-10 w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center flex-shrink-0">
+          <div className="relative z-10 w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center shrink-0">
             {!imageErrors.has(kpi.value) ? (
               <img
                 src={getChampionIcon(kpi.value)}

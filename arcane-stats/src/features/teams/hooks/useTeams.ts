@@ -87,7 +87,7 @@ export function useTeams() {
 
     const newMember: Member = {
       id: user.id,
-      nome: user.name,
+      name: user.name,
     };
 
     team.members.push(newMember);
@@ -126,7 +126,7 @@ export function useTeams() {
 
       const newMember: Member = {
         id: user.id,
-        nome: user.name,
+        name: user.name,
         tag: user.tag,
         winrate: user.winrate,
         kda: user.kda,

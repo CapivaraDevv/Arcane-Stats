@@ -98,12 +98,6 @@ export default function HomePage() {
                 Começar minha evolução
               </Link>
 
-              {/* <Link
-                to="/register"
-                className="border border-slate-600 px-6 py-3 rounded-xl hover:bg-slate-800 transition font-semibold"
-              >
-                Explorar funcionalidades
-              </Link> */}
             </motion.div>
           </div>
 
@@ -168,16 +162,6 @@ export default function HomePage() {
           transition={{ duration: 0.8, delay: 0.5 }}
           className="mx-auto w-full max-w-6xl rounded-3xl border border-slate-800 bg-card-glass p-6 backdrop-blur  transition md:p-8"
         >
-          {/* <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-            <button
-              type="button"
-              onClick={() => setIsLearnMoreOpen(true)}
-              className="w-fit rounded-xl border border-slate-600 px-4 py-2 text-sm font-semibold transition hover:bg-slate-800"
-            >
-              Saiba mais
-            </button>
-          </div> */}
-
           <div className="grid gap-4 md:grid-cols-3">
             <article className="rounded-xl border border-border bg-[hsl(var(--background)/0.6)] hover:border-[hsl(var(--primary)/0.5)] hover:scale-105 transition cursor-pointer p-4">
               <h3 className="font-display text-lg font-semibold text-[#00B4D8]">
@@ -190,7 +174,7 @@ export default function HomePage() {
               </p>
             </article>
 
-            <article className="rounded-xl border bg-[hsl(var(--background)/0.6)] hover:border-[hsl(var(--primary)/0.5)] hover:scale-105 transition cursor-pointer p-4">
+            <article className="rounded-xl border border-border bg-[hsl(var(--background)/0.6)] hover:border-[hsl(var(--primary)/0.5)] hover:scale-105 transition cursor-pointer p-4">
               <h3 className="font-display text-lg font-semibold text-[#00B4D8]">
                 <ChessKnight className="h-3.5 w-3.5" /> O que é uma partida
                 competitiva?
@@ -202,7 +186,7 @@ export default function HomePage() {
               </p>
             </article>
 
-            <article className="group rounded-xl border border-slate-800 bg-[hsl(var(--background)/0.6)] hover:border-[hsl(var(--primary)/0.5)] hover:scale-105 transition cursor-pointer p-4">
+            <article className="group rounded-xl border border-border bg-[hsl(var(--background)/0.6)] hover:border-[hsl(var(--primary)/0.5)] hover:scale-105 transition cursor-pointer p-4">
               <h3 className="font-display text-lg font-semibold text-[#00B4D8]">
                 <Swords className="h-3.5 w-3.5 group-hover:scale-110 group-hover:rotate-3 transition-all" />{" "}
                 O que é eSports?

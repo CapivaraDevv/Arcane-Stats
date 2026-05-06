@@ -1,36 +1,24 @@
-export type StoredUser = {
-  id: string
-  name: string
-  email: string
-  password?: string
-}
+// types.ts
+export type Member = {
+  id: string;
+  name: string;
+  tag?: string;
+  lane?: "Top" | "Jungle" | "Mid" | "ADC" | "Support";
+  winrate?: number;
+  kda?: number;
+  aggression?: number;
+  mainChampion?: string;
 
-export type Lane = 'Top' | 'Jungle' | 'Mid' | 'ADC' | 'Support'
+  // opcional: se quiser linkar com usuário do sistema
+  userId?: string;
+};
 
-export interface Member {
-  id: string
-  nome: string
-  tag?: string
-  lane?: Lane
-  winrate?: number
-  kda?: number
-  aggression?: number
-  mainChampion?: string
-}
+export type Team = {
+  id: number;
+  nome: string;
+  creatorId: string;
+  members: Member[];
+  tag?: string;
+};
 
-export interface Team {
-  id: number
-  nome: string
-  creatorId: string
-  members: Member[] 
-  tag?: string
-}
-
-export type TeamWithMembers = {
-  id: number
-  nome: string
-  tag: string
-  creatorId: string
-  members: Member[] // 👈 UI
-  createdAt: number
-}
+export type SortKey = "winrate" | "kda" | "aggression";
