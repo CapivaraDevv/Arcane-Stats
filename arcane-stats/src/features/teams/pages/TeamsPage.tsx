@@ -1,12 +1,14 @@
-// src/pages/TeamsPage.tsx
 import React from "react";
 import { AnimatePresence } from "framer-motion";
 
 import ScrollReveal from "../../../components/ScrollReveal";
 import { useConfig } from "../../../hooks/useConfig";
+
+import useAuthContext from "../../../features/auth/hooks/useAuth";
+
 import useTeams from "../hooks/useTeams";
 import useTeamsPageState from "../hooks/useTeamsPageState";
-import useAuthContext from "../../../features/auth/hooks/useAuth";
+
 import TeamsHeader from "../components/TeamsHeader";
 import TeamsSidebar from "../components/TeamsSidebar";
 import TeamDetail from "../components/TeamDetail";

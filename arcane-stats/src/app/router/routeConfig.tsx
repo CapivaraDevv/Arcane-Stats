@@ -53,6 +53,9 @@ export function getRouteMeta(pathname: string): RouteMeta {
   )
 }
 
+export const usesShell = (meta?: RouteMeta) =>
+  meta?.layout === "shell";
+
 export const isPrivateRoute = (meta?: RouteMeta) =>
   meta?.auth === 'private'
 
