@@ -126,7 +126,12 @@ const MatchesPage = () => {
   }
 
   return (
-    <main className="flex-1 bg-background min-h-screen">
+    <div className="relative min-h-screen overflow-hidden bg-background text-foreground">
+      {/* Background hextech */}
+      <div className="pointer-events-none absolute inset-0 bg-hero" />
+      <div className="pointer-events-none absolute inset-0 bg-hex opacity-40" />
+      <div className="pointer-events-none absolute -top-40 left-1/2 h-[500px] w-[900px] -translate-x-1/2 rounded-full bg-[hsl(var(--primary)/0.2)] blur-3xl" />
+
       <header className="sticky top-0 z-30 border-b border-[hsl(var(--border)/0.6)] bg-[hsl(var(--background)/0.7)] backdrop-blur-xl">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
           <div className="flex items-center gap-3">
@@ -157,12 +162,13 @@ const MatchesPage = () => {
               className="group relative inline-flex items-center gap-2 overflow-hidden rounded-xl bg-gradient-primary px-5 py-2.5 text-sm font-bold text-primary-foreground shadow-glow transition cursor-pointer"
             >
               Analisar Partidas
+              <span className="absolute inset-0 -translate-x-full bg-linear-to-r from-transparent via-[hsl(0_0%_100%/0.3)] to-transparent transition-transform duration-700 group-hover:translate-x-full" />
             </motion.button>
           </Link>
         </div>
       </header>
 
-      <div className="mx-auto max-w-7xl px-6 py-8">
+      <div className="relative z-10 mx-auto max-w-7xl px-6 py-8">
         <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 mb-6">
           <ScrollReveal preset="up" delay={0} duration={0.5}>
             <div className="bg-card-glass p-4 rounded-xl border border-border/60 shadow-lg">
@@ -305,7 +311,7 @@ const MatchesPage = () => {
         />
       )}
 
-    </main>
+    </div>
   )
 }
 
