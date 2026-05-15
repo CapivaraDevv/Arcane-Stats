@@ -24,7 +24,6 @@ const TONE_MAP = {
 } as const;
 
 type Props = {
-  icon: React.ComponentType<{ className?: string }>;
   label: string;
   value: string;
   tone?: keyof typeof TONE_MAP;
@@ -32,7 +31,6 @@ type Props = {
 };
 
 export const MiniStat: React.FC<Props> = ({
-  icon: Icon,
   label,
   value,
   tone = "primary",
@@ -51,11 +49,6 @@ export const MiniStat: React.FC<Props> = ({
         className={`absolute -right-4 -top-4 h-16 w-16 rounded-full ${t.bg} blur-2xl transition group-hover:scale-150`}
       />
       <div className="relative">
-        <div
-          className={`inline-flex h-7 w-7 items-center justify-center rounded-lg ${t.bg} ${t.text}`}
-        >
-          <Icon className="h-3.5 w-3.5" />
-        </div>
         <div className="mt-2 text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
           {label}
         </div>

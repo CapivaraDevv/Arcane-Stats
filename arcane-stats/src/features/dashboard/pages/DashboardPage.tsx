@@ -146,9 +146,7 @@ export default function DashboardPage() {
                   whileHover={{ scale: 1.02 }}
                   className="bg-[hsl(var(--primary)/0.1)] rounded-xl p-4 border border-white/5 shadow-lg relative overflow-hidden group"
                 >
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                    <div className="absolute inset-0 animate-shimmer" />
-                  </div>
+                  
 
                   <div className="relative z-10">
                     <h2 className="text-lg font-semibold mb-4 text-[#E0E0E0]">
@@ -157,7 +155,7 @@ export default function DashboardPage() {
 
                     <PerformanceRadar data={radarData} />
 
-                    <div className="mt-3 pt-3 border-t border-white/10 text-xs text-[#A8A8A8]">
+                    {/* <div className="mt-3 pt-3 border-t border-white/10 text-xs text-[#A8A8A8]">
                       <div className="flex flex-row items-center">
                         <ChevronRight className="text-white"/> 
                         <p className="font-display text-3xl font-bold text-primary"> Forte em lutas</p>
@@ -170,7 +168,7 @@ export default function DashboardPage() {
                         <ChevronRight className="text-white"/> 
                          <p className="font-display text-3xl font-bold text-[hsl(var(--primary))]">Pode melhorar controle de objetivos</p>
                       </div>   
-                    </div>
+                    </div> */}
                   </div>
                 </motion.div>
               </ScrollReveal>

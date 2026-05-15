@@ -1,4 +1,5 @@
-import { motion } from "framer-motion";
+import { motion, useInView, useAnimationControls } from "framer-motion";
+import { useRef, useEffect } from "react";
 import type { ReactNode } from "react";
 
 interface ScrollRevealProps {
@@ -70,12 +71,24 @@ export default function ScrollReveal({
   preset = "up",
   stagger = 0,
 }: ScrollRevealProps) {
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once, amount });
+  const controls = useAnimationControls();
+
+  useEffect(() => {
+    if (isInView) {
+      controls.start("visible");
+    } else if (!once) {
+      controls.start("hidden");
+    }
+  }, [isInView, once, controls]);
+
   return (
     <motion.div
+      ref={ref}
       variants={presets[preset]}
       initial="hidden"
-      whileInView="visible"
-      viewport={{ once, amount }}
+      animate={controls}
       transition={{
         duration,
         delay,

@@ -110,28 +110,28 @@ export default function TeamDetail({
         {/* Mini stats */}
         <div className="relative mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
           <MiniStat
-            icon={Trophy}
+            
             label="Winrate médio"
             value={`${stats.wr}%`}
             tone="emerald"
             delay={0}
           />
           <MiniStat
-            icon={Swords}
+            
             label="KDA médio"
             value={stats.kda.toFixed(2)}
             tone="primary"
             delay={0.05}
           />
           <MiniStat
-            icon={Flame}
+            
             label="Agressividade"
             value={`${stats.agg}`}
             tone="rose"
             delay={0.1}
           />
           <MiniStat
-            icon={Target}
+            
             label="Rotas cobertas"
             value={`${stats.lanes}/5`}
             tone="amber"
@@ -145,7 +145,6 @@ export default function TeamDetail({
         <div className="mb-5 flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-end">
           <div>
             <div className="flex items-center gap-2">
-              <Zap className="h-4 w-4 text-primary" />
               <h3 className="font-display text-xl font-bold">
                 Ranking interno
               </h3>
