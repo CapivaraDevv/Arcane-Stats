@@ -3,6 +3,14 @@ export const LANES = ["Top", "Jungle", "Mid", "ADC", "Support"] as const;
 
 export type Lane = (typeof LANES)[number];
 
+export type StoredUser = {
+  id: string;
+  name: string;
+  email: string;
+  password: string;
+};
+
+
 export type Member = {
   id: string;
   name: string;

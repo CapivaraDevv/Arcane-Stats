@@ -1,5 +1,5 @@
 import { Route, Routes, useLocation } from "react-router-dom";
-import { appRoutes, isPrivateRoute } from "./routeConfig";
+import { appRoutes, isPrivateRoute, usesShell } from "./routeConfig";
 
 import PageFade from "../../shared/ui/PageFade";
 import ProtectedRoute from "../../shared/routing/ProtectedRoute";
@@ -24,8 +24,11 @@ export default function AppRouter({ isReady }: AppRouterProps) {
 
         const page = <PageFade isReady={isReady}>{content}</PageFade>;
 
-        const withLayout =
-          route.meta.layout === "shell" ? <AppShell>{page}</AppShell> : page;
+        const withLayout = usesShell(route.meta) ? (
+          <AppShell>{page}</AppShell>
+        ) : (
+          page
+        );
 
         return (
           <Route key={route.path} path={route.path} element={withLayout} />
