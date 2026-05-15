@@ -1,9 +1,10 @@
+import { memo } from "react";
 import { motion } from "framer-motion";
 import { useAssets } from "../hooks/useAssets";
 
 type KPI = { title: string; value: string; feedback?: string };
 
-export default function KPICard({
+const KPICard = memo(function KPICard({
   kpi,
   idx,
   imageErrors,
@@ -41,7 +42,7 @@ export default function KPICard({
               <motion.div
                 className="text-xl sm:text-2xl"
                 animate={{ y: [0, -5, 0] }}
-                transition={{ duration: 2, repeat: Infinity, delay: idx * 0.2 }}
+                transition={{ duration: 2, repeat: 2, delay: idx * 0.2 }}
               >
                 🏆
               </motion.div>
@@ -61,4 +62,6 @@ export default function KPICard({
       </div>
     </motion.div>
   );
-}
+});
+
+export default KPICard;

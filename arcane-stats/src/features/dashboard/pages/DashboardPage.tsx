@@ -10,99 +10,87 @@ import LaneCard from "../../../components/LaneCard";
 import { ChartSpline, ChevronRight } from "lucide-react";
 import PerformanceRadar from "../../../components/PerformanceRadar";
 
+const kpis = [
+  { title: "Taxa de Vitória", value: "62%", feedback: "+5% últimos 7 jogos" },
+  { title: "KDA Médio", value: "4.8", feedback: "Acima da média da rota" },
+  { title: "Dano/Min", value: "720", feedback: "Pressão constante nas lutas" },
+  { title: "Melhor Campeão", value: "Vayne", feedback: "65% de Winrate" },
+];
+
+const tendenciaPerformance = [
+  { partida: "P1", kda: 3.2, winrate: 45 },
+  { partida: "P2", kda: 4.1, winrate: 55 },
+  { partida: "P3", kda: 3.8, winrate: 50 },
+  { partida: "P4", kda: 5.2, winrate: 70 },
+  { partida: "P5", kda: 4.5, winrate: 60 },
+  { partida: "P6", kda: 4.8, winrate: 65 },
+  { partida: "P7", kda: 5.5, winrate: 75 },
+];
+
+const radarData = [
+  { subject: "Mecânica", value: 80, fullMark: 100 },
+  { subject: "Consistência", value: 75, fullMark: 100 },
+  { subject: "Agressividade", value: 85, fullMark: 100 },
+  { subject: "Macro", value: 60, fullMark: 100 },
+  { subject: "Farm", value: 70, fullMark: 100 },
+];
+
+const laneAnalysis = [
+  {
+    lane: "Top",
+    champions: ["Jax", "Darius", "Riven"],
+    winrate: 6,
+    kdaAvg: 3.8,
+    firstBloodInvolvement: 34,
+    bestBuild: [3742, 3142, 3053],
+    avgCS: 286,
+    icon: "/IconeTop.png",
+  },
+  {
+    lane: "Jungle",
+    champions: ["LeeSin", "Elise", "Graves"],
+    winrate: 12,
+    kdaAvg: 4.0,
+    firstBloodInvolvement: 62,
+    bestBuild: [3142, 3102, 3071],
+    avgCS: 165,
+    icon: "/IconeJungle.png",
+  },
+  {
+    lane: "Mid",
+    champions: ["Zed", "Talon", "Lux"],
+    winrate: 31,
+    kdaAvg: 4.5,
+    firstBloodInvolvement: 48,
+    bestBuild: [6630, 3165, 3020],
+    avgCS: 312,
+    icon: "/IconeMID.png",
+  },
+  {
+    lane: "ADC",
+    champions: ["Jinx", "Caitlyn", "Vayne"],
+    winrate: 55,
+    kdaAvg: 5.0,
+    firstBloodInvolvement: 18,
+    bestBuild: [6672, 3031, 3036],
+    avgCS: 336,
+    icon: "/IconeADC.webp",
+  },
+  {
+    lane: "Support",
+    champions: ["Thresh", "Braum", "Leona"],
+    winrate: 3,
+    kdaAvg: 3.2,
+    firstBloodInvolvement: 41,
+    bestBuild: [3107, 3107, 3109],
+    avgCS: 18,
+    icon: "/IconeSuporte.png",
+  },
+];
+
 export default function DashboardPage() {
   const { configs } = useConfig();
   const { imageErrors, markImageError } = useImageFallback();
-
-  const kpis = [
-    { title: "Taxa de Vitória", value: "62%", feedback: "+5% últimos 7 jogos" },
-    { title: "KDA Médio", value: "4.8", feedback: "Acima da média da rota" },
-    {
-      title: "Dano/Min",
-      value: "720",
-      feedback: "Pressão constante nas lutas",
-    },
-    { title: "Melhor Campeão", value: "Vayne", feedback: "65% de Winrate" },
-  ];
-
-  const tendenciaPerformance = [
-    { partida: "P1", kda: 3.2, winrate: 45 },
-    { partida: "P2", kda: 4.1, winrate: 55 },
-    { partida: "P3", kda: 3.8, winrate: 50 },
-    { partida: "P4", kda: 5.2, winrate: 70 },
-    { partida: "P5", kda: 4.5, winrate: 60 },
-    { partida: "P6", kda: 4.8, winrate: 65 },
-    { partida: "P7", kda: 5.5, winrate: 75 },
-  ];
-
-  const radarData = [
-    { subject: "Mecânica", value: 80, fullMark: 100 },
-    { subject: "Consistência", value: 75, fullMark: 100 },
-    { subject: "Agressividade", value: 85, fullMark: 100 },
-    { subject: "Macro", value: 60, fullMark: 100 },
-    { subject: "Farm", value: 70, fullMark: 100 },
-  ];
-
-  // const decisionHeatMap = [
-  //   { x: 20, y: 65, intensity: 1.2 },
-  //   { x: 25, y: 60, intensity: 0.9 },
-  //   { x: 55, y: 45, intensity: 1.5 },
-  //   { x: 70, y: 30, intensity: 0.7 },
-  //   { x: 80, y: 20, intensity: 1.3 },
-  // ];
-
-  const laneAnalysis = [
-    {
-      lane: "Top",
-      champions: ["Jax", "Darius", "Riven"],
-      winrate: 6,
-      kdaAvg: 3.8,
-      firstBloodInvolvement: 34,
-      bestBuild: [3742, 3142, 3053],
-      avgCS: 286,
-      icon: "/IconeTop.png",
-    },
-    {
-      lane: "Jungle",
-      champions: ["LeeSin", "Elise", "Graves"],
-      winrate: 12,
-      kdaAvg: 4.0,
-      firstBloodInvolvement: 62,
-      bestBuild: [3142, 3102, 3071],
-      avgCS: 165,
-      icon: "/IconeJungle.png",
-    },
-    {
-      lane: "Mid",
-      champions: ["Zed", "Talon", "Lux"],
-      winrate: 31,
-      kdaAvg: 4.5,
-      firstBloodInvolvement: 48,
-      bestBuild: [6630, 3165, 3020],
-      avgCS: 312,
-      icon: "/IconeMID.png",
-    },
-    {
-      lane: "ADC",
-      champions: ["Jinx", "Caitlyn", "Vayne"],
-      winrate: 55,
-      kdaAvg: 5.0,
-      firstBloodInvolvement: 18,
-      bestBuild: [6672, 3031, 3036],
-      avgCS: 336,
-      icon: "/IconeADC.webp",
-    },
-    {
-      lane: "Support",
-      champions: ["Thresh", "Braum", "Leona"],
-      winrate: 3,
-      kdaAvg: 3.2,
-      firstBloodInvolvement: 41,
-      bestBuild: [3107, 323075, 323110],
-      avgCS: 18,
-      icon: "/IconeSuporte.png",
-    },
-  ];
 
   return (
     <div className="relative overflow-hidden m-auto flex-1 flex-col gap-8 bg-transparent min-h-screen ">

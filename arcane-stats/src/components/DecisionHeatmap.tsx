@@ -21,8 +21,8 @@ export default function DecisionHeatMap({ data }: Props) {
                 <motion.div
                     key={i}
                     initial={{ scale: 0 }}
-                    animate={{ scale: [1, 1.2, 1] }}
-                    transition={{ duration: 3, repeat: Infinity}}
+                    animate={{ scale: 1 }}
+                    transition={{ duration: 0.4, ease: "easeOut" }}
                     className='absolute rounded-full blur-xl'
                     style={{
                         left: `${point.x}%`,

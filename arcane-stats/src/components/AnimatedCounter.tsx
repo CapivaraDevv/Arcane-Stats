@@ -34,7 +34,8 @@ const AnimatedCounter = ({
       },
     });
     return () => controls.stop();
-  }, [inView, to, duration, decimals, prefix, suffix, value]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [inView, to, duration, decimals, prefix, suffix]);
 
   return (
     <span ref={ref} className={className}>

@@ -1,4 +1,4 @@
-import { useRef, useState} from "react";
+import { useRef, useState, useCallback } from "react";
 import type { ReactNode, MouseEvent } from "react";
 import { cn } from "../lib/utils";
 
@@ -15,17 +15,25 @@ const SpotlightCard = ({
   glowColor = "hsl(var(--primary) / 0.18)",
 }: SpotlightCardProps) => {
   const ref = useRef<HTMLDivElement>(null);
+  const rafId = useRef<number | null>(null);
   const [pos, setPos] = useState({ x: 50, y: 50 });
   const [active, setActive] = useState(false);
 
-  const handleMove = (e: MouseEvent<HTMLDivElement>) => {
+  const handleMove = useCallback((e: MouseEvent<HTMLDivElement>) => {
     const el = ref.current;
     if (!el) return;
-    const rect = el.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width) * 100;
-    const y = ((e.clientY - rect.top) / rect.height) * 100;
-    setPos({ x, y });
-  };
+    const clientX = e.clientX;
+    const clientY = e.clientY;
+    if (rafId.current !== null) cancelAnimationFrame(rafId.current);
+    rafId.current = requestAnimationFrame(() => {
+      const rect = el.getBoundingClientRect();
+      setPos({
+        x: ((clientX - rect.left) / rect.width) * 100,
+        y: ((clientY - rect.top) / rect.height) * 100,
+      });
+      rafId.current = null;
+    });
+  }, []);
 
   return (
     <div

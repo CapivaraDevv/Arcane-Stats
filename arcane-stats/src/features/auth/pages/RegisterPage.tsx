@@ -28,7 +28,7 @@ export default function RegisterPage() {
     <div className="min-h-screen relative overflow-x-hidden flex items-center justify-center bg-[#020617]">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <motion.img
-          src="Ekko.png"
+          src="/Ekko.png"
           alt=""
           className="w-screen h-screen object-cover"
           animate={{

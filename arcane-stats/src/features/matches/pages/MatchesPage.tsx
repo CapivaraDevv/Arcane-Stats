@@ -1,5 +1,5 @@
 import { motion, LayoutGroup } from 'framer-motion'
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import ScrollReveal from '../../../components/ScrollReveal'
 import { Link } from "react-router-dom";
 import { useAssets } from '../../../hooks/useAssets'
@@ -23,107 +23,110 @@ interface Partida {
   visao: number
 }
 
+const partidas: Partida[] = [
+  {
+    id: 1,
+    data: '2024-01-15',
+    resultado: 'Vitória',
+    duracao: '32:15',
+    modo: 'Ranqueada Solo/Duo',
+    kda: '12/3/8',
+    campeao: 'Vayne',
+    build: [3006, 6672, 3124, 3153, 3046, 3026],
+    role: 'ADC',
+    gold: 15200,
+    dano: 45200,
+    visao: 18,
+  },
+  {
+    id: 2,
+    data: '2024-01-14',
+    resultado: 'Vitória',
+    duracao: '28:42',
+    modo: 'Ranqueada Solo/Duo',
+    kda: '8/2/12',
+    campeao: 'Jinx',
+    build: [3006, 6672, 3031, 3094, 3036, 3026],
+    role: 'ADC',
+    gold: 13800,
+    dano: 38900,
+    visao: 15,
+  },
+  {
+    id: 3,
+    data: '2024-01-13',
+    resultado: 'Derrota',
+    duracao: '35:20',
+    modo: 'Ranqueada Solo/Duo',
+    kda: '5/7/4',
+    campeao: 'Caitlyn',
+    build: [3006, 6671, 3031, 3094, 3036, 3026],
+    role: 'ADC',
+    gold: 12100,
+    dano: 28900,
+    visao: 22,
+  },
+  {
+    id: 4,
+    data: '2024-01-12',
+    resultado: 'Vitória',
+    duracao: '25:10',
+    modo: 'Ranqueada Solo/Duo',
+    kda: '15/1/6',
+    campeao: 'Lucian',
+    build: [3006, 6671, 3031, 3095, 3036, 3026],
+    role: 'ADC',
+    gold: 14500,
+    dano: 52100,
+    visao: 12,
+  },
+  {
+    id: 5,
+    data: '2024-01-11',
+    resultado: 'Derrota',
+    duracao: '40:05',
+    modo: 'Ranqueada Solo/Duo',
+    kda: '7/9/11',
+    campeao: 'Ezreal',
+    build: [3158, 6692, 3042, 3078, 6694, 3026],
+    role: 'ADC',
+    gold: 16800,
+    dano: 41200,
+    visao: 28,
+  },
+  {
+    id: 6,
+    data: '2024-01-10',
+    resultado: 'Vitória',
+    duracao: '30:30',
+    modo: 'Ranqueada Solo/Duo',
+    kda: '10/4/9',
+    campeao: 'Draven',
+    build: [3006, 6672, 3031, 3095, 3036, 3026],
+    role: 'ADC',
+    gold: 14200,
+    dano: 39800,
+    visao: 20,
+  },
+];
+
+const estatisticas = {
+  total: partidas.length,
+  vitorias: partidas.filter((p) => p.resultado === 'Vitória').length,
+  derrotas: partidas.filter((p) => p.resultado === 'Derrota').length,
+  winrate: Math.round((partidas.filter((p) => p.resultado === 'Vitória').length / partidas.length) * 100),
+};
+
 const MatchesPage = () => {
   const [filtro, setFiltro] = useState<'Todas' | 'Vitória' | 'Derrota'>('Todas')
   const { imageErrors, markImageError } = useImageFallback()
   const { getChampionIcon, getItemIcon } = useAssets()
   const [selectedMatch, setSelectedMatch] = useState<Partida | null>(null)
 
-  const partidas: Partida[] = [
-    {
-      id: 1,
-      data: '2024-01-15',
-      resultado: 'Vitória',
-      duracao: '32:15',
-      modo: 'Ranqueada Solo/Duo',
-      kda: '12/3/8',
-      campeao: 'Vayne',
-      build: [3006, 6672, 3124, 3153, 3046, 3026],
-      role: 'ADC',
-      gold: 15200,
-      dano: 45200,
-      visao: 18,
-    },
-    {
-      id: 2,
-      data: '2024-01-14',
-      resultado: 'Vitória',
-      duracao: '28:42',
-      modo: 'Ranqueada Solo/Duo',
-      kda: '8/2/12',
-      campeao: 'Jinx',
-      build: [3006, 6672, 3031, 3094, 3036, 3026],
-      role: 'ADC',
-      gold: 13800,
-      dano: 38900,
-      visao: 15,
-    },
-    {
-      id: 3,
-      data: '2024-01-13',
-      resultado: 'Derrota',
-      duracao: '35:20',
-      modo: 'Ranqueada Solo/Duo',
-      kda: '5/7/4',
-      campeao: 'Caitlyn',
-      build: [3006, 6671, 3031, 3094, 3036, 3026],
-      role: 'ADC',
-      gold: 12100,
-      dano: 28900,
-      visao: 22,
-    },
-    {
-      id: 4,
-      data: '2024-01-12',
-      resultado: 'Vitória',
-      duracao: '25:10',
-      modo: 'Ranqueada Solo/Duo',
-      kda: '15/1/6',
-      campeao: 'Lucian',
-      build: [3006, 6671, 3031, 3095, 3036, 3026],
-      role: 'ADC',
-      gold: 14500,
-      dano: 52100,
-      visao: 12,
-    },
-    {
-      id: 5,
-      data: '2024-01-11',
-      resultado: 'Derrota',
-      duracao: '40:05',
-      modo: 'Ranqueada Solo/Duo',
-      kda: '7/9/11',
-      campeao: 'Ezreal',
-      build: [3158, 6692, 3042, 3078, 6694, 3026],
-      role: 'ADC',
-      gold: 16800,
-      dano: 41200,
-      visao: 28,
-    },
-    {
-      id: 6,
-      data: '2024-01-10',
-      resultado: 'Vitória',
-      duracao: '30:30',
-      modo: 'Ranqueada Solo/Duo',
-      kda: '10/4/9',
-      campeao: 'Draven',
-      build: [3006, 6672, 3031, 3095, 3036, 3026],
-      role: 'ADC',
-      gold: 14200,
-      dano: 39800,
-      visao: 20,
-    },
-  ]
-
-  const partidasFiltradas = filtro === 'Todas' ? partidas : partidas.filter((p) => p.resultado === filtro)
-
-  const estatisticas = {
-    total: partidas.length,
-    vitorias: partidas.filter((p) => p.resultado === 'Vitória').length,
-    derrotas: partidas.filter((p) => p.resultado === 'Derrota').length,
-    winrate: Math.round((partidas.filter((p) => p.resultado === 'Vitória').length / partidas.length) * 100),
-  }
+  const partidasFiltradas = useMemo(
+    () => filtro === 'Todas' ? partidas : partidas.filter((p) => p.resultado === filtro),
+    [filtro],
+  )
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-background text-foreground">

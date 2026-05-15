@@ -78,7 +78,17 @@ const TeamsSimulate: React.FC = () => {
   const winning = score.a > score.b ? "a" : score.b > score.a ? "b" : "tie";
 
   if (!current) {
-    return <div>Time não encontrado</div>;
+    return (
+      <div className="flex flex-col items-center justify-center gap-4 p-8 text-center">
+        <p className="text-muted-foreground">Time não encontrado.</p>
+        <button
+          onClick={() => navigate("/times")}
+          className="rounded-xl border border-border bg-secondary/60 px-5 py-2.5 text-sm font-bold transition hover:bg-secondary"
+        >
+          ← Voltar para Times
+        </button>
+      </div>
+    );
   }
 
   return (

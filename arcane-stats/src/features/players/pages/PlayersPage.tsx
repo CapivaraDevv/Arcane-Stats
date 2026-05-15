@@ -14,6 +14,12 @@ type Player = {
   country: string;
 };
 
+const MATCH_HISTORY = [
+  { id: 1, result: "Vitória", kda: "6/2/8", champion: "Fake Champion", date: "5 min atrás" },
+  { id: 2, result: "Vitória", kda: "4/3/12", champion: "Fake Champion", date: "1h atrás" },
+  { id: 3, result: "Derrota", kda: "3/5/7", champion: "Fake Champion", date: "2h atrás" },
+];
+
 const PlayersPage = () => {
   const [filtroRole, setFiltroRole] = useState<string>("Todas");
 
@@ -193,30 +199,6 @@ const PlayersPage = () => {
   };
 
   const [selectedPlayer, setSelectedPlayer] = useState<Player | null>(null);
-
-  const getMatchHistory = () => [
-    {
-      id: 1,
-      result: "Vitória",
-      kda: "6/2/8",
-      champion: "Fake Champion",
-      date: "5 min atrás",
-    },
-    {
-      id: 2,
-      result: "Vitória",
-      kda: "4/3/12",
-      champion: "Fake Champion",
-      date: "1h atrás",
-    },
-    {
-      id: 3,
-      result: "Derrota",
-      kda: "3/5/7",
-      champion: "Fake Champion",
-      date: "2h atrás",
-    },
-  ];
 
   const modalRef = useRef<HTMLDivElement>(null);
 
@@ -605,7 +587,7 @@ const PlayersPage = () => {
                 </h3>
 
                 <div className="space-y-2">
-                  {getMatchHistory().map((match) => (
+                  {MATCH_HISTORY.map((match) => (
                     <div
                       key={match.id}
                       className="flex items-center justify-between rounded-xl border border-[hsl(var(--border)/0.4)] bg-[hsl(var(--secondary)/0.25)] p-3"

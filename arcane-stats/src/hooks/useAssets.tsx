@@ -1,5 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState, useEffect, useMemo, useCallback } from 'react';
 import type { ReactNode } from 'react';
 import * as ddragon from '../services/ddragon';
 
@@ -62,26 +62,27 @@ export const AssetProvider = ({ children }: { children: ReactNode }) => {
   }, [version]);
 
 
-  const getChampionIcon = (championName: string) => {
+  const getChampionIcon = useCallback((championName: string) => {
     const v = version || 'latest';
     return ddragon.getChampionIcon(v, championName);
-  };
+  }, [version]);
 
-  const getChampionIconById = (championId: number) => {
+  const getChampionIconById = useCallback((championId: number) => {
     const name = championMap[championId];
     return name ? ddragon.getChampionIcon(version, name) : '';
-  };
+  }, [version, championMap]);
 
-  const getItemIcon = (itemId: number) => {
+  const getItemIcon = useCallback((itemId: number) => {
     const v = version || 'latest';
     return ddragon.getItemIcon(v, itemId);
-  };
-  const getSpellIcon = (spellName: string) => {
+  }, [version]);
+
+  const getSpellIcon = useCallback((spellName: string) => {
     const v = version || 'latest';
     return ddragon.getSpellIcon(v, spellName);
-  };
+  }, [version]);
 
-  const value: AssetContextType = {
+  const value = useMemo<AssetContextType>(() => ({
     version,
     championMap,
     setVersion,
@@ -89,7 +90,7 @@ export const AssetProvider = ({ children }: { children: ReactNode }) => {
     getChampionIconById,
     getItemIcon,
     getSpellIcon,
-  };
+  }), [version, championMap, getChampionIcon, getChampionIconById, getItemIcon, getSpellIcon]);
 
   return <AssetContext.Provider value={value}>{children}</AssetContext.Provider>;
 };
