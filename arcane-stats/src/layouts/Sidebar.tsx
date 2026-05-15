@@ -52,7 +52,8 @@ const Sidebar = () => {
           { path: '/jogadores', label: 'Jogadores', index: 2 },
           { path: '/partidas', label: 'Partidas', index: 3 },
           // { path: '/analisar', label: 'Analisar Partida', index: 1 },
-          { path: '/configuracoes', label: 'Configurações', index: 4 },
+          { path: '/perfil', label: 'Perfil', index: 4 },
+          { path: '/configuracoes', label: 'Configurações', index: 5 },
         ].map(({ path, label, index }) => (
           <motion.div key={path} custom={index} initial="hidden" animate="visible" variants={linkVariants}>
             <Link

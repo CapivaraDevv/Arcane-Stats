@@ -2,19 +2,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useMemo, useCallback } from "react";
 import { X, TrendingUp, TrendingDown, Zap, Target, AlertTriangle, CheckCircle2, ArrowRight } from "lucide-react";
 
-type Resultado = "Vitória" | "Derrota";
-type EventType = "erro" | "acerto" | "turning";
+import type { Partida } from './types';
 
-export type Partida = {
-  id: number;
-  resultado: Resultado;
-  campeao: string;
-  role: string;
-  kda: string;
-  gold: number;
-  dano: number;
-  visao: number;
-};
+type EventType = "erro" | "acerto" | "turning";
 
 type MatchEvent = {
   time: string;

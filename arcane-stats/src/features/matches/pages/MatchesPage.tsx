@@ -2,113 +2,13 @@ import { motion, LayoutGroup } from 'framer-motion'
 import { useState, useMemo } from 'react'
 import ScrollReveal from '../../../components/ScrollReveal'
 import { Link } from "react-router-dom";
-import { useAssets } from '../../../hooks/useAssets'
-import { useImageFallback } from '../../../shared/hooks/useImageFallback'
 import { Users } from 'lucide-react';
 import MatchDebrief from '../MatchDebrief';
+import MatchCard from '../components/MatchCard';
+import { mockMatches } from '../data/mockMatches';
+import type { Partida } from '../types';
 
-
-interface Partida {
-  id: number
-  data: string
-  resultado: 'Vitória' | 'Derrota'
-  duracao: string
-  modo: string
-  kda: string
-  campeao: string
-  build: number[]
-  role: string
-  gold: number
-  dano: number
-  visao: number
-}
-
-const partidas: Partida[] = [
-  {
-    id: 1,
-    data: '2024-01-15',
-    resultado: 'Vitória',
-    duracao: '32:15',
-    modo: 'Ranqueada Solo/Duo',
-    kda: '12/3/8',
-    campeao: 'Vayne',
-    build: [3006, 6672, 3124, 3153, 3046, 3026],
-    role: 'ADC',
-    gold: 15200,
-    dano: 45200,
-    visao: 18,
-  },
-  {
-    id: 2,
-    data: '2024-01-14',
-    resultado: 'Vitória',
-    duracao: '28:42',
-    modo: 'Ranqueada Solo/Duo',
-    kda: '8/2/12',
-    campeao: 'Jinx',
-    build: [3006, 6672, 3031, 3094, 3036, 3026],
-    role: 'ADC',
-    gold: 13800,
-    dano: 38900,
-    visao: 15,
-  },
-  {
-    id: 3,
-    data: '2024-01-13',
-    resultado: 'Derrota',
-    duracao: '35:20',
-    modo: 'Ranqueada Solo/Duo',
-    kda: '5/7/4',
-    campeao: 'Caitlyn',
-    build: [3006, 6671, 3031, 3094, 3036, 3026],
-    role: 'ADC',
-    gold: 12100,
-    dano: 28900,
-    visao: 22,
-  },
-  {
-    id: 4,
-    data: '2024-01-12',
-    resultado: 'Vitória',
-    duracao: '25:10',
-    modo: 'Ranqueada Solo/Duo',
-    kda: '15/1/6',
-    campeao: 'Lucian',
-    build: [3006, 6671, 3031, 3095, 3036, 3026],
-    role: 'ADC',
-    gold: 14500,
-    dano: 52100,
-    visao: 12,
-  },
-  {
-    id: 5,
-    data: '2024-01-11',
-    resultado: 'Derrota',
-    duracao: '40:05',
-    modo: 'Ranqueada Solo/Duo',
-    kda: '7/9/11',
-    campeao: 'Ezreal',
-    build: [3158, 6692, 3042, 3078, 6694, 3026],
-    role: 'ADC',
-    gold: 16800,
-    dano: 41200,
-    visao: 28,
-  },
-  {
-    id: 6,
-    data: '2024-01-10',
-    resultado: 'Vitória',
-    duracao: '30:30',
-    modo: 'Ranqueada Solo/Duo',
-    kda: '10/4/9',
-    campeao: 'Draven',
-    build: [3006, 6672, 3031, 3095, 3036, 3026],
-    role: 'ADC',
-    gold: 14200,
-    dano: 39800,
-    visao: 20,
-  },
-];
+const partidas = mockMatches;
 
 const estatisticas = {
   total: partidas.length,
@@ -119,8 +19,6 @@ const estatisticas = {
 
 const MatchesPage = () => {
   const [filtro, setFiltro] = useState<'Todas' | 'Vitória' | 'Derrota'>('Todas')
-  const { imageErrors, markImageError } = useImageFallback()
-  const { getChampionIcon, getItemIcon } = useAssets()
   const [selectedMatch, setSelectedMatch] = useState<Partida | null>(null)
 
   const partidasFiltradas = useMemo(
@@ -220,88 +118,7 @@ const MatchesPage = () => {
           >
             {partidasFiltradas.map((partida, idx) => (
               <ScrollReveal key={partida.id} preset="up" delay={idx * 0.1} duration={0.6}>
-                <motion.div
-                  layoutId={`match-${partida.id}`}
-                  onClick={() => setSelectedMatch(partida)}
-                  whileHover={{ scale: 1.02 }}
-                  className={`bg-card-glass p-6 rounded-xl border shadow-lg transition-all cursor-pointer ${partida.resultado === 'Vitória'
-                    ? 'border-[#4CAF50]/30 hover:border-[#4CAF50]/50'
-                    : 'border-[#F44336]/30 hover:border-[#F44336]/50'
-                    }`}
-                >
-                  <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                    <div className="flex items-center gap-4">
-                      <div className={`relative w-16 h-16 rounded-lg overflow-hidden ${partida.resultado === 'Vitória'
-                        ? 'ring-2 ring-[#4CAF50]/50'
-                        : 'ring-2 ring-[#F44336]/50'
-                        }`}>
-                        {imageErrors.has(partida.campeao) ? (
-                          <div className={`w-full h-full flex items-center justify-center text-2xl font-bold ${partida.resultado === 'Vitória' ? 'bg-[#4CAF50]/20 text-[#4CAF50]' : 'bg-[#F44336]/20 text-[#F44336]'
-                            }`}>
-                            {partida.resultado === 'Vitória' ? '✓' : '✗'}
-                          </div>
-                        ) : (
-                          <img
-                            src={getChampionIcon(partida.campeao)}
-                            alt={partida.campeao}
-                            className="w-full h-full object-cover"
-                            onError={() => markImageError(partida.campeao)}
-                          />
-                        )}
-                        <div className={`absolute inset-0 ${partida.resultado === 'Vitória' ? 'bg-[#4CAF50]/10' : 'bg-[#F44336]/10'
-                          }`} />
-                      </div>
-                      <div>
-                        <div className="flex items-center gap-3 mb-1">
-                          <h3 className="font-display text-lg font-semibold text-foreground">
-                            {partida.campeao} - {partida.role}
-                          </h3>
-                          <span className={`px-2 py-1 rounded text-xs font-semibold ${partida.resultado === 'Vitória' ? 'bg-[#4CAF50]/20 text-[#4CAF50]' : 'bg-[#F44336]/20 text-[#F44336]'
-                            }`}>
-                            {partida.resultado}
-                          </span>
-                        </div>
-                        <div className="text-sm text-muted-foreground">
-                          {partida.modo} • {partida.data} • {partida.duracao}
-                        </div>
-                      </div>
-                    </div>
-
-                    <div>
-                      <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-1 text-center">Build in-game</div>
-                      <div className="flex gap-1">
-                        {partida.build.map((itemId, bIdx) => (
-                          <img
-                            key={bIdx}
-                            src={getItemIcon(itemId)}
-                            alt={`item-${itemId}`}
-                            title={`#${itemId}`}
-                            className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 rounded-md object-contain bg-background/20 border border-white/10 hover:scale-110 transition-all"
-                          />
-                        ))}
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                      <div>
-                        <div className="text-xs text-muted-foreground mb-1">KDA</div>
-                        <div className="text-sm font-semibold text-foreground">{partida.kda}</div>
-                      </div>
-                      <div>
-                        <div className="text-xs text-muted-foreground mb-1">Gold</div>
-                        <div className="text-sm font-semibold text-[#F4A261]">{partida.gold.toLocaleString()}</div>
-                      </div>
-                      <div>
-                        <div className="text-xs text-muted-foreground mb-1">Dano</div>
-                        <div className="text-sm font-semibold text-foreground">{partida.dano.toLocaleString()}</div>
-                      </div>
-                      <div>
-                        <div className="text-xs text-muted-foreground mb-1">Visão</div>
-                        <div className="text-sm font-semibold text-primary">{partida.visao}</div>
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
+                <MatchCard partida={partida} onSelect={setSelectedMatch} />
               </ScrollReveal>
             ))}
           </div>

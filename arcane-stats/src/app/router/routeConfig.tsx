@@ -11,6 +11,7 @@ import PlayersPage from '../../features/players/pages/PlayersPage'
 import MatchesPage from '../../features/matches/pages/MatchesPage'
 import AnalyzePage from '../../features/matches/pages/AnalyzePage'
 import SettingsPage from '../../features/settings/pages/SettingsPage'
+import ProfilePage from '../../features/profile/pages/ProfilePage'
 import LoginPage from '../../features/auth/pages/LoginPage'
 import RegisterPage from '../../features/auth/pages/RegisterPage'
 
@@ -38,6 +39,7 @@ export const appRoutes: AppRoute[] = [
   { path: '/jogadores', element: <PlayersPage />, meta: { auth: 'private', layout: 'shell'} },
   { path: '/partidas', element: <MatchesPage />, meta: { auth: 'private', layout: 'shell'} },
   { path: '/analisar', element: <AnalyzePage />, meta: { auth: 'private', layout: 'shell'} },
+  { path: '/perfil', element: <ProfilePage />, meta: { auth: 'private', layout: 'shell'} },
   { path: '/configuracoes', element: <SettingsPage />, meta: { auth: 'private', layout: 'shell'} },
 ]
 
