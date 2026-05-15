@@ -126,7 +126,7 @@ const MatchesPage = () => {
   }
 
   return (
-    <main className="flex-1 bg-[#0B132B] min-h-screen">
+    <main className="flex-1 bg-background min-h-screen">
       <header className="sticky top-0 z-30 border-b border-[hsl(var(--border)/0.6)] bg-[hsl(var(--background)/0.7)] backdrop-blur-xl">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
           <div className="flex items-center gap-3">
@@ -162,30 +162,30 @@ const MatchesPage = () => {
         </div>
       </header>
 
-      <div className='m-auto p-8'>
+      <div className="mx-auto max-w-7xl px-6 py-8">
         <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 mb-6">
           <ScrollReveal preset="up" delay={0} duration={0.5}>
-            <div className="bg-[#1D2D50] p-4 rounded-lg border border-white/5 shadow-lg">
-              <div className="text-2xl font-bold text-[#E0E0E0]">{estatisticas.total}</div>
-              <div className="text-sm text-[#A8A8A8]">Total de Partidas</div>
+            <div className="bg-card-glass p-4 rounded-xl border border-border/60 shadow-lg">
+              <div className="text-2xl font-bold text-foreground">{estatisticas.total}</div>
+              <div className="text-sm text-muted-foreground">Total de Partidas</div>
             </div>
           </ScrollReveal>
           <ScrollReveal preset="up" delay={0.1} duration={0.5}>
-            <div className="bg-[#1D2D50] p-4 rounded-lg border border-white/5 shadow-lg">
+            <div className="bg-card-glass p-4 rounded-xl border border-border/60 shadow-lg">
               <div className="text-2xl font-bold text-[#4CAF50]">{estatisticas.vitorias}</div>
-              <div className="text-sm text-[#A8A8A8]">Vitórias</div>
+              <div className="text-sm text-muted-foreground">Vitórias</div>
             </div>
           </ScrollReveal>
           <ScrollReveal preset="up" delay={0.2} duration={0.5}>
-            <div className="bg-[#1D2D50] p-4 rounded-lg border border-white/5 shadow-lg">
+            <div className="bg-card-glass p-4 rounded-xl border border-border/60 shadow-lg">
               <div className="text-2xl font-bold text-[#F44336]">{estatisticas.derrotas}</div>
-              <div className="text-sm text-[#A8A8A8]">Derrotas</div>
+              <div className="text-sm text-muted-foreground">Derrotas</div>
             </div>
           </ScrollReveal>
           <ScrollReveal preset="up" delay={0.3} duration={0.5}>
-            <div className="bg-[#1D2D50] p-4 rounded-lg border border-white/5 shadow-lg">
-              <div className="text-2xl font-bold text-[#00B4D8]">{estatisticas.winrate}%</div>
-              <div className="text-sm text-[#A8A8A8]">Winrate</div>
+            <div className="bg-card-glass p-4 rounded-xl border border-border/60 shadow-lg">
+              <div className="text-2xl font-bold text-primary">{estatisticas.winrate}%</div>
+              <div className="text-sm text-muted-foreground">Winrate</div>
             </div>
           </ScrollReveal>
         </div>
@@ -195,9 +195,9 @@ const MatchesPage = () => {
             <button
               key={opcao}
               onClick={() => setFiltro(opcao)}
-              className={`px-4 py-2 rounded-lg transition-all ${filtro === opcao
-                ? 'bg-[#0077B6] text-[#E0E0E0] shadow-lg'
-                : 'bg-[#1D2D50] text-[#A8A8A8] hover:bg-[#0077B6]/50 border border-white/5'
+              className={`px-4 py-2 rounded-xl text-sm transition-all ${filtro === opcao
+                ? 'bg-gradient-primary text-primary-foreground shadow-glow'
+                : 'bg-[hsl(var(--secondary)/0.5)] text-muted-foreground hover:text-foreground border border-border'
                 }`}
             >
               {opcao}
@@ -215,7 +215,7 @@ const MatchesPage = () => {
                   layoutId={`match-${partida.id}`}
                   onClick={() => setSelectedMatch(partida)}
                   whileHover={{ scale: 1.02 }}
-                  className={`bg-[#1D2D50] p-6 rounded-lg border shadow-lg transition-all cursor-pointer ${partida.resultado === 'Vitória'
+                  className={`bg-card-glass p-6 rounded-xl border shadow-lg transition-all cursor-pointer ${partida.resultado === 'Vitória'
                     ? 'border-[#4CAF50]/30 hover:border-[#4CAF50]/50'
                     : 'border-[#F44336]/30 hover:border-[#F44336]/50'
                     }`}
@@ -244,7 +244,7 @@ const MatchesPage = () => {
                       </div>
                       <div>
                         <div className="flex items-center gap-3 mb-1">
-                          <h3 className="space-grotesk-title text-lg font-semibold text-[#E0E0E0]">
+                          <h3 className="font-display text-lg font-semibold text-foreground">
                             {partida.campeao} - {partida.role}
                           </h3>
                           <span className={`px-2 py-1 rounded text-xs font-semibold ${partida.resultado === 'Vitória' ? 'bg-[#4CAF50]/20 text-[#4CAF50]' : 'bg-[#F44336]/20 text-[#F44336]'
@@ -252,14 +252,14 @@ const MatchesPage = () => {
                             {partida.resultado}
                           </span>
                         </div>
-                        <div className="sora-text text-sm text-[#A8A8A8]">
+                        <div className="text-sm text-muted-foreground">
                           {partida.modo} • {partida.data} • {partida.duracao}
                         </div>
                       </div>
                     </div>
 
                     <div>
-                      <div className="text-xs font-semibold text-[#A8A8A8] uppercase tracking-wide mb-1 text-center">Build in-game</div>
+                      <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-1 text-center">Build in-game</div>
                       <div className="flex gap-1">
                         {partida.build.map((itemId, bIdx) => (
                           <img
@@ -267,7 +267,7 @@ const MatchesPage = () => {
                             src={getItemIcon(itemId)}
                             alt={`item-${itemId}`}
                             title={`#${itemId}`}
-                            className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 rounded-md object-contain bg-[#0B132B]/20 border border-white/10 hover:scale-110 transition-all"
+                            className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 rounded-md object-contain bg-background/20 border border-white/10 hover:scale-110 transition-all"
                           />
                         ))}
                       </div>
@@ -275,20 +275,20 @@ const MatchesPage = () => {
 
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                       <div>
-                        <div className="text-xs text-[#A8A8A8] mb-1">KDA</div>
-                        <div className="text-sm font-semibold text-[#E0E0E0]">{partida.kda}</div>
+                        <div className="text-xs text-muted-foreground mb-1">KDA</div>
+                        <div className="text-sm font-semibold text-foreground">{partida.kda}</div>
                       </div>
                       <div>
-                        <div className="text-xs text-[#A8A8A8] mb-1">Gold</div>
+                        <div className="text-xs text-muted-foreground mb-1">Gold</div>
                         <div className="text-sm font-semibold text-[#F4A261]">{partida.gold.toLocaleString()}</div>
                       </div>
                       <div>
-                        <div className="text-xs text-[#A8A8A8] mb-1">Dano</div>
-                        <div className="text-sm font-semibold text-[#E0E0E0]">{partida.dano.toLocaleString()}</div>
+                        <div className="text-xs text-muted-foreground mb-1">Dano</div>
+                        <div className="text-sm font-semibold text-foreground">{partida.dano.toLocaleString()}</div>
                       </div>
                       <div>
-                        <div className="text-xs text-[#A8A8A8] mb-1">Visão</div>
-                        <div className="text-sm font-semibold text-[#00B4D8]">{partida.visao}</div>
+                        <div className="text-xs text-muted-foreground mb-1">Visão</div>
+                        <div className="text-sm font-semibold text-primary">{partida.visao}</div>
                       </div>
                     </div>
                   </div>

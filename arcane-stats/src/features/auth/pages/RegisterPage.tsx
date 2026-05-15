@@ -3,7 +3,6 @@ import { useNavigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import useAuthContext from "../hooks/useAuth";
 
-import EkkoImg from "../../../../public/Ekko.png";
 
 export default function RegisterPage() {
   const { register } = useAuthContext();
@@ -29,7 +28,7 @@ export default function RegisterPage() {
     <div className="min-h-screen relative overflow-x-hidden flex items-center justify-center bg-[#020617]">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <motion.img
-          src={EkkoImg}
+          src="Ekko.png"
           alt=""
           className="w-screen h-screen object-cover"
           animate={{

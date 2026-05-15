@@ -3,7 +3,6 @@ import { useNavigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import useAuthContext from "../hooks/useAuth";
 
-import ThreshImg from "../../../../public/Thresh_0.jpg";
 
 export default function LoginPage() {
   const { login } = useAuthContext();
@@ -31,7 +30,7 @@ export default function LoginPage() {
     <div className="min-h-screen relative flex items-center justify-center overflow-x-hidden bg-gradient-secundary">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <motion.img
-          src={ThreshImg}
+          src="/Thresh_0.jpg"
           alt=""
           className="w-screen h-screen object-cover"
           animate={{

@@ -1,272 +1,488 @@
-import { useState, useMemo, useEffect, useRef } from 'react'
-import ScrollReveal from '../../../components/ScrollReveal'
+import { useState, useMemo, useEffect, useRef } from "react";
+import ScrollReveal from "../../../components/ScrollReveal";
+import { Users } from "lucide-react";
 
-type Player = { rank: number; nick: string; name: string; team: string; role: string; kda: number; winrate: number; games: number; country: string }
+type Player = {
+  rank: number;
+  nick: string;
+  name: string;
+  team: string;
+  role: string;
+  kda: number;
+  winrate: number;
+  games: number;
+  country: string;
+};
 
 const PlayersPage = () => {
-  const [filtroRole, setFiltroRole] = useState<string>('Todas')
+  const [filtroRole, setFiltroRole] = useState<string>("Todas");
 
   const ranking: Player[] = [
-    { rank: 1, nick: 'Faker', name: 'Lee Sang-hyeok', team: 'T1', role: 'Mid', kda: 6.2, winrate: 72, games: 210, country: 'KR' },
-    { rank: 2, nick: 'Caps', name: 'Rasmus Winther', team: 'G2 Esports', role: 'Mid', kda: 5.8, winrate: 69, games: 198, country: 'EU' },
-    { rank: 3, nick: 'Chovy', name: 'Jeong Ji-hoon', team: 'Gen.G', role: 'Mid', kda: 5.6, winrate: 67, games: 185, country: 'KR' },
-    { rank: 4, nick: 'Rekkles', name: 'Carl Martin Erik Larsson', team: 'G2 Esports', role: 'ADC', kda: 5.4, winrate: 66, games: 220, country: 'EU' },
-    { rank: 5, nick: 'Perkz', name: 'Luka Perković', team: 'Cloud9', role: 'ADC', kda: 5.1, winrate: 65, games: 205, country: 'EU' },
-    { rank: 6, nick: 'Teddy', name: 'Park Jin-seong', team: 'T1', role: 'ADC', kda: 4.9, winrate: 64, games: 190, country: 'KR' },
-    { rank: 7, nick: 'Doinb', name: 'Kim Tae-sang', team: 'LNG', role: 'Mid', kda: 4.8, winrate: 63, games: 176, country: 'KR' },
-    { rank: 8, nick: 'Uzi', name: 'Jian Zihao', team: 'Retired', role: 'ADC', kda: 4.7, winrate: 62, games: 300, country: 'CN' },
-    { rank: 9, nick: 'Nuguri', name: 'Jang Ha-gwon', team: 'DWG KIA', role: 'Top', kda: 4.6, winrate: 61, games: 160, country: 'KR' },
-    { rank: 10, nick: 'ShowMaker', name: 'Heo Su', team: 'DWG KIA', role: 'Mid', kda: 4.5, winrate: 60, games: 170, country: 'KR' },
-  ]
+    {
+      rank: 1,
+      nick: "Faker",
+      name: "Lee Sang-hyeok",
+      team: "T1",
+      role: "Mid",
+      kda: 6.2,
+      winrate: 72,
+      games: 210,
+      country: "KR",
+    },
+    {
+      rank: 2,
+      nick: "Caps",
+      name: "Rasmus Winther",
+      team: "G2 Esports",
+      role: "Mid",
+      kda: 5.8,
+      winrate: 69,
+      games: 198,
+      country: "EU",
+    },
+    {
+      rank: 3,
+      nick: "Chovy",
+      name: "Jeong Ji-hoon",
+      team: "Gen.G",
+      role: "Mid",
+      kda: 5.6,
+      winrate: 67,
+      games: 185,
+      country: "KR",
+    },
+    {
+      rank: 4,
+      nick: "Rekkles",
+      name: "Carl Martin Erik Larsson",
+      team: "G2 Esports",
+      role: "ADC",
+      kda: 5.4,
+      winrate: 66,
+      games: 220,
+      country: "EU",
+    },
+    {
+      rank: 5,
+      nick: "Perkz",
+      name: "Luka Perković",
+      team: "Cloud9",
+      role: "ADC",
+      kda: 5.1,
+      winrate: 65,
+      games: 205,
+      country: "EU",
+    },
+    {
+      rank: 6,
+      nick: "Teddy",
+      name: "Park Jin-seong",
+      team: "T1",
+      role: "ADC",
+      kda: 4.9,
+      winrate: 64,
+      games: 190,
+      country: "KR",
+    },
+    {
+      rank: 7,
+      nick: "Doinb",
+      name: "Kim Tae-sang",
+      team: "LNG",
+      role: "Mid",
+      kda: 4.8,
+      winrate: 63,
+      games: 176,
+      country: "KR",
+    },
+    {
+      rank: 8,
+      nick: "Uzi",
+      name: "Jian Zihao",
+      team: "Retired",
+      role: "ADC",
+      kda: 4.7,
+      winrate: 62,
+      games: 300,
+      country: "CN",
+    },
+    {
+      rank: 9,
+      nick: "Nuguri",
+      name: "Jang Ha-gwon",
+      team: "DWG KIA",
+      role: "Top",
+      kda: 4.6,
+      winrate: 61,
+      games: 160,
+      country: "KR",
+    },
+    {
+      rank: 10,
+      nick: "ShowMaker",
+      name: "Heo Su",
+      team: "DWG KIA",
+      role: "Mid",
+      kda: 4.5,
+      winrate: 60,
+      games: 170,
+      country: "KR",
+    },
+  ];
 
-  const roles = ['Todas', 'Top', 'Jungle', 'Mid', 'ADC', 'Support']
-  const jogadoresFiltrados = filtroRole === 'Todas' ? ranking : ranking.filter((j) => j.role === filtroRole)
+  const roles = ["Todas", "Top", "Jungle", "Mid", "ADC", "Support"];
+  const jogadoresFiltrados =
+    filtroRole === "Todas"
+      ? ranking
+      : ranking.filter((j) => j.role === filtroRole);
 
-  const [sortKey, setSortKey] = useState<'rank' | 'kda' | 'winrate' | 'games'>('rank')
-  const [sortDir, setSortDir] = useState<'asc' | 'desc'>('asc')
-  const [page, setPage] = useState<number>(1)
-  const [pageSize, setPageSize] = useState<number>(5)
+  const [sortKey, setSortKey] = useState<"rank" | "kda" | "winrate" | "games">(
+    "rank",
+  );
+  const [sortDir, setSortDir] = useState<"asc" | "desc">("asc");
+  const [page, setPage] = useState<number>(1);
+  const [pageSize, setPageSize] = useState<number>(5);
 
   const sorted = useMemo(() => {
-    const arr = [...jogadoresFiltrados]
+    const arr = [...jogadoresFiltrados];
     arr.sort((a: Player, b: Player) => {
-      let aVal: string | number
-      let bVal: string | number
-      if (sortKey === 'rank' || sortKey === 'kda' || sortKey === 'winrate' || sortKey === 'games') {
-        aVal = a[sortKey]
-        bVal = b[sortKey]
+      let aVal: string | number;
+      let bVal: string | number;
+      if (
+        sortKey === "rank" ||
+        sortKey === "kda" ||
+        sortKey === "winrate" ||
+        sortKey === "games"
+      ) {
+        aVal = a[sortKey];
+        bVal = b[sortKey];
       } else {
-        aVal = a[sortKey as keyof Player] as string
-        bVal = b[sortKey as keyof Player] as string
+        aVal = a[sortKey as keyof Player] as string;
+        bVal = b[sortKey as keyof Player] as string;
       }
 
-      if (typeof aVal === 'string') {
-        return sortDir === 'asc' ? aVal.localeCompare(bVal as string) : (bVal as string).localeCompare(aVal)
+      if (typeof aVal === "string") {
+        return sortDir === "asc"
+          ? aVal.localeCompare(bVal as string)
+          : (bVal as string).localeCompare(aVal);
       }
 
-      return sortDir === 'asc' ? (aVal as number) - (bVal as number) : (bVal as number) - (aVal as number)
-    })
-    return arr
-  }, [jogadoresFiltrados, sortKey, sortDir])
+      return sortDir === "asc"
+        ? (aVal as number) - (bVal as number)
+        : (bVal as number) - (aVal as number);
+    });
+    return arr;
+  }, [jogadoresFiltrados, sortKey, sortDir]);
 
-  const totalPages = Math.max(1, Math.ceil(sorted.length / pageSize))
+  const totalPages = Math.max(1, Math.ceil(sorted.length / pageSize));
   useEffect(() => {
     if (page > totalPages) {
-      setPage(totalPages)
+      setPage(totalPages);
     }
-  }, [page, totalPages])
+  }, [page, totalPages]);
 
-  const pageItems = sorted.slice((page - 1) * pageSize, page * pageSize)
+  const pageItems = sorted.slice((page - 1) * pageSize, page * pageSize);
 
   const getInitials = (nick: string) => {
-    return nick.split(' ').map((s) => s[0]).slice(0, 2).join('').toUpperCase()
-  }
+    return nick
+      .split(" ")
+      .map((s) => s[0])
+      .slice(0, 2)
+      .join("")
+      .toUpperCase();
+  };
 
-  const [selectedPlayer, setSelectedPlayer] = useState<Player | null>(null)
+  const [selectedPlayer, setSelectedPlayer] = useState<Player | null>(null);
 
   const getMatchHistory = () => [
-    { id: 1, result: 'Vitória', kda: '6/2/8', champion: 'Fake Champion', date: '5 min atrás' },
-    { id: 2, result: 'Vitória', kda: '4/3/12', champion: 'Fake Champion', date: '1h atrás' },
-    { id: 3, result: 'Derrota', kda: '3/5/7', champion: 'Fake Champion', date: '2h atrás' },
-  ]
+    {
+      id: 1,
+      result: "Vitória",
+      kda: "6/2/8",
+      champion: "Fake Champion",
+      date: "5 min atrás",
+    },
+    {
+      id: 2,
+      result: "Vitória",
+      kda: "4/3/12",
+      champion: "Fake Champion",
+      date: "1h atrás",
+    },
+    {
+      id: 3,
+      result: "Derrota",
+      kda: "3/5/7",
+      champion: "Fake Champion",
+      date: "2h atrás",
+    },
+  ];
 
-  const modalRef = useRef<HTMLDivElement>(null)
+  const modalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && selectedPlayer) {
-        setSelectedPlayer(null)
+      if (e.key === "Escape" && selectedPlayer) {
+        setSelectedPlayer(null);
       }
-    }
-    window.addEventListener('keydown', handleKeyDown)
-    return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [selectedPlayer])
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [selectedPlayer]);
 
   return (
-    <main className="flex-1 p-8 bg-[#0B132B] min-h-screen">
-      <div className="mb-6">
-        <h2 className="space-grotesk-title text-3xl font-bold mb-2 text-[#E0E0E0]">Jogadores</h2>
-        <p className="sora-text text-[#A8A8A8]">Gerencie e visualize estatísticas dos jogadores</p>
-      </div>
+    <main className="flex-1 space-y-6">
+      <header className="sticky top-0 z-30 border-b border-[hsl(var(--border)/0.6)] bg-[hsl(var(--background)/0.7)] backdrop-blur-xl">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+          <div className="flex items-center gap-3">
+            <div className="relative">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-[hsl(var(--primary)/0.4)] bg-[hsl(var(--primary)/0.1)] text-primary shadow-glow">
+                <Users className="h-5 w-5" />
+              </div>
+              <span className="absolute -right-1 -top-1 h-2.5 w-2.5 animate-glow-pulse rounded-full bg-primary-glow" />
+            </div>
 
-      <fieldset className="mb-6">
-        <legend className="sr-only">Filtrar por role</legend>
-        <div className="flex flex-wrap gap-2">
-          {roles.map((role) => (
-            <button
-              key={role}
-              onClick={() => {
-                setFiltroRole(role)
-                setPage(1)
-              }}
-              aria-pressed={filtroRole === role}
-              aria-label={`Filtrar por role ${role}`}
-              className={`px-4 py-2 rounded-lg transition-all focus:outline-none focus:ring-2 focus:ring-[#00B4D8] ${
-                filtroRole === role
-                  ? 'bg-[#0077B6] text-[#E0E0E0] shadow-lg'
-                  : 'bg-[#1D2D50] text-[#A8A8A8] hover:bg-[#0077B6]/50 border border-white/5'
-              }`}
-            >
-              {role}
-            </button>
-          ))}
+            <div>
+              <h1 className="font-display text-xl font-bold tracking-tight">
+                Jogadores
+              </h1>
+              <p className="text-xs text-muted-foreground">
+                Gerencie squads, escale jogadores e simule embates.
+              </p>
+            </div>
+          </div>
         </div>
-      </fieldset>
+      </header>
 
-      <div className="bg-[#1D2D50] rounded-lg p-4 border border-white/5 shadow-lg">
+      {/* Tabela */}
+      <div className="rounded-2xl border border-[hsl(var(--border))] bg-card-glass p-6 m-10 shadow-card">
         <ScrollReveal preset="up" delay={0.05} duration={0.6}>
-          <div className="overflow-x-auto">
-            <table className="min-w-full table-auto">
-              <thead>
-                <tr className="text-left text-sm text-[#A8A8A8] border-b border-white/10">
-                  <th className="py-3 px-4 w-12" role="columnheader">
-                    <button
-                      className="cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#00B4D8] p-1 rounded"
-                      onClick={() => {
-                        if (sortKey === 'rank') setSortDir(sortDir === 'asc' ? 'desc' : 'asc')
-                        else {
-                          setSortKey('rank')
-                          setSortDir('asc')
-                        }
-                      }}
-                      aria-label={`Ordenar por ranking ${sortKey === 'rank' ? `(${sortDir})` : ''}`}
-                    >
-                      # {sortKey === 'rank' ? (sortDir === 'asc' ? '▲' : '▼') : ''}
-                    </button>
-                  </th>
-                  <th className="py-3 px-4" role="columnheader">Jogador</th>
-                  <th className="py-3 px-4" role="columnheader">Time</th>
-                  <th className="py-3 px-4" role="columnheader">Role</th>
-                  <th className="py-3 px-4" role="columnheader">
-                    <button
-                      className="cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#00B4D8] p-1 rounded"
-                      onClick={() => {
-                        if (sortKey === 'kda') setSortDir(sortDir === 'asc' ? 'desc' : 'asc')
-                        else {
-                          setSortKey('kda')
-                          setSortDir('desc')
-                        }
-                      }}
-                      aria-label={`Ordenar por KDA ${sortKey === 'kda' ? `(${sortDir})` : ''}`}
-                    >
-                      KDA {sortKey === 'kda' ? (sortDir === 'asc' ? '▲' : '▼') : ''}
-                    </button>
-                  </th>
-                  <th className="py-3 px-4" role="columnheader">
-                    <button
-                      className="cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#00B4D8] p-1 rounded"
-                      onClick={() => {
-                        if (sortKey === 'winrate') setSortDir(sortDir === 'asc' ? 'desc' : 'asc')
-                        else {
-                          setSortKey('winrate')
-                          setSortDir('desc')
-                        }
-                      }}
-                      aria-label={`Ordenar por Winrate ${sortKey === 'winrate' ? `(${sortDir})` : ''}`}
-                    >
-                      Winrate {sortKey === 'winrate' ? (sortDir === 'asc' ? '▲' : '▼') : ''}
-                    </button>
-                  </th>
-                  <th className="py-3 px-4" role="columnheader">
-                    <button
-                      className="cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#00B4D8] p-1 rounded"
-                      onClick={() => {
-                        if (sortKey === 'games') setSortDir(sortDir === 'asc' ? 'desc' : 'asc')
-                        else {
-                          setSortKey('games')
-                          setSortDir('desc')
-                        }
-                      }}
-                      aria-label={`Ordenar por Partidas ${sortKey === 'games' ? `(${sortDir})` : ''}`}
-                    >
-                      Partidas {sortKey === 'games' ? (sortDir === 'asc' ? '▲' : '▼') : ''}
-                    </button>
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {pageItems.map((p, idx) => (
-                  <tr
-                    key={p.rank}
-                    className={`border-b border-white/5 ${idx % 2 === 0 ? 'bg-[#14223A]/20' : ''} cursor-pointer hover:bg-[#0077B6]/20`}
-                    onClick={() => setSelectedPlayer(p)}
-                    role="button"
-                    tabIndex={0}
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault()
-                        setSelectedPlayer(p)
-                      }
-                    }}
-                    aria-label={`Ver detalhes de ${p.nick}`}
-                  >
-                    <td className="py-3 px-4 font-semibold text-[#E0E0E0]">{p.rank}</td>
-                    <td className="py-3 px-4">
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-full flex items-center justify-center bg-linear-to-br from-[#0077B6] to-[#00B4D8] text-white font-bold">
-                          {getInitials(p.nick)}
-                        </div>
-                        <div>
-                          <div className="text-sm font-semibold text-[#E0E0E0]">{p.nick}</div>
-                          <div className="text-xs text-[#A8A8A8]">{p.name} • {p.country}</div>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="py-3 px-4 text-sm text-[#A8A8A8]">{p.team}</td>
-                    <td className="py-3 px-4 text-sm text-[#A8A8A8]">{p.role}</td>
-                    <td className="py-3 px-4 text-sm text-[#00B4D8] font-semibold">{p.kda.toFixed(1)}</td>
-                    <td className="py-3 px-4 text-sm text-[#4CAF50] font-semibold">{p.winrate}%</td>
-                    <td className="py-3 px-4 text-sm text-[#F4A261]">{p.games}</td>
+          <div className="mb-6">
+            <h2 className="font-display text-3xl font-black tracking-tight text-primary">
+              Jogadores
+            </h2>
+
+            <p className="mt-1 text-sm text-muted-foreground">
+              Gerencie e visualize estatísticas dos jogadores
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-2 mb-5">
+            {roles.map((role) => (
+              <button
+                key={role}
+                onClick={() => {
+                  setFiltroRole(role);
+                  setPage(1);
+                }}
+                aria-pressed={filtroRole === role}
+                aria-label={`Filtrar por role ${role}`}
+                className={`rounded-xl px-4 py-2 text-sm font-bold transition ${
+                  filtroRole === role
+                    ? "bg-gradient-primary text-primary-foreground shadow-glow"
+                    : "border border-border bg-[hsl(var(--secondary)/0.5)] text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                {role}
+              </button>
+            ))}
+          </div>
+          <div className="overflow-hidden rounded-xl border border-[hsl(var(--border)/0.6)]">
+            <div className="overflow-x-auto">
+              <table className="min-w-full table-auto text-sm">
+                <thead className="bg-[hsl(var(--secondary)/0.4)] text-[10px] uppercase tracking-widest text-muted-foreground">
+                  <tr>
+                    <th className="px-4 py-3 text-left">
+                      <button
+                        className="inline-flex items-center gap-1 rounded-lg p-1 transition hover:text-foreground"
+                        onClick={() => {
+                          if (sortKey === "rank")
+                            setSortDir(sortDir === "asc" ? "desc" : "asc");
+                          else {
+                            setSortKey("rank");
+                            setSortDir("asc");
+                          }
+                        }}
+                      >
+                        #
+                      </button>
+                    </th>
+
+                    <th className="px-4 py-3 text-left">Jogador</th>
+
+                    <th className="px-4 py-3 text-left">Time</th>
+
+                    <th className="px-4 py-3 text-left">Role</th>
+
+                    <th className="px-4 py-3 text-left">
+                      <button
+                        className="inline-flex items-center gap-1 rounded-lg p-1 transition hover:text-foreground"
+                        onClick={() => {
+                          if (sortKey === "kda")
+                            setSortDir(sortDir === "asc" ? "desc" : "asc");
+                          else {
+                            setSortKey("kda");
+                            setSortDir("desc");
+                          }
+                        }}
+                      >
+                        KDA
+                      </button>
+                    </th>
+
+                    <th className="px-4 py-3 text-left">
+                      <button
+                        className="inline-flex items-center gap-1 rounded-lg p-1 transition hover:text-foreground"
+                        onClick={() => {
+                          if (sortKey === "winrate")
+                            setSortDir(sortDir === "asc" ? "desc" : "asc");
+                          else {
+                            setSortKey("winrate");
+                            setSortDir("desc");
+                          }
+                        }}
+                      >
+                        Winrate
+                      </button>
+                    </th>
+
+                    <th className="px-4 py-3 text-left">
+                      <button
+                        className="inline-flex items-center gap-1 rounded-lg p-1 transition hover:text-foreground"
+                        onClick={() => {
+                          if (sortKey === "games")
+                            setSortDir(sortDir === "asc" ? "desc" : "asc");
+                          else {
+                            setSortKey("games");
+                            setSortDir("desc");
+                          }
+                        }}
+                      >
+                        Partidas
+                      </button>
+                    </th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+
+                <tbody>
+                  {pageItems.map((p) => (
+                    <tr
+                      key={p.rank}
+                      className="group cursor-pointer border-t border-[hsl(var(--border)/0.4)] transition hover:bg-primary/5"
+                      onClick={() => setSelectedPlayer(p)}
+                      role="button"
+                      tabIndex={0}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" || e.key === " ") {
+                          e.preventDefault();
+                          setSelectedPlayer(p);
+                        }
+                      }}
+                      aria-label={`Ver detalhes de ${p.nick}`}
+                    >
+                      <td className="px-4 py-3 font-display font-bold text-foreground">
+                        {p.rank}
+                      </td>
+
+                      <td className="px-4 py-3">
+                        <div className="flex items-center gap-3">
+                          <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-primary font-display text-sm font-black text-primary-foreground shadow-glow">
+                            {getInitials(p.nick)}
+                          </div>
+
+                          <div>
+                            <div className="font-display font-bold text-foreground">
+                              {p.nick}
+                            </div>
+
+                            <div className="text-[11px] text-muted-foreground">
+                              {p.name} • {p.country}
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+
+                      <td className="px-4 py-3 text-sm text-muted-foreground">
+                        {p.team}
+                      </td>
+
+                      <td className="px-4 py-3 text-sm text-muted-foreground">
+                        {p.role}
+                      </td>
+
+                      <td className="px-4 py-3 text-sm font-semibold text-primary">
+                        {p.kda.toFixed(1)}
+                      </td>
+
+                      <td className="px-4 py-3 text-sm font-semibold text-emerald-400">
+                        {p.winrate}%
+                      </td>
+
+                      <td className="px-4 py-3 text-sm text-amber-300">
+                        {p.games}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </ScrollReveal>
 
-        <div className="mt-4 flex items-center justify-between">
-          <div className="text-sm text-[#A8A8A8]">
-            Mostrando <span className="text-[#E0E0E0]">{(page - 1) * pageSize + 1}</span>–<span className="text-[#E0E0E0]">{Math.min(page * pageSize, sorted.length)}</span> de <span className="text-[#E0E0E0]">{sorted.length}</span>
+        {/* Paginação */}
+        <div className="mt-5 flex items-center justify-between">
+          <div className="text-sm text-muted-foreground">
+            Mostrando{" "}
+            <span className="font-semibold text-foreground">
+              {(page - 1) * pageSize + 1}
+            </span>
+            –
+            <span className="font-semibold text-foreground">
+              {Math.min(page * pageSize, sorted.length)}
+            </span>{" "}
+            de{" "}
+            <span className="font-semibold text-foreground">
+              {sorted.length}
+            </span>
           </div>
 
-          <nav className="flex items-center gap-2" aria-label="Controles de paginação">
+          <nav className="flex items-center gap-2">
             <button
               onClick={() => setPage((p) => Math.max(1, p - 1))}
               disabled={page === 1}
-              aria-label="Página anterior"
-              className="px-3 py-1 rounded bg-[#0B132B] text-[#A8A8A8] disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-[#00B4D8]"
-            >Prev</button>
-            <label htmlFor="page-input" className="text-sm text-[#A8A8A8]">Página</label>
-            <input
-              id="page-input"
-              type="number"
-              value={page}
-              min={1}
-              max={totalPages}
-              onChange={(e) => setPage(Math.min(Math.max(1, Number(e.target.value || 1)), totalPages))}
-              aria-label="Número da página"
-              className="w-12 text-center bg-[#0B132B] text-[#E0E0E0] rounded focus:outline-none focus:ring-2 focus:ring-[#00B4D8]"
-            />
-            <div className="text-sm text-[#A8A8A8]">de {totalPages}</div>
+              className="rounded-xl border border-border bg-[hsl(var(--secondary)/0.6)] px-3 py-2 text-sm font-bold transition hover:border-primary/40 disabled:opacity-40"
+            >
+              Prev
+            </button>
+
+            <div className="rounded-xl border border-border bg-[hsl(var(--background)/0.6)] px-4 py-2 text-sm font-bold">
+              {page} / {totalPages}
+            </div>
+
             <button
               onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
               disabled={page === totalPages}
-              aria-label="Próxima página"
-              className="px-3 py-1 rounded bg-[#0B132B] text-[#A8A8A8] disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-[#00B4D8]"
-            >Next</button>
+              className="rounded-xl border border-border bg-[hsl(var(--secondary)/0.6)] px-3 py-2 text-sm font-bold transition hover:border-primary/40 disabled:opacity-40"
+            >
+              Next
+            </button>
           </nav>
 
           <div className="flex items-center gap-2">
-            <label htmlFor="page-size-select" className="text-sm text-[#A8A8A8]">Linhas</label>
+            <label
+              htmlFor="page-size-select"
+              className="text-sm text-muted-foreground"
+            >
+              Linhas
+            </label>
+
             <select
               id="page-size-select"
               value={pageSize}
               onChange={(e) => {
-                setPageSize(Number(e.target.value))
-                setPage(1)
+                setPageSize(Number(e.target.value));
+                setPage(1);
               }}
-              aria-label="Quantidade de linhas por página"
-              className="bg-[#0B132B] text-[#E0E0E0] rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-[#00B4D8]"
+              className="rounded-xl border border-border bg-[hsl(var(--secondary)/0.6)] px-3 py-2 text-sm font-bold text-foreground outline-none"
             >
               <option value={5}>5</option>
               <option value={10}>10</option>
@@ -275,102 +491,171 @@ const PlayersPage = () => {
           </div>
         </div>
       </div>
-
       {selectedPlayer && (
-        <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4" onClick={() => setSelectedPlayer(null)} role="presentation">
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm"
+          onClick={() => setSelectedPlayer(null)}
+          role="presentation"
+        >
           <div
             ref={modalRef}
-            className="bg-[#1D2D50] rounded-lg w-full max-w-2xl max-h-[90vh] overflow-y-auto border border-white/10 shadow-2xl focus:outline-none"
+            className="w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-2xl border border-[hsl(var(--border))] bg-card-glass shadow-elevated focus:outline-none"
             onClick={(e) => e.stopPropagation()}
             role="dialog"
             aria-modal="true"
             aria-labelledby="modal-title"
             tabIndex={-1}
           >
-            <div className="sticky top-0 bg-[#0B132B] p-6 border-b border-white/10 flex justify-between items-center">
+            {/* Header */}
+            <div className="sticky top-0 flex items-center justify-between border-b border-[hsl(var(--border)/0.5)] bg-[hsl(var(--background)/0.7)] p-6 backdrop-blur-xl">
               <div className="flex items-center gap-4">
-                <div className="w-16 h-16 rounded-full flex items-center justify-center bg-linear-to-br from-[#0077B6] to-[#00B4D8] text-white font-bold text-2xl" aria-hidden="true">
+                <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-primary font-display text-2xl font-black text-primary-foreground shadow-glow">
                   {getInitials(selectedPlayer.nick)}
                 </div>
+
                 <div>
-                  <h2 id="modal-title" className="text-2xl font-bold text-[#E0E0E0]">{selectedPlayer.nick}</h2>
-                  <p className="text-sm text-[#A8A8A8]">{selectedPlayer.name} • {selectedPlayer.country}</p>
+                  <h2
+                    id="modal-title"
+                    className="font-display text-2xl font-black tracking-tight text-primary"
+                  >
+                    {selectedPlayer.nick}
+                  </h2>
+
+                  <p className="text-sm text-muted-foreground">
+                    {selectedPlayer.name} • {selectedPlayer.country}
+                  </p>
                 </div>
               </div>
+
               <button
                 onClick={() => setSelectedPlayer(null)}
-                aria-label="Fechar perfil do jogador"
-                className="text-[#A8A8A8] hover:text-[#E0E0E0] text-2xl focus:outline-none focus:ring-2 focus:ring-[#00B4D8] rounded px-2"
-                title="Fechar (ESC)"
+                className="rounded-xl px-2 text-2xl text-muted-foreground transition hover:text-foreground"
               >
                 ✕
               </button>
             </div>
 
-            <div className="p-6 space-y-6">
+            {/* Body */}
+            <div className="space-y-6 p-6">
               <div className="grid grid-cols-2 gap-4">
-                <div className="bg-[#0B132B] p-4 rounded-lg border border-white/5">
-                  <div className="text-xs text-[#A8A8A8] mb-1">Time</div>
-                  <div className="text-lg font-semibold text-[#E0E0E0]">{selectedPlayer.team}</div>
+                <div className="rounded-xl border border-[hsl(var(--border)/0.5)] bg-[hsl(var(--secondary)/0.35)] p-4">
+                  <div className="mb-1 text-xs text-muted-foreground">Time</div>
+
+                  <div className="text-lg font-semibold text-foreground">
+                    {selectedPlayer.team}
+                  </div>
                 </div>
-                <div className="bg-[#0B132B] p-4 rounded-lg border border-white/5">
-                  <div className="text-xs text-[#A8A8A8] mb-1">Role</div>
-                  <div className="text-lg font-semibold text-[#E0E0E0]">{selectedPlayer.role}</div>
+
+                <div className="rounded-xl border border-[hsl(var(--border)/0.5)] bg-[hsl(var(--secondary)/0.35)] p-4">
+                  <div className="mb-1 text-xs text-muted-foreground">Role</div>
+
+                  <div className="text-lg font-semibold text-foreground">
+                    {selectedPlayer.role}
+                  </div>
                 </div>
               </div>
 
+              {/* Estatísticas */}
               <div>
-                <h3 className="text-lg font-bold text-[#E0E0E0] mb-3">Estatísticas</h3>
+                <h3 className="mb-3 font-display text-lg font-bold text-foreground">
+                  Estatísticas
+                </h3>
+
                 <div className="grid grid-cols-4 gap-3">
-                  <div className="bg-[#0B132B] p-3 rounded-lg border border-white/5 text-center">
-                    <div className="text-2xl font-bold text-[#00B4D8]">{selectedPlayer.kda.toFixed(1)}</div>
-                    <div className="text-xs text-[#A8A8A8]">KDA</div>
+                  <div className="rounded-xl border border-[hsl(var(--border)/0.5)] bg-[hsl(var(--secondary)/0.35)] p-3 text-center">
+                    <div className="font-display text-2xl font-black text-primary">
+                      {selectedPlayer.kda.toFixed(1)}
+                    </div>
+
+                    <div className="text-xs text-muted-foreground">KDA</div>
                   </div>
-                  <div className="bg-[#0B132B] p-3 rounded-lg border border-white/5 text-center">
-                    <div className="text-2xl font-bold text-[#00B4D8]">{selectedPlayer.winrate}%</div>
-                    <div className="text-xs text-[#A8A8A8]">Winrate</div>
+
+                  <div className="rounded-xl border border-[hsl(var(--border)/0.5)] bg-[hsl(var(--secondary)/0.35)] p-3 text-center">
+                    <div className="font-display text-2xl font-black text-emerald-400">
+                      {selectedPlayer.winrate}%
+                    </div>
+
+                    <div className="text-xs text-muted-foreground">Winrate</div>
                   </div>
-                  <div className="bg-[#0B132B] p-3 rounded-lg border border-white/5 text-center">
-                    <div className="text-2xl font-bold text-[#00B4D8]">{selectedPlayer.games}</div>
-                    <div className="text-xs text-[#A8A8A8]">Partidas</div>
+
+                  <div className="rounded-xl border border-[hsl(var(--border)/0.5)] bg-[hsl(var(--secondary)/0.35)] p-3 text-center">
+                    <div className="font-display text-2xl font-black text-amber-300">
+                      {selectedPlayer.games}
+                    </div>
+
+                    <div className="text-xs text-muted-foreground">
+                      Partidas
+                    </div>
                   </div>
-                  <div className="bg-[#0B132B] p-3 rounded-lg border border-white/5 text-center">
-                    <div className="text-2xl font-bold text-[#00B4D8]">#1</div>
-                    <div className="text-xs text-[#A8A8A8]">Posição</div>
+
+                  <div className="rounded-xl border border-[hsl(var(--border)/0.5)] bg-[hsl(var(--secondary)/0.35)] p-3 text-center">
+                    <div className="font-display text-2xl font-black text-primary">
+                      #{selectedPlayer.rank}
+                    </div>
+
+                    <div className="text-xs text-muted-foreground">Posição</div>
                   </div>
                 </div>
               </div>
 
+              {/* Histórico */}
               <div>
-                <h3 className="text-lg font-bold text-[#E0E0E0] mb-3">Histórico Recente</h3>
+                <h3 className="mb-3 font-display text-lg font-bold text-foreground">
+                  Histórico Recente
+                </h3>
+
                 <div className="space-y-2">
                   {getMatchHistory().map((match) => (
-                    <div key={match.id} className="flex items-center justify-between bg-[#0B132B] p-3 rounded-lg border border-white/5">
+                    <div
+                      key={match.id}
+                      className="flex items-center justify-between rounded-xl border border-[hsl(var(--border)/0.4)] bg-[hsl(var(--secondary)/0.25)] p-3"
+                    >
                       <div>
-                        <div className="text-sm font-semibold text-[#E0E0E0]">{match.champion}</div>
-                        <div className="text-xs text-[#A8A8A8]">{match.date}</div>
+                        <div className="text-sm font-semibold text-foreground">
+                          {match.champion}
+                        </div>
+
+                        <div className="text-xs text-muted-foreground">
+                          {match.date}
+                        </div>
                       </div>
+
                       <div className="text-right">
-                        <div className={`text-sm font-bold ${match.result === 'Vitória' ? 'text-[#4CAF50]' : 'text-[#FF6B6B]'}`}>
+                        <div
+                          className={
+                            match.result === "Vitória"
+                              ? "text-sm font-bold text-emerald-400"
+                              : "text-sm font-bold text-rose-400"
+                          }
+                        >
                           {match.result}
                         </div>
-                        <div className="text-xs text-[#A8A8A8]">{match.kda}</div>
+
+                        <div className="text-xs text-muted-foreground">
+                          {match.kda}
+                        </div>
                       </div>
                     </div>
                   ))}
                 </div>
               </div>
 
+              {/* Actions */}
               <div className="grid grid-cols-2 gap-3">
-                <button aria-label={`Seguir ${selectedPlayer.nick}`} className="bg-[#0077B6] hover:bg-[#00B4D8] text-[#E0E0E0] font-semibold py-2 rounded-lg transition focus:outline-none focus:ring-2 focus:ring-[#00B4D8] focus:ring-offset-2 focus:ring-offset-[#1D2D50]">Seguir</button>
-                <button aria-label={`Comparar com ${selectedPlayer.nick}`} className="bg-[#1D2D50] hover:bg-[#0077B6]/50 text-[#E0E0E0] font-semibold py-2 rounded-lg border border-white/10 transition focus:outline-none focus:ring-2 focus:ring-[#00B4D8] focus:ring-offset-2 focus:ring-offset-[#1D2D50]">Comparar</button>
+                <button className="rounded-xl bg-gradient-primary py-2 font-bold text-primary-foreground shadow-glow transition hover:opacity-90">
+                  Seguir
+                </button>
+
+                <button className="rounded-xl border border-border bg-[hsl(var(--secondary)/0.5)] py-2 font-bold text-foreground transition hover:border-primary/40">
+                  Comparar
+                </button>
               </div>
             </div>
           </div>
         </div>
       )}
     </main>
-  )
-}
+  );
+};
 
-export default PlayersPage
+export default PlayersPage;

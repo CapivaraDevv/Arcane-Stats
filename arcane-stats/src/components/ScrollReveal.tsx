@@ -1,5 +1,4 @@
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { motion } from "framer-motion";
 import type { ReactNode } from "react";
 
 interface ScrollRevealProps {
@@ -53,8 +52,7 @@ const presets = {
   },
   bounce: {
     hidden: { opacity: 0, y: 60 },
-    visible: { opacity: 1, y: 0 },
-    transition: { type: "spring", stiffness: 120 },
+    visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 120 } },
   },
   reveal: {
     hidden: { opacity: 0, x: -70, filter: "blur(6px)" },
@@ -72,15 +70,12 @@ export default function ScrollReveal({
   preset = "up",
   stagger = 0,
 }: ScrollRevealProps) {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once, amount });
-
   return (
     <motion.div
-      ref={ref}
       variants={presets[preset]}
       initial="hidden"
-      animate={isInView ? "visible" : "hidden"}
+      whileInView="visible"
+      viewport={{ once, amount }}
       transition={{
         duration,
         delay,
