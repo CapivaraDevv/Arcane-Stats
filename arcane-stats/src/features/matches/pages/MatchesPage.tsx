@@ -117,7 +117,7 @@ const MatchesPage = () => {
           <div className="space-y-4"
           >
             {partidasFiltradas.map((partida, idx) => (
-              <ScrollReveal key={partida.id} preset="up" delay={idx * 0.1} duration={0.6}>
+              <ScrollReveal key={partida.id} preset="up" delay={Math.min(idx * 0.05, 0.3)} duration={0.4}>
                 <MatchCard partida={partida} onSelect={setSelectedMatch} />
               </ScrollReveal>
             ))}

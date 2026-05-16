@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { appRoutes, isPrivateRoute, usesShell } from "./routeConfig";
 
@@ -16,10 +17,12 @@ export default function AppRouter({ isReady }: AppRouterProps) {
   return (
     <Routes location={location}>
       {appRoutes.map((route) => {
+        const lazy = <Suspense fallback={null}>{route.element}</Suspense>;
+
         const content = isPrivateRoute(route.meta) ? (
-          <ProtectedRoute>{route.element}</ProtectedRoute>
+          <ProtectedRoute>{lazy}</ProtectedRoute>
         ) : (
-          route.element
+          lazy
         );
 
         const page = <PageFade isReady={isReady}>{content}</PageFade>;

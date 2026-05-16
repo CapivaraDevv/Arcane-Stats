@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { motion } from 'framer-motion';
 
 type HeatPoint = {
@@ -10,12 +11,12 @@ type Props = {
     data: HeatPoint[];
 };
 
-export default function DecisionHeatMap({ data }: Props) {
+const DecisionHeatMap = memo(function DecisionHeatMap({ data }: Props) {
     return (
         <div className='relative w-full h-[400px] rounded-lg overflow-hidden'>
 
             {/* Mapa */}
-            <img src="/SummonersRiftMap.jpg" className='absolute inset-0 w-full h-full object-cover opacity-80' />
+            <img src="/SummonersRiftMap.jpg" width={800} height={800} className='absolute inset-0 w-full h-full object-cover opacity-80' />
 
             {data.map((point, i) => (
                 <motion.div
@@ -35,4 +36,6 @@ export default function DecisionHeatMap({ data }: Props) {
             ))}
         </div>
     )
-}
+});
+
+export default DecisionHeatMap;

@@ -1,8 +1,9 @@
+import { memo } from 'react';
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Cell } from 'recharts';
 
 type EfficiencyDatum = { lane: string; winrate: number; kdaAvg: number };
 
-export default function EfficiencyChart({ data }: { data: EfficiencyDatum[] }) {
+const EfficiencyChart = memo(function EfficiencyChart({ data }: { data: EfficiencyDatum[] }) {
 
   return (
     <div className="relative z-10 w-full">
@@ -33,4 +34,6 @@ export default function EfficiencyChart({ data }: { data: EfficiencyDatum[] }) {
       </ResponsiveContainer>
     </div>
   );
-}
+});
+
+export default EfficiencyChart;
