@@ -99,7 +99,6 @@ const SettingsPage = () => {
                 <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-[hsl(var(--primary)/0.4)] bg-[hsl(var(--primary)/0.1)] text-primary shadow-glow">
                   <Settings className="h-5 w-5" />
                 </div>
-                {/* <span className="absolute -right-1 -top-1 h-2.5 w-2.5 animate-glow-pulse rounded-full bg-primary" /> */}
               </div>
               <div>
                 <h1 className="font-display text-xl font-bold tracking-tight">Configurações</h1>

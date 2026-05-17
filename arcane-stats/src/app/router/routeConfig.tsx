@@ -6,7 +6,6 @@ const DashboardPage = lazy(() => import('../../features/dashboard/pages/Dashboar
 const TeamsPage = lazy(() => import('../../features/teams/pages/TeamsPage'))
 const TeamsSimulate = lazy(() => import('../../features/teams/pages/TeamsSimulate'))
 const PlayersPage = lazy(() => import('../../features/players/pages/PlayersPage'))
-const MatchesPage = lazy(() => import('../../features/matches/pages/MatchesPage'))
 const AnalyzePage = lazy(() => import('../../features/matches/pages/AnalyzePage'))
 const SettingsPage = lazy(() => import('../../features/settings/pages/SettingsPage'))
 const ProfilePage = lazy(() => import('../../features/profile/pages/ProfilePage'))
@@ -35,8 +34,7 @@ export const appRoutes: AppRoute[] = [
   { path: '/times/:id/simulate', element: <TeamsSimulate />, meta: { auth: 'private', layout: 'shell'} },
 
   { path: '/jogadores', element: <PlayersPage />, meta: { auth: 'private', layout: 'shell'} },
-  { path: '/partidas', element: <MatchesPage />, meta: { auth: 'private', layout: 'shell'} },
-  { path: '/analisar', element: <AnalyzePage />, meta: { auth: 'private', layout: 'shell'} },
+{ path: '/analisar', element: <AnalyzePage />, meta: { auth: 'private', layout: 'shell'} },
   { path: '/perfil', element: <ProfilePage />, meta: { auth: 'private', layout: 'shell'} },
   { path: '/configuracoes', element: <SettingsPage />, meta: { auth: 'private', layout: 'shell'} },
 ]
