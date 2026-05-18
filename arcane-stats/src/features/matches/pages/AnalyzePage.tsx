@@ -177,8 +177,8 @@ export default function AnalyzePage({ embedded = false }: { embedded?: boolean }
           {/* IDLE */}
           {pageState === 'idle' && (
             <div className="flex flex-col items-center justify-center py-32 gap-6 text-center">
-              <div className="h-20 w-20 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center">
-                <Brain className="h-10 w-10 text-primary" />
+              <div className="h-20 w-20 rounded-2xl bg-primary/10 border border-[hsl(var(--primary)/0.2)] flex items-center justify-center">
+                <Brain className="h-10 w-10 text-primary " />
               </div>
               <div>
                 <h2 className="space-grotesk-title text-2xl font-bold text-foreground mb-2">Pronto para analisar</h2>
@@ -192,7 +192,7 @@ export default function AnalyzePage({ embedded = false }: { embedded?: boolean }
                 whileTap={{ scale: 0.98 }}
                 className="flex items-center gap-2 px-6 py-3 rounded-xl bg-primary text-[hsl(var(--primary-foreground))] font-bold"
               >
-                <Brain className="h-5 w-5" />
+                {/* <Brain className="h-5 w-5" /> */}
                 Gerar análise completa
               </motion.button>
             </div>
