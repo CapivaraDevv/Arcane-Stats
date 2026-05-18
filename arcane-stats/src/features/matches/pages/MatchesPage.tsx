@@ -2,7 +2,7 @@ import { motion, LayoutGroup } from 'framer-motion'
 import { useState, useMemo } from 'react'
 import ScrollReveal from '../../../components/ScrollReveal'
 import { Link } from "react-router-dom";
-import { Users } from 'lucide-react';
+import { Trophy } from 'lucide-react';
 import MatchDebrief from '../MatchDebrief';
 import MatchCard from '../components/MatchCard';
 import { mockMatches } from '../data/mockMatches';
@@ -38,7 +38,7 @@ const MatchesPage = () => {
           <div className="flex items-center gap-3">
             <div className="relative">
               <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-[hsl(var(--primary)/0.4)] bg-[hsl(var(--primary)/0.1)] text-primary shadow-glow">
-                <Users className="h-5 w-5" />
+                <Trophy className="h-5 w-5" />
               </div>
               <span className="absolute -right-1 -top-1 h-2.5 w-2.5 animate-glow-pulse rounded-full bg-primary-glow" />
             </div>
