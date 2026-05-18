@@ -1,19 +1,16 @@
-import type { ReactElement } from 'react'
+import { lazy, type ReactElement } from 'react'
 import { matchPath } from "react-router-dom";
 
-
-
-import HomePage from '../../features/home/pages/HomePage'
-import DashboardPage from '../../features/dashboard/pages/DashboardPage'
-import TeamsPage from '../../features/teams/pages/TeamsPage'
-import TeamsSimulate from '../../features/teams/pages/TeamsSimulate'
-import PlayersPage from '../../features/players/pages/PlayersPage'
-import MatchesPage from '../../features/matches/pages/MatchesPage'
-import AnalyzePage from '../../features/matches/pages/AnalyzePage'
-import SettingsPage from '../../features/settings/pages/SettingsPage'
-import ProfilePage from '../../features/profile/pages/ProfilePage'
-import LoginPage from '../../features/auth/pages/LoginPage'
-import RegisterPage from '../../features/auth/pages/RegisterPage'
+const HomePage = lazy(() => import('../../features/home/pages/HomePage'))
+const DashboardPage = lazy(() => import('../../features/dashboard/pages/DashboardPage'))
+const TeamsPage = lazy(() => import('../../features/teams/pages/TeamsPage'))
+const TeamsSimulate = lazy(() => import('../../features/teams/pages/TeamsSimulate'))
+const PlayersPage = lazy(() => import('../../features/players/pages/PlayersPage'))
+const AnalyzePage = lazy(() => import('../../features/matches/pages/AnalyzePage'))
+const SettingsPage = lazy(() => import('../../features/settings/pages/SettingsPage'))
+const ProfilePage = lazy(() => import('../../features/profile/pages/ProfilePage'))
+const LoginPage = lazy(() => import('../../features/auth/pages/LoginPage'))
+const RegisterPage = lazy(() => import('../../features/auth/pages/RegisterPage'))
 
 export type RouteMeta = {
   auth: 'public' | 'private'
@@ -37,8 +34,7 @@ export const appRoutes: AppRoute[] = [
   { path: '/times/:id/simulate', element: <TeamsSimulate />, meta: { auth: 'private', layout: 'shell'} },
 
   { path: '/jogadores', element: <PlayersPage />, meta: { auth: 'private', layout: 'shell'} },
-  { path: '/partidas', element: <MatchesPage />, meta: { auth: 'private', layout: 'shell'} },
-  { path: '/analisar', element: <AnalyzePage />, meta: { auth: 'private', layout: 'shell'} },
+{ path: '/analisar', element: <AnalyzePage />, meta: { auth: 'private', layout: 'shell'} },
   { path: '/perfil', element: <ProfilePage />, meta: { auth: 'private', layout: 'shell'} },
   { path: '/configuracoes', element: <SettingsPage />, meta: { auth: 'private', layout: 'shell'} },
 ]
@@ -60,4 +56,3 @@ export const usesShell = (meta?: RouteMeta) =>
 
 export const isPrivateRoute = (meta?: RouteMeta) =>
   meta?.auth === 'private'
-

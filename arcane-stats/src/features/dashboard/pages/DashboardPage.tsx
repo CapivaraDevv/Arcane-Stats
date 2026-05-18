@@ -7,7 +7,7 @@ import DarkVeil from "../../../components/DarkVeilBackground";
 import KPICard from "../../../components/KPICard";
 import TrendChart from "../../../components/TrendChart";
 import LaneCard from "../../../components/LaneCard";
-import { ChartSpline, ChevronRight } from "lucide-react";
+import { ChartSpline } from "lucide-react";
 import PerformanceRadar from "../../../components/PerformanceRadar";
 
 const kpis = [
@@ -124,7 +124,7 @@ export default function DashboardPage() {
           {kpis.map((kpi, idx) => (
             <ScrollReveal
               key={idx}
-              delay={idx * 0.1}
+              delay={Math.min(idx * 0.05, 0.3)}
               preset="up"
               duration={0.6}
             >
@@ -229,7 +229,7 @@ export default function DashboardPage() {
             {laneAnalysis.map((lane, idx) => (
               <ScrollReveal
                 key={idx}
-                delay={idx * 0.1}
+                delay={Math.min(idx * 0.05, 0.3)}
                 preset="up"
                 duration={0.6}
               >

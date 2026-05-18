@@ -1,8 +1,9 @@
+import { memo } from 'react';
 import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 
 type TrendDatum = { partida: string; kda: number; winrate: number };
 
-export default function TrendChart({ data }: { data: TrendDatum[] }) {
+const TrendChart = memo(function TrendChart({ data }: { data: TrendDatum[] }) {
   return (
     <div className="relative z-10 w-full">
       <ResponsiveContainer width="100%" height={360} minHeight={160}>
@@ -18,4 +19,6 @@ export default function TrendChart({ data }: { data: TrendDatum[] }) {
       </ResponsiveContainer>
     </div>
   );
-}
+});
+
+export default TrendChart;

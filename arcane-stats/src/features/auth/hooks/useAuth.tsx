@@ -1,5 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { authStorage } from '../services/authStorage';
 
 export type User = {
@@ -30,7 +30,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setInitialized(true);
   }, []);
 
-  const register = async (name: string, email: string, password: string) => {
+  const register = useCallback(async (name: string, email: string, password: string) => {
     const users = authStorage.readUsers();
     if (users.find(u => u.email.toLowerCase() === email.toLowerCase())) {
       return { success: false, message: 'E-mail já cadastrado' };
@@ -42,9 +42,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     authStorage.writeSession(newUser);
     setUser(newUser);
     return { success: true };
-  };
+  }, []);
 
-  const login = async (email: string, password: string) => {
+  const login = useCallback(async (email: string, password: string) => {
     const users = authStorage.readUsers();
     const found = users.find(u => u.email.toLowerCase() === email.toLowerCase() && u.password === password);
     if (!found) return { success: false, message: 'Credenciais inválidas' };
@@ -52,15 +52,20 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     authStorage.writeSession(logged);
     setUser(logged);
     return { success: true };
-  };
+  }, []);
 
-  const logout = () => {
+  const logout = useCallback(() => {
     authStorage.clearSession();
     setUser(null);
-  };
+  }, []);
+
+  const value = useMemo(
+    () => ({ user, initialized, register, login, logout }),
+    [user, initialized, register, login, logout]
+  );
 
   return (
-    <AuthContext.Provider value={{ user, initialized, register, login, logout }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
   );
 };
 

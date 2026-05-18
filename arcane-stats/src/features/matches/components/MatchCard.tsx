@@ -17,7 +17,7 @@ export default function MatchCard({ partida, onSelect }: MatchCardProps) {
       layoutId={`match-${partida.id}`}
       onClick={() => onSelect(partida)}
       whileHover={{ scale: 1.02 }}
-      className={`bg-card-glass p-6 rounded-xl border shadow-lg transition-all cursor-pointer ${
+      className={`bg-card-glass p-6 rounded-xl border shadow-lg cursor-pointer ${
         partida.resultado === 'Vitória'
           ? 'border-[#4CAF50]/30 hover:border-[#4CAF50]/50'
           : 'border-[#F44336]/30 hover:border-[#F44336]/50'

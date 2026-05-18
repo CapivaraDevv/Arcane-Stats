@@ -53,7 +53,7 @@ const presets = {
   },
   bounce: {
     hidden: { opacity: 0, y: 60 },
-    visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 120 } },
+    visible: { opacity: 1, y: 0, transition: { type: "spring" as const, stiffness: 120 } },
   },
   reveal: {
     hidden: { opacity: 0, x: -70, filter: "blur(6px)" },

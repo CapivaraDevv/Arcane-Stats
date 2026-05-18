@@ -1,3 +1,4 @@
+import { memo } from "react";
 import {
   Radar,
   RadarChart,
@@ -17,7 +18,7 @@ interface PerformanceRadarProps {
   data: RadarData[];
 }
 
-export default function PerformanceRadar({ data }: PerformanceRadarProps) {
+const PerformanceRadar = memo(function PerformanceRadar({ data }: PerformanceRadarProps) {
   return (
     <div className="w-full h-[267px] bg-[#05080fb3] rounded-3xl p-2">
       <ResponsiveContainer width="100%" height="100%">
@@ -55,4 +56,6 @@ export default function PerformanceRadar({ data }: PerformanceRadarProps) {
       </ResponsiveContainer>
     </div>
   );
-}
+});
+
+export default PerformanceRadar;

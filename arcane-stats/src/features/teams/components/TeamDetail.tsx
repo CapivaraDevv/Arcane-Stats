@@ -5,10 +5,6 @@ import {
   Swords,
   Crown,
   UserPlus,
-  Trophy,
-  Target,
-  Flame,
-  Zap,
   ArrowUpDown,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
