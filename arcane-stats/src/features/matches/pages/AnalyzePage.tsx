@@ -96,7 +96,7 @@ function buildKpis(report: AnalysisReport) {
     {
       title: 'KDA Médio',
       value: (kdaMetric?.value ?? 0).toFixed(1),
-      feedback: (kdaMetric?.deviation ?? 0) >= 0 ? '↑ Acima do benchmark' : '↓ Abaixo do benchmark',
+      feedback: (kdaMetric?.deviation ?? 0) >= 0 ? '↑ Acima da média do ELO' : '↓ Abaixo da média do ELO',
     },
     {
       title: 'Gold/min',
@@ -111,7 +111,7 @@ function buildKpis(report: AnalysisReport) {
   ]
 }
 
-export default function AnalyzePage() {
+export default function AnalyzePage({ embedded = false }: { embedded?: boolean }) {
   const [pageState, setPageState] = useState<PageState>('idle')
   const [report, setReport] = useState<AnalysisReport | null>(null)
   const [expandedDiag, setExpandedDiag] = useState(false)
@@ -127,68 +127,52 @@ export default function AnalyzePage() {
     }, 1800)
   }
 
-  return (
-    <div className="relative overflow-hidden min-h-screen">
-      <DarkVeilBackground />
-      <div className="relative z-10">
+  const filtersBar = (
+    <div className="flex flex-wrap items-center gap-2">
+      <select
+        value={filters.queue}
+        onChange={e => setFilters(f => ({ ...f, queue: e.target.value }))}
+        className="text-xs bg-[hsl(var(--secondary))] border border-border text-foreground rounded-lg px-3 py-1.5 focus:outline-none focus:border-primary/50"
+      >
+        <option value="solo">Solo/Duo</option>
+        <option value="flex">Flex</option>
+        <option value="all">Todas as filas</option>
+      </select>
+      <select
+        value={filters.lane}
+        onChange={e => setFilters(f => ({ ...f, lane: e.target.value }))}
+        className="text-xs bg-[hsl(var(--secondary))] border border-border text-foreground rounded-lg px-3 py-1.5 focus:outline-none focus:border-primary/50"
+      >
+        <option value="all">Todas as lanes</option>
+        <option value="top">Top</option>
+        <option value="jungle">Jungle</option>
+        <option value="mid">Mid</option>
+        <option value="adc">ADC</option>
+        <option value="support">Support</option>
+      </select>
+      <select
+        value={filters.period}
+        onChange={e => setFilters(f => ({ ...f, period: e.target.value }))}
+        className="text-xs bg-[hsl(var(--secondary))] border border-border text-foreground rounded-lg px-3 py-1.5 focus:outline-none focus:border-primary/50"
+      >
+        <option value="20">Últimas 20</option>
+        <option value="50">Últimas 50</option>
+        <option value="100">Últimas 100</option>
+      </select>
+      <motion.button
+        onClick={handleAnalyze}
+        disabled={pageState === 'loading'}
+        whileTap={{ scale: 0.97 }}
+        className="flex items-center gap-2 px-4 py-1.5 rounded-lg bg-primary text-[hsl(var(--primary-foreground))] text-xs font-bold disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+        <Brain className="h-3.5 w-3.5" />
+        {pageState === 'loading' ? 'Analisando...' : 'Analisar'}
+      </motion.button>
+    </div>
+  )
 
-        {/* Header */}
-        <header className="sticky top-0 border-b border-[hsl(var(--border)/0.6)] bg-[hsl(var(--background)/0.7)] backdrop-blur-xl z-30">
-          <div className="mx-auto flex flex-wrap items-center gap-3 justify-between max-w-7xl px-4 sm:px-6 py-3">
-            <div className="flex items-center gap-3">
-              <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-[hsl(var(--primary)/0.4)] bg-[hsl(var(--primary)/0.1)] text-primary">
-                <Brain className="h-4 w-4" />
-              </div>
-              <div>
-                <h1 className="font-display text-lg font-bold tracking-tight">Análise de Performance</h1>
-                <p className="text-xs text-muted-foreground hidden sm:block">Relatório de coaching gerado por IA</p>
-              </div>
-            </div>
-            <div className="flex flex-wrap items-center gap-2">
-              <select
-                value={filters.queue}
-                onChange={e => setFilters(f => ({ ...f, queue: e.target.value }))}
-                className="text-xs bg-[hsl(var(--secondary))] border border-border text-foreground rounded-lg px-3 py-1.5 focus:outline-none focus:border-primary/50"
-              >
-                <option value="solo">Solo/Duo</option>
-                <option value="flex">Flex</option>
-                <option value="all">Todas as filas</option>
-              </select>
-              <select
-                value={filters.lane}
-                onChange={e => setFilters(f => ({ ...f, lane: e.target.value }))}
-                className="text-xs bg-[hsl(var(--secondary))] border border-border text-foreground rounded-lg px-3 py-1.5 focus:outline-none focus:border-primary/50"
-              >
-                <option value="all">Todas as lanes</option>
-                <option value="top">Top</option>
-                <option value="jungle">Jungle</option>
-                <option value="mid">Mid</option>
-                <option value="adc">ADC</option>
-                <option value="support">Support</option>
-              </select>
-              <select
-                value={filters.period}
-                onChange={e => setFilters(f => ({ ...f, period: e.target.value }))}
-                className="text-xs bg-[hsl(var(--secondary))] border border-border text-foreground rounded-lg px-3 py-1.5 focus:outline-none focus:border-primary/50"
-              >
-                <option value="20">Últimas 20</option>
-                <option value="50">Últimas 50</option>
-                <option value="100">Últimas 100</option>
-              </select>
-              <motion.button
-                onClick={handleAnalyze}
-                disabled={pageState === 'loading'}
-                whileTap={{ scale: 0.97 }}
-                className="flex items-center gap-2 px-4 py-1.5 rounded-lg bg-primary text-[hsl(var(--primary-foreground))] text-xs font-bold disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                <Brain className="h-3.5 w-3.5" />
-                {pageState === 'loading' ? 'Analisando...' : 'Analisar'}
-              </motion.button>
-            </div>
-          </div>
-        </header>
-
-        <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8 space-y-8">
+  const mainContent = (
+    <div className="space-y-8">
 
           {/* IDLE */}
           {pageState === 'idle' && (
@@ -219,7 +203,7 @@ export default function AnalyzePage() {
             <div className="space-y-4">
               <div className="flex items-center gap-3 text-primary animate-pulse">
                 <Brain className="h-4 w-4" />
-                <span className="text-sm font-medium">IA processando benchmarks e padrões de jogo...</span>
+                <span className="text-sm font-medium">IA processando médias do ELO e padrões de jogo...</span>
               </div>
               <Skeleton />
             </div>
@@ -278,7 +262,7 @@ export default function AnalyzePage() {
                   <div className="bg-card-glass rounded-2xl border border-border p-5 sm:p-6">
                     <SectionHeader
                       icon={<BarChart3 className="h-4 w-4" />}
-                      title="Radar de Habilidades & Benchmarks"
+                      title="Radar de Habilidades & Médias do ELO"
                       subtitle="Comparação com a média da sua lane no ELO atual"
                     />
                     <div className="grid md:grid-cols-2 gap-8 items-center">
@@ -493,6 +477,40 @@ export default function AnalyzePage() {
             )
           })()}
 
+    </div>
+  )
+
+  if (embedded) {
+    return (
+      <div className="space-y-6 px-4 sm:px-6 py-8">
+        <div className="flex flex-wrap items-center justify-end gap-2">
+          {filtersBar}
+        </div>
+        {mainContent}
+      </div>
+    )
+  }
+
+  return (
+    <div className="relative overflow-hidden min-h-screen">
+      <DarkVeilBackground />
+      <div className="relative z-10">
+        <header className="sticky top-0 border-b border-[hsl(var(--border)/0.6)] bg-[hsl(var(--background)/0.7)] backdrop-blur-xl z-30">
+          <div className="mx-auto flex flex-wrap items-center gap-3 justify-between max-w-7xl px-4 sm:px-6 py-3">
+            <div className="flex items-center gap-3">
+              <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-[hsl(var(--primary)/0.4)] bg-[hsl(var(--primary)/0.1)] text-primary">
+                <Brain className="h-4 w-4" />
+              </div>
+              <div>
+                <h1 className="font-display text-lg font-bold tracking-tight">Análise de Performance</h1>
+                <p className="text-xs text-muted-foreground hidden sm:block">Relatório de coaching gerado por IA</p>
+              </div>
+            </div>
+            {filtersBar}
+          </div>
+        </header>
+        <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+          {mainContent}
         </main>
       </div>
     </div>

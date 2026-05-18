@@ -1,9 +1,11 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, lazy, Suspense } from 'react';
 import { LayoutGroup } from 'framer-motion';
 import { User } from 'lucide-react';
 import ScrollReveal from '../../../components/ScrollReveal';
 import DarkVeil from '../../../components/DarkVeilBackground';
 import useAuth  from '../../auth/hooks/useAuth';
+
+const AnalyzePage = lazy(() => import('../../matches/pages/AnalyzePage'))
 import { mockMatches } from '../../matches/data/mockMatches';
 import MatchCard from '../../matches/components/MatchCard';
 import MatchDebrief from '../../matches/MatchDebrief';
@@ -12,6 +14,7 @@ import type { Partida } from '../../matches/types';
 export default function ProfilePage() {
   const { user } = useAuth();
   const [filtro, setFiltro] = useState<'Todas' | 'Vitória' | 'Derrota'>('Todas');
+  const [activeTab, setActiveTab] = useState<'historico' | 'analisar'>('historico');
   const [selectedMatch, setSelectedMatch] = useState<Partida | null>(null);
 
   const stats = useMemo(() => {
@@ -108,35 +111,61 @@ export default function ProfilePage() {
           </ScrollReveal>
         </div>
 
-        {/* Histórico de partidas */}
+        {/* Partidas */}
         <div>
-          <h2 className="font-display text-xl font-bold mb-4 text-foreground">Histórico de Partidas</h2>
-
-          <div className="flex gap-2 mb-6">
-            {(['Todas', 'Vitória', 'Derrota'] as const).map((opcao) => (
-              <button
-                key={opcao}
-                onClick={() => setFiltro(opcao)}
-                className={`px-4 py-2 rounded-xl text-sm transition-all ${
-                  filtro === opcao
-                    ? 'bg-gradient-primary text-primary-foreground shadow-glow'
-                    : 'bg-[hsl(var(--secondary)/0.5)] text-muted-foreground hover:text-foreground border border-border'
-                }`}
-              >
-                {opcao}
-              </button>
-            ))}
-          </div>
-
-          <LayoutGroup>
-            <div className="space-y-4">
-              {partidasFiltradas.map((partida, idx) => (
-                <ScrollReveal key={partida.id} preset="up" delay={Math.min(idx * 0.05, 0.3)} duration={0.4}>
-                  <MatchCard partida={partida} onSelect={setSelectedMatch} />
-                </ScrollReveal>
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="font-display text-xl font-bold text-foreground">Partidas</h2>
+            <div className="flex gap-1 rounded-xl border border-border p-1 bg-[hsl(var(--secondary)/0.3)]">
+              {(['historico', 'analisar'] as const).map((tab) => (
+                <button
+                  key={tab}
+                  onClick={() => setActiveTab(tab)}
+                  className={`px-4 py-1.5 rounded-lg text-sm font-medium transition-all ${
+                    activeTab === tab
+                      ? 'bg-gradient-primary text-primary-foreground shadow-glow'
+                      : 'text-muted-foreground hover:text-foreground'
+                  }`}
+                >
+                  {tab === 'historico' ? 'Histórico' : 'Analisar'}
+                </button>
               ))}
             </div>
-          </LayoutGroup>
+          </div>
+
+          {activeTab === 'historico' && (
+            <>
+              <div className="flex gap-2 mb-6">
+                {(['Todas', 'Vitória', 'Derrota'] as const).map((opcao) => (
+                  <button
+                    key={opcao}
+                    onClick={() => setFiltro(opcao)}
+                    className={`px-4 py-2 rounded-xl text-sm transition-all ${
+                      filtro === opcao
+                        ? 'bg-gradient-primary text-primary-foreground shadow-glow'
+                        : 'bg-[hsl(var(--secondary)/0.5)] text-muted-foreground hover:text-foreground border border-border'
+                    }`}
+                  >
+                    {opcao}
+                  </button>
+                ))}
+              </div>
+              <LayoutGroup>
+                <div className="space-y-4">
+                  {partidasFiltradas.map((partida, idx) => (
+                    <ScrollReveal key={partida.id} preset="up" delay={Math.min(idx * 0.05, 0.3)} duration={0.4}>
+                      <MatchCard partida={partida} onSelect={setSelectedMatch} />
+                    </ScrollReveal>
+                  ))}
+                </div>
+              </LayoutGroup>
+            </>
+          )}
+
+          {activeTab === 'analisar' && (
+            <Suspense fallback={<div className="h-64 rounded-2xl bg-white/5 animate-pulse" />}>
+              <AnalyzePage embedded />
+            </Suspense>
+          )}
         </div>
       </div>
 
