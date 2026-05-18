@@ -3,7 +3,7 @@ import type { AnalysisReport } from './analysisTypes'
 export const MOCK_ANALYSIS: AnalysisReport = {
   gradeGlobal: 'B+',
   diagnosticoGeral:
-    'Você demonstra um perfil sólido de top lane com boa mecânica individual e presença de mapa consistente. Seus maiores problemas estão no cs/min e na tomada de decisão em split push, onde tende a perder trades de objetivos por overextend. As últimas 10 partidas mostram melhora clara no KDA (+46%), mas o Damage Efficiency e Gold/min ainda estão abaixo do benchmark para a lane. A tendência é positiva — foco em farm e decisão de mapa pode subir sua nota para A- em 2 semanas.',
+    'Você demonstra um perfil sólido de top lane com boa mecânica individual e presença de mapa consistente. Seus maiores problemas estão no cs/min e na tomada de decisão em split push, onde tende a perder trades de objetivos por overextend. As últimas 10 partidas mostram melhora clara no KDA (+46%), mas o Damage Efficiency e Gold/min ainda estão abaixo da média do ELO para a lane. A tendência é positiva — foco em farm e decisão de mapa pode subir sua nota para A- em 2 semanas.',
 
   metricas: [
     { name: 'Farm/min', unit: 'cs', value: 5.46, benchmark: 7.0, deviation: -22 },
@@ -33,17 +33,17 @@ export const MOCK_ANALYSIS: AnalysisReport = {
   ],
 
   gargalos: [
-    'Farm/min 22% abaixo do benchmark — perda consistente de CS após o minuto 12',
+    'Farm/min 22% abaixo da média do ELO — perda consistente de CS após o minuto 12',
     'Overextend em split push causa mortes desnecessárias em ~40% das partidas analisadas',
-    'Gold/min abaixo do benchmark indica ineficiência na conversão de vantagens de lane',
+    'Gold/min abaixo da média do ELO indica ineficiência na conversão de vantagens de lane',
     'Damage Efficiency baixo sugere dano desperdiçado em minions durante teamfights',
   ],
 
   pontosPositivos: [
-    'KDA acima do benchmark — controle de risco em fights melhorou 15% nas últimas 10 partidas',
+    'KDA acima da média do ELO — controle de risco em fights melhorou 15% nas últimas 10 partidas',
     'Darius e Camille apresentam excelente winrate — alta sinergia com seu estilo de jogo',
-    'Agressividade no early game consistente com benchmarks de alto elo para top lane',
-    'Participação em lutas de equipe (Kill Participation) próxima do benchmark',
+    'Agressividade no early game consistente com os padrões de alto elo para top lane',
+    'Participação em lutas de equipe (Kill Participation) próxima da média do ELO',
   ],
 
   trendData: [

@@ -52,7 +52,7 @@ export default function MetricBenchmarkRow({ metric, delay = 0 }: Props) {
         />
       </div>
       <p className="text-[10px] text-muted-foreground text-right">
-        benchmark: {metric.benchmark.toFixed(metric.benchmark % 1 === 0 ? 0 : 2)} {metric.unit}
+        média do ELO: {metric.benchmark.toFixed(metric.benchmark % 1 === 0 ? 0 : 2)} {metric.unit}
       </p>
     </motion.div>
   )
