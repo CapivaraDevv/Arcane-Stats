@@ -1,7 +1,6 @@
-import { motion, LayoutGroup } from 'framer-motion'
+import { LayoutGroup } from 'framer-motion'
 import { useState, useMemo } from 'react'
 import ScrollReveal from '../../../components/ScrollReveal'
-import { Link } from "react-router-dom";
 import { Trophy } from 'lucide-react';
 import MatchDebrief from '../MatchDebrief';
 import MatchCard from '../components/MatchCard';
@@ -53,19 +52,6 @@ const MatchesPage = () => {
               </p>
             </div>
           </div>
-          <Link
-            to="/analisar"
-            className=""
-          >
-            <motion.button
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.97 }}
-              className="group relative inline-flex items-center gap-2 overflow-hidden rounded-xl bg-gradient-primary px-5 py-2.5 text-sm font-bold text-primary-foreground shadow-glow transition cursor-pointer"
-            >
-              Analisar Partidas
-              <span className="absolute inset-0 -translate-x-full bg-linear-to-r from-transparent via-[hsl(0_0%_100%/0.3)] to-transparent transition-transform duration-700 group-hover:translate-x-full" />
-            </motion.button>
-          </Link>
         </div>
       </header>
 
