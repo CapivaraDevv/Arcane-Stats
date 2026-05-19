@@ -9,9 +9,9 @@ import TerminalMockup from "../../../components/TerminalMockup";
 
 const metrics = [
   { to: 95, suffix: "%", label: "Precisão nas Previsões" },
-  { to: 50, suffix: "k+", label: "Partidas Analisadas" },
+  { to: 50, suffix: "k+", label: "Partidas Mapeadas" },
   { to: 100, suffix: "+", label: "Dados por Partida" },
-  { to: 24, suffix: "/7", label: "Análise em Tempo Real" },
+  { to: 24, suffix: "/7", label: "Monitoramento em Tempo Real" },
 ];
 
 const kpis = [
@@ -29,7 +29,7 @@ const insights = [
 const features = [
   "Comparativo de desempenho em tempo real",
   "Sugestões estratégicas geradas por IA",
-  "Análise de padrões em mais de 50 mil partidas",
+  "Reconhecimento de padrões em mais de 50 mil partidas",
 ];
 
 export default function HomePage() {
@@ -95,7 +95,7 @@ export default function HomePage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
           >
-            <SpotlightCard className="rounded-3xl p-6 md:p-8">
+            <SpotlightCard className="rounded-3xl p-6 md:p-8 transition-all">
               <div className="mb-6 flex items-center justify-between">
                 <span className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
                   Relatório Estratégico por IA
@@ -177,7 +177,7 @@ export default function HomePage() {
             <ScrollReveal preset="left" duration={0.9}>
               <div>
                 <p className="text-xs uppercase tracking-[0.2em] text-primary">
-                  Análise de Performance
+                  Performance em Detalhes
                 </p>
                 <h2 className="mt-4 font-display text-4xl font-bold leading-tight md:text-5xl">
                   Cada decisão
@@ -185,7 +185,7 @@ export default function HomePage() {
                   tem um custo.
                 </h2>
                 <p className="mt-6 max-w-sm text-base leading-relaxed text-muted-foreground">
-                  O Arcane Stats analisa cada movimento, troca e escolha de
+                  O Arcane Stats mapeia cada movimento, troca e escolha de
                   objetivo da sua partida, mostrando exatamente onde o jogo foi
                   ganho ou perdido.
                 </p>
@@ -288,7 +288,7 @@ export default function HomePage() {
               <TerminalMockup
                 lines={[
                   "> Modelo: v2.4.1 carregado",
-                  "> Analisando aos 14:32...",
+                  "> Verificando aos 14:32...",
                   "> Lacuna estratégica: dragon",
                   "> Risco de derrota: 73%",
                   "→ Ação corretiva disponível",
@@ -323,7 +323,7 @@ export default function HomePage() {
                 Jogue com <span className="text-primary">inteligência.</span>
               </h2>
               <p className="mx-auto mt-6 max-w-md text-base leading-relaxed text-muted-foreground">
-                Nada de planilha ou análise complicada. Depois de cada partida,
+                Nada de planilha complicada. Depois de cada partida,
                 você recebe três pontos concretos para melhorar na próxima.
               </p>
               <TerminalMockup

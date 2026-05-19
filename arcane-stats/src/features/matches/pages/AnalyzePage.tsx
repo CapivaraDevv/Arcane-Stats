@@ -163,9 +163,8 @@ export default function AnalyzePage({ embedded = false }: { embedded?: boolean }
         onClick={handleAnalyze}
         disabled={pageState === 'loading'}
         whileTap={{ scale: 0.97 }}
-        className="flex items-center gap-2 px-4 py-1.5 rounded-lg bg-primary text-[hsl(var(--primary-foreground))] text-xs font-bold disabled:opacity-50 disabled:cursor-not-allowed"
+        className="flex items-center gap-2 px-4 py-1.5 rounded-lg bg-primary text-xs font-bold disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        <Brain className="h-3.5 w-3.5" />
         {pageState === 'loading' ? 'Analisando...' : 'Analisar'}
       </motion.button>
     </div>
@@ -190,10 +189,10 @@ export default function AnalyzePage({ embedded = false }: { embedded?: boolean }
                 onClick={handleAnalyze}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="flex items-center gap-2 px-6 py-3 rounded-xl bg-primary text-[hsl(var(--primary-foreground))] font-bold"
+                className="group relative overflow-hidden cursor-pointer flex items-center gap-2 px-6 py-3 rounded-xl bg-primary  font-bold"
               >
-                {/* <Brain className="h-5 w-5" /> */}
                 Gerar análise completa
+                <span className="absolute inset-0 -translate-x-full bg-linear-to-r from-transparent via-[hsl(0_0%_100%/0.25)] to-transparent transition-transform duration-700 group-hover:translate-x-full" />
               </motion.button>
             </div>
           )}
