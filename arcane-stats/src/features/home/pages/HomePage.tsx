@@ -1,563 +1,338 @@
 import { motion } from "framer-motion";
-import DarkVeil from "../../../components/DarkVeilBackground";
 import { Link } from "react-router-dom";
-import { useState } from "react";
-import ScrollReveal from "../../../components/ScrollReveal";
-import { BarChart3, BookOpenText, Brain } from "lucide-react";
+import DarkVeilBackground from "../../../components/DarkVeilBackground";
 import SpotlightCard from "../../../components/SpotlightCard";
 import AnimatedCounter from "../../../components/AnimatedCounter";
+import ScrollReveal from "../../../components/ScrollReveal";
 import AppFooter from "../../../components/AppFooter";
 
-import {
-  TrendingUp,
-  Crosshair,
-  Flame,
-  Gamepad2,
-  ChessKnight,
-  Swords,
-  ChessRook,
-  ChartSpline,
-  Users,
-  UserRound,
-  UserCircle,
-  ArrowRight,
-  Zap,
-} from "lucide-react";
-
-const features = [
-  {
-    title: "Dashboard",
-    description: "KPIs, radar de performance e tendências das suas partidas em tempo real.",
-    icon: ChartSpline,
-    path: "/dashboard",
-  },
-  {
-    title: "Times",
-    description: "Monte squads, adicione jogadores e simule embates estratégicos.",
-    icon: Users,
-    path: "/times",
-  },
-  {
-    title: "Jogadores",
-    description: "Ranking global por KDA, winrate e partidas com filtros por role.",
-    icon: UserRound,
-    path: "/jogadores",
-  },
-  {
-    title: "Perfil",
-    description: "Seu histórico, conquistas e evolução ao longo do tempo.",
-    icon: UserCircle,
-    path: "/perfil",
-  },
+const metrics = [
+  { to: 95, suffix: "%", label: "Acurácia de Predição" },
+  { to: 50, suffix: "k+", label: "Partidas Analisadas" },
+  { to: 100, suffix: "+", label: "Sinais por Partida" },
+  { to: 24, suffix: "/7", label: "Análise em Tempo Real" },
 ];
 
-const dashboardCards = [
-  {
-    label: "Winrate",
-    value: 12,
-    suffix: "%",
-    prefix: "+",
-    trend: "vs. último patch",
-    icon: TrendingUp,
-  },
-  {
-    label: "CS / min",
-    value: 7.8,
-    decimals: 1,
-    trend: "Top 18% da elo",
-    icon: Crosshair,
-  },
-  { label: "Erros críticos", value: 3, trend: "min 12 · 18 · 24", icon: Flame },
+const kpis = [
+  { label: "Win Rate", value: "62%", trend: "+5%" },
+  { label: "KDA Médio", value: "4.8", trend: "Top 12%" },
+  { label: "CS / min", value: "7.8", trend: "Top 18%" },
+];
+
+const insights = [
+  { label: "Eficiência de rotação", value: "Alta" },
+  { label: "Controle de visão", value: "Média" },
+  { label: "Prioridade de objetivos", value: "Ótima" },
+];
+
+const features = [
+  "Benchmark de performance em tempo real",
+  "Insights estratégicos gerados por IA",
+  "Reconhecimento de padrões em 50k+ partidas",
 ];
 
 export default function HomePage() {
-  const demoVideoUrl = "https://www.youtube.com/watch?v=mDYqT0_9VR4";
-  const demoThumbnail =
-    "https://images.unsplash.com/photo-1542751110-97427bbecf20?auto=format&fit=crop&w=1200&q=80";
-  const [isLearnMoreOpen, setIsLearnMoreOpen] = useState(false);
-  const youtubeVideoId = demoVideoUrl.match(
-    /(?:v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/,
-  )?.[1];
-  const demoEmbedUrl = youtubeVideoId
-    ? `https://www.youtube.com/embed/${youtubeVideoId}`
-    : null;
-
-  const itemVariants = {
-    hidden: { opacity: 0, x: 20 },
-    visible: { opacity: 1, x: 0 },
-  };
-
-  const upItemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0 },
-  };
-
   return (
-    <div className="relative min-h-screen w-full overflow-hidden bg-[#020617] text-white">
-      <DarkVeil />
+    <div className="relative min-h-screen w-full overflow-hidden bg-background text-foreground">
 
-      <section className="relative z-10 px-6 pt-16 md:pt-20">
-        <div className="mx-auto grid w-full max-w-6xl items-center gap-10 lg:grid-cols-2">
-          <div className="text-left">
+      {/* ── HERO ──────────────────────────────────────────────── */}
+      <section className="relative flex min-h-screen items-center px-6 pb-24 pt-10">
+        <DarkVeilBackground />
+
+        <div className="relative z-10 mx-auto grid w-full max-w-6xl items-center gap-16 lg:grid-cols-[1fr_1.1fr]">
+
+          {/* Copy */}
+          <div>
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="inline-flex items-center rounded-full border border-border/40 px-3 py-1 text-xs uppercase tracking-[0.2em] text-primary"
+            >
+              Inteligência Estratégica · LoL
+            </motion.div>
+
             <motion.h1
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7 }}
-              className="font-display text-4xl md:text-5xl lg:text-6xl font-bold leading-tight"
+              transition={{ duration: 0.7, delay: 0.12, ease: [0.16, 1, 0.3, 1] }}
+              className="mt-6 font-display text-6xl font-black leading-[0.92] md:text-7xl lg:text-8xl"
             >
-              Arcane <span className="text-[#00B4D8]">Stats</span>
+              Transforme dados em
+              <br />
+              <span className="text-gradient">dominância.</span>
             </motion.h1>
 
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 0.3 }}
-              className="mt-5 text-slate-300 max-w-xl text-base md:text-lg"
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="mt-6 max-w-md text-lg leading-relaxed text-muted-foreground"
             >
-              O Arcane Stats traduz números complexos em dicas simples para você
-              saber onde errou, o que melhorar e como evoluir já na próxima
-              partida.
+              Plataforma de análise estratégica com IA para jogadores e equipes competitivas de League of Legends.
             </motion.p>
 
             <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.5 }}
-              className="mt-8 flex flex-wrap gap-4"
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.5 }}
+              className="mt-10 flex flex-wrap gap-4"
             >
               <Link
                 to="/login"
-                className="bg-[#0077B6] hover:bg-[#00B4D8] px-6 py-3 rounded-xl font-semibold shadow-lg transition"
+                className="group relative inline-flex items-center overflow-hidden rounded-xl bg-gradient-primary px-6 py-3 text-sm font-bold text-primary-foreground shadow-glow transition"
               >
-                Começar minha evolução
+                Analisar Agora
+                <span className="absolute inset-0 -translate-x-full bg-linear-to-r from-transparent via-[hsl(0_0%_100%/0.25)] to-transparent transition-transform duration-700 group-hover:translate-x-full" />
               </Link>
 
+              <Link
+                to="/dashboard"
+                className="inline-flex items-center rounded-xl border border-border px-6 py-3 text-sm font-medium text-muted-foreground transition hover:border-border/80 hover:text-foreground"
+              >
+                Ver Insights
+              </Link>
             </motion.div>
           </div>
 
+          {/* Dashboard mockup */}
           <motion.div
-            initial={{ opacity: 0, y: 40 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.25 }}
-            className="rounded-3xl border border-slate-700 bg-[hsl(var(--background)/0.6)] p-4 backdrop-blur"
+            transition={{ duration: 0.9, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
           >
-            {demoEmbedUrl ? (
-              <div className="relative overflow-hidden rounded-2xl">
-                <iframe
-                  src={demoEmbedUrl}
-                  title="Demonstração do Arcane Stats"
-                  className="aspect-video w-full rounded-2xl"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  referrerPolicy="strict-origin-when-cross-origin"
-                  allowFullScreen
-                />
+            <SpotlightCard className="rounded-3xl p-6 md:p-8">
+              <div className="mb-6 flex items-center justify-between">
+                <span className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
+                  Relatório Estratégico — IA
+                </span>
+                <span className="rounded-full bg-primary/10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest text-primary">
+                  Ao vivo
+                </span>
               </div>
-            ) : (
-              <div className="relative aspect-video overflow-hidden rounded-2xl">
-                <img
-                  src={demoThumbnail}
-                  alt="Thumbnail da demonstração do Arcane Stats"
-                  className="h-full w-full object-cover opacity-60"
-                />
-                <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-[#020617]/60">
-                  <button
-                    type="button"
-                    className="h-16 w-16 rounded-full border border-white/60 bg-white/10 text-2xl text-white"
-                    aria-label="Play da demonstração (em breve)"
+
+              <div className="space-y-3">
+                {kpis.map((kpi) => (
+                  <div
+                    key={kpi.label}
+                    className="flex items-center justify-between rounded-xl border border-border/60 bg-background/40 px-4 py-3"
                   >
-                    ▶
-                  </button>
-                  <p className="rounded-full border border-slate-500 bg-slate-950/80 px-4 py-2 text-sm font-medium text-slate-100">
-                    Demonstração em breve
+                    <span className="text-sm text-muted-foreground">{kpi.label}</span>
+                    <div className="flex items-center gap-3">
+                      <span className="text-xs text-primary">{kpi.trend}</span>
+                      <span className="font-display text-lg font-bold text-foreground">
+                        {kpi.value}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-6 border-t border-border pt-6">
+                <div className="rounded-xl border border-primary/20 bg-primary/5 p-4">
+                  <p className="text-xs uppercase tracking-[0.15em] text-primary">Insight da IA</p>
+                  <p className="mt-2 text-sm leading-relaxed text-foreground">
+                    Você perdeu{" "}
+                    <span className="font-semibold text-primary">3 waves</span>{" "}
+                    por rotação errada aos{" "}
+                    <span className="font-semibold text-primary">12 min</span>.
+                    Recuperar isso equivale a{" "}
+                    <span className="font-semibold text-primary">+340 de ouro</span>.
                   </p>
                 </div>
               </div>
-            )}
+            </SpotlightCard>
           </motion.div>
         </div>
       </section>
 
-      <section id="guia" className="relative z-10 mt-12 px-6">
-        <div className="w-full mx-auto max-w-6xl">
-          <div className="mb-10 flex flex-col items-start justify-between gap-4 md:flex-row md:items-end">
-            <div>
-              <p className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.25em] text-primary">
-                <ChessRook className="h-3.5 w-3.5" /> Novo em LoL/eSports?
-              </p>
-              <h2 className="mt-3 font-display text-3xl font-bold leading-tight md:text-5xl">
-                Um guia rápido para entender o básico.
-              </h2>
-            </div>
+      {/* ── METRICS ───────────────────────────────────────────── */}
+      <section className="relative z-10 border-t border-border px-6 py-32 md:py-40">
+        <div className="mx-auto max-w-6xl">
+          <div className="grid grid-cols-2 divide-x divide-border md:grid-cols-4">
+            {metrics.map((m, i) => (
+              <ScrollReveal
+                key={m.label}
+                preset="up"
+                delay={i * 0.1}
+                duration={0.7}
+                className="px-6 py-4 first:pl-0 last:pr-0 md:px-10"
+              >
+                <div className="font-display text-5xl font-black text-foreground md:text-6xl lg:text-7xl">
+                  <AnimatedCounter to={m.to} suffix={m.suffix} />
+                </div>
+                <p className="mt-3 text-xs uppercase tracking-[0.2em] text-muted-foreground">
+                  {m.label}
+                </p>
+              </ScrollReveal>
+            ))}
           </div>
         </div>
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.5 }}
-          className="mx-auto w-full max-w-6xl rounded-3xl border border-slate-800 bg-card-glass p-6 backdrop-blur  transition md:p-8"
-        >
-          <div className="grid gap-4 md:grid-cols-3">
-            <article className="rounded-xl border border-border bg-[hsl(var(--background)/0.6)] hover:border-[hsl(var(--primary)/0.5)] hover:scale-105 transition cursor-pointer p-4">
-              <h3 className="font-display text-lg font-semibold text-[#00B4D8]">
-                <Gamepad2 className="h-3.5 w-3.5" /> O que é LoL?
-              </h3>
-              <p className="font-sans mt-2 text-sm text-slate-300">
-                League of Legends é um jogo de equipe 5 contra 5. Cada pessoa
-                escolhe um personagem e trabalha com o time para chegar até a
-                base inimiga.
-              </p>
-            </article>
-
-            <article className="rounded-xl border border-border bg-[hsl(var(--background)/0.6)] hover:border-[hsl(var(--primary)/0.5)] hover:scale-105 transition cursor-pointer p-4">
-              <h3 className="font-display text-lg font-semibold text-[#00B4D8]">
-                <ChessKnight className="h-3.5 w-3.5" /> O que é uma partida
-                competitiva?
-              </h3>
-              <p className="font-sans mt-2 text-sm text-slate-300">
-                É uma partida organizada entre times treinados, com estratégia e
-                funções bem definidas. Vence quem toma melhores decisões ao
-                longo do jogo.
-              </p>
-            </article>
-
-            <article className="group rounded-xl border border-border bg-[hsl(var(--background)/0.6)] hover:border-[hsl(var(--primary)/0.5)] hover:scale-105 transition cursor-pointer p-4">
-              <h3 className="font-display text-lg font-semibold text-[#00B4D8]">
-                <Swords className="h-3.5 w-3.5 group-hover:scale-110 group-hover:rotate-3 transition-all" />{" "}
-                O que é eSports?
-              </h3>
-              <p className="font-sans mt-2 text-sm text-slate-300">
-                Esports são competições profissionais de videogames, onde
-                jogadores e equipes disputam campeonatos com estratégia.
-              </p>
-            </article>
-          </div>
-
-          <div className="mt-6 rounded-xl border border-slate-800 bg-black/40 p-4">
-            <p className="text-sm font-semibold text-primary">
-              <BookOpenText className="h-3.5 w-3.5"/> Microglossário
-            </p>
-            <div className="mt-3 grid gap-2 text-sm text-slate-300 md:grid-cols-2">
-              <p>
-                <span className="font-semibold text-slate-100">Campeão:</span>{" "}
-                personagem escolhido por cada jogador.
-              </p>
-              <p>
-                <span className="font-semibold text-slate-100">Rota:</span>{" "}
-                caminho principal do mapa por onde o time avança.
-              </p>
-              <p>
-                <span className="font-semibold text-slate-100">Objetivo:</span>{" "}
-                alvo importante como torres, dragão e barão.
-              </p>
-              <p>
-                <span className="font-semibold text-slate-100">Draft:</span>{" "}
-                momento de escolher e bloquear campeões antes da partida.
-              </p>
-              <p>
-                <span className="font-semibold text-slate-100">Farm:</span> ouro
-                e experiência obtidos ao eliminar tropas e monstros.
-              </p>
-              <p>
-                <span className="font-semibold text-slate-100">Gank:</span>{" "}
-                ataque surpresa para ajudar um aliado em outra rota.
-              </p>
-            </div>
-          </div>
-        </motion.div>
       </section>
 
-      <section id="dashboard" className="relative z-10 mt-32 px-6">
-        <ScrollReveal>
-          <div className="mx-auto w-full max-w-6xl">
-            <div className="mb-10 flex flex-col items-start justify-between gap-4 md:flex-row md:items-end">
-              <div>
-                <p className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.25em] text-primary">
-                  <BarChart3 className="h-3.5 w-3.5" /> Pós-jogo
-                </p>
-                <h2 className="mt-3 font-display text-3xl font-bold leading-tight md:text-5xl">
-                  Onde você <span className="text-gradient">perdeu o jogo</span>
-                  .
-                  <br className="hidden md:block" /> Em 3 cards.
-                </h2>
-              </div>
-            </div>
+      {/* ── ANALYSIS ──────────────────────────────────────────── */}
+      <section className="relative z-10 border-t border-border px-6 py-32 md:py-40">
+        <div className="mx-auto max-w-6xl">
+          <div className="grid items-center gap-16 lg:grid-cols-[1fr_1.2fr]">
 
-            <div className="relative">
-              <div className="absolute -inset-4 -z-10 rounded-4xl bg-gradient-primary opacity-20 blur-3xl" />
-              <SpotlightCard className="rounded-3xl border-[hsl(var(--primary)/0.2)] p-6 shadow-elevated md:p-8">
-                <div className="grid gap-4 md:grid-cols-3">
-                  {dashboardCards.map((c, i) => (
-                    <motion.div
-                      key={c.label}
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: i * 0.1, duration: 0.5 }}
-                      className="group relative overflow-hidden rounded-2xl border border-border bg-[hsl(var(--background)/0.6)] p-5 transition hover:border-[hsl(var(--primary)/0.4)] cursor-pointer"
-                    >
-                      <div className="absolute -right-8 -top-8 h-24 w-24 rounded-full bg-[hsl(var(--primary)/0.1)] blur-2xl opacity-0 transition group-hover:opacity-100" />
-                      <div className="relative">
-                        <div className="flex items-center justify-between">
-                          <p className="text-xs uppercase tracking-wide text-muted-foreground">
-                            {c.label}
-                          </p>
-                          <c.icon className="h-4 w-4 text-primary" />
-                        </div>
-                        <div className="mt-3 flex items-baseline gap-1">
-                          <h3 className="font-display text-3xl font-bold text-primary">
-                            <AnimatedCounter
-                              to={c.value}
-                              decimals={c.decimals ?? 0}
-                              prefix={c.prefix ?? ""}
-                              suffix={c.suffix ?? ""}
-                            />
-                          </h3>
-                        </div>
-                        <p className="mt-1 text-xs text-muted-foreground">
-                          {c.trend}
-                        </p>
-                      </div>
-                    </motion.div>
+            {/* Copy */}
+            <ScrollReveal preset="left" duration={0.9}>
+              <div>
+                <p className="text-xs uppercase tracking-[0.2em] text-primary">
+                  Análise Estratégica
+                </p>
+                <h2 className="mt-4 font-display text-4xl font-bold leading-tight md:text-5xl">
+                  Cada decisão
+                  <br />
+                  tem um custo.
+                </h2>
+                <p className="mt-6 max-w-sm text-base leading-relaxed text-muted-foreground">
+                  O Arcane Stats mapeia cada rotação, troca e decisão de objetivo — mostrando exatamente onde o jogo foi ganho ou perdido.
+                </p>
+                <div className="mt-8 space-y-4">
+                  {features.map((item) => (
+                    <div key={item} className="flex items-center gap-4 border-l-2 border-primary pl-4">
+                      <span className="text-sm text-foreground">{item}</span>
+                    </div>
                   ))}
                 </div>
-
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.4 }}
-                  className="relative mt-6 overflow-hidden rounded-2xl border border-[hsl(var(--primary)/0.3)] bg-[hsl(var(--background)/0.8)] p-6"
-                >
-                  <div className="absolute inset-0 bg-gradient-primary opacity-[0.04]" />
-                  <div className="relative flex items-start gap-4">
-                    <div className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-gradient-primary text-primary-foreground shadow-glow">
-                      <Brain className="text-black h-5 w-5" />
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2">
-                        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-primary">
-                          Insight da IA
-                        </p>
-                        <span className="rounded-full bg-[hsl(var(--destructive)/0.15)] px-2 py-0.5 text-[10px] font-medium uppercase text-destructive">
-                          crítico
-                        </span>
-                      </div>
-                      <p className="mt-2 text-base text-foreground">
-                        Você perdeu{" "}
-                        <span className="font-semibold text-primary">
-                          3 waves
-                        </span>{" "}
-                        por rotação errada aos{" "}
-                        <span className="font-semibold text-primary">
-                          12 minutos
-                        </span>
-                        . Recue para a base após o segundo abate na bot —
-                        recupere{" "}
-                        <span className="font-semibold text-primary">
-                          +340 ouro
-                        </span>
-                        .
-                      </p>
-                    </div>
-                  </div>
-                </motion.div>
-              </SpotlightCard>
-            </div>
-          </div>
-        </ScrollReveal>
-      </section>
-
-      <section className="relative z-10 mt-32 px-6">
-        <div className="pointer-events-none absolute left-1/2 top-1/2 h-[400px] w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[hsl(var(--primary)/0.07)] blur-3xl" />
-        <ScrollReveal preset="up">
-          <div className="mx-auto mb-10 w-full max-w-6xl text-center">
-            <p className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.25em] text-primary">
-              <Zap className="h-3.5 w-3.5" /> O que você encontra aqui
-            </p>
-            <h2 className="mt-3 font-display text-4xl font-bold leading-tight md:text-5xl">
-              Tudo que você precisa{" "}
-              <span className="text-gradient">em um lugar</span>.
-            </h2>
-          </div>
-        </ScrollReveal>
-
-        <div className="mx-auto w-full max-w-6xl grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-          {features.map((f, i) => (
-            <ScrollReveal key={f.path} preset="up" delay={i * 0.1} duration={0.5}>
-              <motion.div
-                whileHover={{ scale: 1.02 }}
-                className="group relative overflow-hidden rounded-2xl border border-border bg-card-glass p-6 transition hover:border-[hsl(var(--primary)/0.5)] cursor-pointer"
-              >
-                <div className="absolute -right-8 -top-8 h-28 w-28 rounded-full bg-[hsl(var(--primary)/0.12)] blur-2xl opacity-0 transition duration-300 group-hover:opacity-100" />
-                <div className="relative">
-                  <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-primary shadow-glow">
-                    <f.icon className="h-5 w-5 text-primary-foreground" />
-                  </div>
-                  <h3 className="font-display text-lg font-bold text-foreground">{f.title}</h3>
-                  <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{f.description}</p>
-                  <Link
-                    to="/login"
-                    className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-primary transition-all hover:gap-2"
-                  >
-                    Acessar <ArrowRight className="h-4 w-4" />
-                  </Link>
-                </div>
-              </motion.div>
+              </div>
             </ScrollReveal>
-          ))}
+
+            {/* Score mockup */}
+            <ScrollReveal preset="reveal" duration={1}>
+              <SpotlightCard className="rounded-3xl p-8 md:p-10">
+                <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
+                  Score Estratégico — IA
+                </p>
+                <div className="mt-4 flex items-baseline gap-2">
+                  <span className="font-display text-8xl font-black text-primary">87</span>
+                  <span className="font-display text-3xl text-muted-foreground">/ 100</span>
+                </div>
+                <div className="mt-4 h-0.5 w-full overflow-hidden rounded-full bg-border">
+                  <div className="h-full w-[87%] rounded-full bg-gradient-primary" />
+                </div>
+                <div className="mt-8">
+                  {insights.map((row) => (
+                    <div
+                      key={row.label}
+                      className="flex items-center justify-between border-t border-border py-3"
+                    >
+                      <span className="text-sm text-muted-foreground">{row.label}</span>
+                      <span className="text-sm font-semibold text-foreground">{row.value}</span>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-2 border-t border-border pt-6">
+                  <p className="text-sm font-semibold text-primary">
+                    → Rotacione após o Baron aos 28:00
+                  </p>
+                </div>
+              </SpotlightCard>
+            </ScrollReveal>
+          </div>
         </div>
       </section>
 
-      <ScrollReveal>
-        <section className="relative z-10 mt-12 px-6">
-          <div className="mx-auto w-full max-w-6xl rounded-3xl border border-slate-800 bg-slate-900/70 p-6 backdrop-blur md:p-8">
-            <div className="grid gap-6 lg:grid-cols-[1.2fr_1fr]">
-              <div className="space-y-5">
-                <ScrollReveal preset="right">
-                  <article className="rounded-2xl border border-slate-800 bg-slate-800/60 p-5">
-                    <h2 className="text-xl font-bold text-[#00B4D8]">
-                      Para quem é
-                    </h2>
-                    <p className="mt-2 text-sm text-slate-300 md:text-base">
-                      Feito para fãs que querem entender o jogo além do placar,
-                      jogadores que buscam evolução prática, analistas que
-                      precisam de sinais rápidos e curiosos que querem aprender
-                      eSports sem jargão.
-                    </p>
-                  </article>
-                </ScrollReveal>
+      {/* ── NARRATIVE ─────────────────────────────────────────── */}
+      <div className="relative z-10 border-t border-border">
 
-                <ScrollReveal preset="right">
-                  <article className="rounded-2xl border border-slate-800 bg-slate-800/60 p-5">
-                    <h2 className="text-xl font-bold text-[#00B4D8]">
-                      Por que criamos
-                    </h2>
-                    <p className="mt-2 text-sm text-slate-300 md:text-base">
-                      Nossa missão é democratizar análise competitiva em LoL:
-                      transformar dados difíceis em decisões acionáveis para
-                      qualquer pessoa melhorar, acompanhar e discutir partidas
-                      com confiança.
-                    </p>
-                  </article>
-                </ScrollReveal>
-              </div>
-
-              <ScrollReveal preset="left" stagger={0.12}>
-                <aside className="rounded-2xl border border-slate-800 bg-black/40 p-5">
-                  <h3 className="text-lg font-bold text-slate-100">
-                    Métricas de confiança
-                  </h3>
-                  <ul className="mt-4 space-y-3 text-sm text-slate-300">
-                    <motion.li
-                      variants={itemVariants}
-                      transition={{ duration: 0.35, delay: 0.5 }}
-                      className="flex items-center justify-between rounded-lg border border-slate-800 bg-slate-900/70 px-3 py-2"
-                    >
-                      <span>Partidas analisadas</span>
-                      <strong className="text-[#00B4D8]">12.4k</strong>
-                    </motion.li>
-
-                    <motion.li
-                      variants={itemVariants}
-                      transition={{ duration: 0.35, delay: 0.53 }}
-                      className="flex items-center justify-between rounded-lg border border-slate-800 bg-slate-900/70 px-3 py-2"
-                    >
-                      <span>Atualizações de modelo</span>
-                      <strong className="text-[#00B4D8]">Semanais</strong>
-                    </motion.li>
-                    <motion.li
-                      variants={itemVariants}
-                      transition={{ duration: 0.35, delay: 0.56 }}
-                      className="flex items-center justify-between rounded-lg border border-slate-800 bg-slate-900/70 px-3 py-2"
-                    >
-                      <span>Fontes de dados</span>
-                      <strong className="text-[#00B4D8]">
-                        Riot + APIs públicas
-                      </strong>
-                    </motion.li>
-                  </ul>
-                </aside>
-              </ScrollReveal>
-            </div>
-
-            <ScrollReveal preset="up" stagger={0.12}>
-              <div className="mt-6 grid gap-4 md:grid-cols-3">
-                <motion.blockquote
-                  variants={upItemVariants}
-                  className="rounded-xl border border-slate-800 bg-slate-800/60 p-4 text-sm text-slate-200"
-                >
-                  “Finalmente consigo explicar o jogo para meus amigos sem
-                  travar em termos técnicos.”
-                  <footer className="mt-2 text-xs text-slate-400">
-                    — Lara, fã casual
-                  </footer>
-                </motion.blockquote>
-
-                <motion.blockquote
-                  variants={upItemVariants}
-                  className="rounded-xl border border-slate-800 bg-slate-800/60 p-4 text-sm text-slate-200"
-                >
-                  “O resumo pós-jogo me mostrou erros de rotação que eu nunca
-                  tinha percebido.”
-                  <footer className="mt-2 text-xs text-slate-400">
-                    — Vini, jogador ranked
-                  </footer>
-                </motion.blockquote>
-
-                <motion.blockquote
-                  variants={upItemVariants}
-                  className="rounded-xl border border-slate-800 bg-slate-800/60 p-4 text-sm text-slate-200"
-                >
-                  “Os indicadores são rápidos e confiáveis para preparar
-                  comentários antes das séries.”
-                  <footer className="mt-2 text-xs text-slate-400">
-                    — Caio, analista iniciante
-                  </footer>
-                </motion.blockquote>
+        {/* 01 */}
+        <div className="overflow-hidden border-b border-border px-6 py-24 md:py-32">
+          <div className="mx-auto max-w-6xl">
+            <ScrollReveal preset="left" duration={0.9}>
+              <div className="lg:w-1/2">
+                <span className="pointer-events-none block select-none font-display text-8xl font-black leading-none text-foreground/[0.04] md:text-9xl">
+                  01
+                </span>
+                <div className="-mt-8">
+                  <p className="text-xs uppercase tracking-[0.2em] text-primary">
+                    Fase um
+                  </p>
+                  <h2 className="mt-3 font-display text-4xl font-bold leading-tight md:text-6xl">
+                    Observe padrões.
+                  </h2>
+                  <p className="mt-6 max-w-sm text-base leading-relaxed text-muted-foreground">
+                    Cada partida gera milhares de pontos de dado. Nós filtramos os que realmente definem o resultado — visão, rotações, timing de objetivos.
+                  </p>
+                </div>
               </div>
             </ScrollReveal>
           </div>
-        </section>
-      </ScrollReveal>
+        </div>
+
+        {/* 02 */}
+        <div className="overflow-hidden border-b border-border px-6 py-24 md:py-32">
+          <div className="mx-auto flex max-w-6xl justify-end">
+            <ScrollReveal preset="right" duration={0.9}>
+              <div className="lg:w-full">
+                <span className="pointer-events-none block select-none font-display text-8xl font-black leading-none text-foreground/[0.04] md:text-9xl">
+                  02
+                </span>
+                <div className="-mt-8">
+                  <p className="text-xs uppercase tracking-[0.2em] text-primary">
+                    Fase dois
+                  </p>
+                  <h2 className="mt-3 font-display text-4xl font-bold leading-tight md:text-6xl">
+                    Preveja decisões.
+                  </h2>
+                  <p className="mt-6 max-w-sm text-base leading-relaxed text-muted-foreground">
+                    IA treinada em milhões de partidas competitivas identifica lacunas estratégicas antes que elas se tornem derrotas.
+                  </p>
+                </div>
+              </div>
+            </ScrollReveal>
+          </div>
+        </div>
+
+        {/* 03 */}
+        <div className="overflow-hidden border-b border-border px-6 py-24 md:py-32">
+          <div className="mx-auto max-w-6xl text-center">
+            <ScrollReveal preset="up" duration={1}>
+              <span className="pointer-events-none block select-none font-display text-9xl font-black leading-none text-foreground/[0.04] md:text-[12rem]">
+                03
+              </span>
+              <p className="-mt-4 text-xs uppercase tracking-[0.2em] text-primary">
+                Fase três
+              </p>
+              <h2 className="mt-3 font-display text-5xl font-bold leading-tight md:text-7xl">
+                Jogue com <span className="text-gradient">inteligência.</span>
+              </h2>
+              <p className="mx-auto mt-6 max-w-md text-base leading-relaxed text-muted-foreground">
+                Sem ruído — apenas as três coisas que você precisa corrigir agora, entregues após cada partida.
+              </p>
+            </ScrollReveal>
+          </div>
+        </div>
+      </div>
+
+      {/* ── CTA FINAL ─────────────────────────────────────────── */}
+      <section className="relative z-10 border-t border-border px-6 py-32 md:py-40">
+        <ScrollReveal preset="fade" duration={1.2}>
+          <div className="mx-auto max-w-2xl text-center">
+            <h2 className="font-display text-4xl font-bold leading-tight md:text-5xl">
+              Sua próxima vantagem competitiva
+              <br />
+              começa com dados.
+            </h2>
+            <p className="mt-5 text-base text-muted-foreground">
+              Junte-se a jogadores e times que já tomam decisões mais inteligentes.
+            </p>
+            <div className="mt-10">
+              <Link
+                to="/register"
+                className="group relative inline-flex items-center overflow-hidden rounded-xl bg-gradient-primary px-8 py-4 text-base font-bold text-primary-foreground shadow-glow transition"
+              >
+                Começar Agora
+                <span className="absolute inset-0 -translate-x-full bg-linear-to-r from-transparent via-[hsl(0_0%_100%/0.25)] to-transparent transition-transform duration-700 group-hover:translate-x-full" />
+              </Link>
+            </div>
+            <p className="mt-5 text-xs text-muted-foreground">Grátis para começar.</p>
+          </div>
+        </ScrollReveal>
+      </section>
 
       <AppFooter />
-
-      {isLearnMoreOpen && (
-        <div className="fixed inset-0 z-30 flex items-center justify-center bg-black/70 px-4">
-          <div className="w-full max-w-2xl rounded-2xl border border-slate-700 bg-slate-950 p-6 shadow-2xl">
-            <div className="flex items-start justify-between gap-4">
-              <h3 className="text-xl font-bold text-[#00B4D8]">
-                Guia estendido para iniciantes
-              </h3>
-              <button
-                type="button"
-                onClick={() => setIsLearnMoreOpen(false)}
-                className="rounded-lg border border-slate-600 px-3 py-1 text-sm hover:bg-slate-800"
-              >
-                Fechar
-              </button>
-            </div>
-            <div className="mt-4 space-y-4 text-sm text-slate-300">
-              <p>
-                Em LoL, o objetivo final é destruir o Nexus inimigo. Para isso,
-                os times avançam pelo mapa, conquistam visão, lutam por
-                objetivos e protegem sua própria base.
-              </p>
-              <p>
-                Em competições, quase tudo é planejado: escolhas no draft,
-                movimentação pelo mapa, tempos de luta e controle de recursos.
-                Pequenas decisões podem decidir o resultado.
-              </p>
-              <p>
-                As estatísticas existem para transformar a partida em
-                aprendizado. Elas ajudam a responder perguntas como: “onde
-                perdemos vantagem?”, “quem cresceu mais rápido?” e “em que
-                minuto o jogo virou?”.
-              </p>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
