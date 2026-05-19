@@ -6,6 +6,7 @@ import ScrollReveal from "../../../components/ScrollReveal";
 import { BarChart3, BookOpenText, Brain } from "lucide-react";
 import SpotlightCard from "../../../components/SpotlightCard";
 import AnimatedCounter from "../../../components/AnimatedCounter";
+import AppFooter from "../../../components/AppFooter";
 
 import {
   TrendingUp,
@@ -15,7 +16,40 @@ import {
   ChessKnight,
   Swords,
   ChessRook,
+  ChartSpline,
+  Users,
+  UserRound,
+  UserCircle,
+  ArrowRight,
+  Zap,
 } from "lucide-react";
+
+const features = [
+  {
+    title: "Dashboard",
+    description: "KPIs, radar de performance e tendências das suas partidas em tempo real.",
+    icon: ChartSpline,
+    path: "/dashboard",
+  },
+  {
+    title: "Times",
+    description: "Monte squads, adicione jogadores e simule embates estratégicos.",
+    icon: Users,
+    path: "/times",
+  },
+  {
+    title: "Jogadores",
+    description: "Ranking global por KDA, winrate e partidas com filtros por role.",
+    icon: UserRound,
+    path: "/jogadores",
+  },
+  {
+    title: "Perfil",
+    description: "Seu histórico, conquistas e evolução ao longo do tempo.",
+    icon: UserCircle,
+    path: "/perfil",
+  },
+];
 
 const dashboardCards = [
   {
@@ -333,6 +367,47 @@ export default function HomePage() {
         </ScrollReveal>
       </section>
 
+      <section className="relative z-10 mt-32 px-6">
+        <div className="pointer-events-none absolute left-1/2 top-1/2 h-[400px] w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[hsl(var(--primary)/0.07)] blur-3xl" />
+        <ScrollReveal preset="up">
+          <div className="mx-auto mb-10 w-full max-w-6xl text-center">
+            <p className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.25em] text-primary">
+              <Zap className="h-3.5 w-3.5" /> O que você encontra aqui
+            </p>
+            <h2 className="mt-3 font-display text-4xl font-bold leading-tight md:text-5xl">
+              Tudo que você precisa{" "}
+              <span className="text-gradient">em um lugar</span>.
+            </h2>
+          </div>
+        </ScrollReveal>
+
+        <div className="mx-auto w-full max-w-6xl grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+          {features.map((f, i) => (
+            <ScrollReveal key={f.path} preset="up" delay={i * 0.1} duration={0.5}>
+              <motion.div
+                whileHover={{ scale: 1.02 }}
+                className="group relative overflow-hidden rounded-2xl border border-border bg-card-glass p-6 transition hover:border-[hsl(var(--primary)/0.5)] cursor-pointer"
+              >
+                <div className="absolute -right-8 -top-8 h-28 w-28 rounded-full bg-[hsl(var(--primary)/0.12)] blur-2xl opacity-0 transition duration-300 group-hover:opacity-100" />
+                <div className="relative">
+                  <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-primary shadow-glow">
+                    <f.icon className="h-5 w-5 text-primary-foreground" />
+                  </div>
+                  <h3 className="font-display text-lg font-bold text-foreground">{f.title}</h3>
+                  <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{f.description}</p>
+                  <Link
+                    to="/login"
+                    className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-primary transition-all hover:gap-2"
+                  >
+                    Acessar <ArrowRight className="h-4 w-4" />
+                  </Link>
+                </div>
+              </motion.div>
+            </ScrollReveal>
+          ))}
+        </div>
+      </section>
+
       <ScrollReveal>
         <section className="relative z-10 mt-12 px-6">
           <div className="mx-auto w-full max-w-6xl rounded-3xl border border-slate-800 bg-slate-900/70 p-6 backdrop-blur md:p-8">
@@ -444,6 +519,8 @@ export default function HomePage() {
           </div>
         </section>
       </ScrollReveal>
+
+      <AppFooter />
 
       {isLearnMoreOpen && (
         <div className="fixed inset-0 z-30 flex items-center justify-center bg-black/70 px-4">

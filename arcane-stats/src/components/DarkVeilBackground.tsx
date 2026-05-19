@@ -18,13 +18,10 @@ const DarkVeilBackground = () => {
       <div className="absolute inset-0 bg-scanlines" />
 
       <div
-        className="absolute top-45 left-22 h-20 w-120 rounded-full bg-primary/20 blur-2xl animate-orb-1"
+        className="absolute top-45 left-22 h-120 w-120 rounded-full bg-primary/20 blur-3xl animate-orb-1"
         style={{ translate: `${mp.x * 40}px ${mp.y * 20}px` }}
       />
-      <div
-        className="absolute top-45 left-22 h-120 w-20 rounded-full bg-primary/20 blur-2xl animate-orb-1"
-        style={{ translate: `${mp.x * 40}px ${mp.y * 20}px` }}
-      />
+     
       <div
         className="absolute top-1/3 -right-40 h-160 w-160 rounded-full bg-[hsl(var(--primary)/0.12)] blur-3xl animate-orb-2"
         style={{ translate: `${mp.x * -40}px ${mp.y * -30}px` }}
